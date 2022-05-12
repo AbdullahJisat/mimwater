@@ -30,4 +30,4 @@ Route::namespace('Admin')->name('admin.')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::resource('salesmans', SalesmanController::class);
+Route::resource('salesmans', SalesmanController::class)->middleware('web');

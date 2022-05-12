@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSalesmanRequest;
 use App\Models\Salesman;
 use Illuminate\Http\Request;
 
@@ -34,9 +35,10 @@ class SalesmanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSalesmanRequest $request)
     {
-        //
+        Salesman::create($request->validated());
+        return redirect()->route('salesmans.index');
     }
 
     /**
@@ -58,7 +60,8 @@ class SalesmanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $salesman = Salesman::findOrFail($id);
+        return view('backend.pages.salesman.create', compact('salesman'));
     }
 
     /**
@@ -68,9 +71,10 @@ class SalesmanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreSalesmanRequest $request, $id)
     {
-        //
+        Salesman::findOrFail($id)->update($request->except('password'));
+        return redirect()->route('salesmans.index');
     }
 
     /**
@@ -81,6 +85,7 @@ class SalesmanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Salesman::findOrFail($id)->delete();
+        return back();
     }
 }

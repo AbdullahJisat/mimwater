@@ -28,14 +28,21 @@ class StoreSalesmanRequest extends FormRequest
             'email' => 'required',
             'password' => 'required',
             'username' => 'required',
-            'email' => 'required',
-            'email' => 'required',
+            'phone' => 'required',
+            'nid' => 'required',
+            'location' => 'required',
         ];
     }
     public function messages()
     {
         return [
-            'subject.required' => 'subject require',
+            'name.required' => 'name require',
+            'email.required' => 'email require',
+            'password.required' => 'password require',
+            'username.required' => 'username require',
+            'phone.required' => 'phone require',
+            'nid.required' => 'nid require',
+            'location.required' => 'location require',
         ];
     }
 }

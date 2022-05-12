@@ -11,20 +11,25 @@
                     class="icofont icofont-user-alt-3"></i>{{ __('View Salesman') }}</a>
         </div>
         <div class="card-block">
-            <form id="salesmanForm" method="post" action="#" novalidate>
+            <form id="salesmanForm" method="post" action="{{ (@$salesman) ? route('salesmans.update', $salesman->id) : route('salesmans.store') }}" novalidate>
+                @csrf
+                @method((@$salesman) ? 'PUT': 'POST')
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name">
-                        <span class="messages"></span>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name" value="{{ (@$salesman) ? $salesman->name :old('name') }}"/>
+                        @if($errors->has('name'))
+                            <span class="messages">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Enter valid e-mail address">
-                        <span class="messages"></span>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ (@$salesman) ? $salesman->email :old('email') }}" placeholder="Enter valid e-mail address" />
+                            @if($errors->has('email'))
+                                <span class="messages">{{ $errors->first('email') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group row">
@@ -32,39 +37,48 @@
                     <div class="col-sm-10">
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="Password input">
-                        <span class="messages"></span>
+                            @if($errors->has('password'))
+                                <span class="messages">{{ $errors->first('password') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" id="username"
-                            placeholder="Enter Your Username">
-                        <span class="messages"></span>
+                        <input type="text" class="form-control" name="username" id="username" value="{{ (@$salesman) ? $salesman->username :old('username') }}" placeholder="Enter Your Username" />
+                            @if($errors->has('username'))
+                                <span class="messages">{{ $errors->first('username') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
                         <input type="text" placeholder="Enter your number" class="form-control"
-                            name="phone" id="phone" pattern="^(?:(?:\+|00)88|01)?\d{11}\r?$" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"/>
-                        <span class="messages"></span>
+                            name="phone" id="phone" pattern="^(?:(?:\+|00)88|01)?\d{11}\r?$" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" value="{{ (@$salesman) ? $salesman->phone :old('phone') }}" />
+                            @if($errors->has('phone'))
+                                <span class="messages">{{ $errors->first('phone') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nid</label>
                     <div class="col-sm-10">
                             <input type="text" class="form-control" name="nid" id="nid" pattern="[1-9]{1}[0-9]{9}" placeholder="Enter your nid"
-                            title="Enter nid number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"/>
-                        <span class="messages"></span>
+                            title="Enter nid number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" {{ old('nid') }} value="{{ (@$salesman) ? $salesman->nid :old('nid') }}" />
+                            @if($errors->has('nid'))
+                                <span class="messages">{{ $errors->first('nid') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Location</label>
                     <div class="col-sm-10">
                             <input type="text" class="form-control" name="location" id="location"
-                            title="Enter your location" placeholder="Enter your location" />
-                        <span class="messages"></span>
+                            title="Enter your location" placeholder="Enter your location" value="{{ (@$salesman) ? $salesman->location :old('location') }}"/>
+                            @if($errors->has('location'))
+                                <span class="messages">{{ $errors->first('location') }}</span>
+                            @endif
                     </div>
                 </div>
                 <div class="row">
@@ -72,17 +86,18 @@
                     <div class="col-sm-10">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="status" id="status" checked
-                                    value="1"> Active
+                                <input class="form-check-input" type="radio" name="status" id="status" {{ $salesman->status == 1 ? 'checked' : ''}} value="1"> Active
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="radio" name="status" id="status"
-                                    value="0"> Inactive
+                                    value="0" {{ $salesman->status == 0 ? 'checked' : '' }}> Inactive
                             </label>
                         </div>
-                        <span class="messages"></span>
+                        @if($errors->has('status'))
+                            <span class="messages">{{ $errors->first('status') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">

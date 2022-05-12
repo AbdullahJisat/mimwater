@@ -14,6 +14,7 @@
                 <table id="multi-colum-dt" class="table table-striped table-bordered nowrap">
                     <thead>
                         <tr>
+                            <th>SL</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Username</th>
@@ -35,8 +36,14 @@
                                 <td>{{ $salesman->location }}</td>
                                 <td>{{ $salesman->nid }}</td>
                                 <td>{{ $salesman->password }}</td>
-                                <td><button class="btn waves-effect waves-light btn-primary"><i class="icofont icofont-user-alt-3"></i></button>
-                                    <button class="btn waves-effect waves-light btn-success"><i class="icofont icofont-check-circled"></i></button></td>
+                                <td>
+                                    <form action="{{route('salesmans.destroy',$salesman->id)}}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a href="{{route('salesmans.edit',$salesman->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                        <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @empty
                             <td colspan="8">No Salesman available</td>
