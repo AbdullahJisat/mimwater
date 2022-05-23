@@ -1,5 +1,13 @@
-@extends('frontend.layouts.master')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Directors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
     <h1 style="text-align:center; color: #6EC1E4; font-weight: bold;font-family: Arial, Helvetica, sans-serif; margin-bottom: 50px;">Board of Directors</h1>
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -9,7 +17,6 @@
                     <p style="margin-top: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 19px; color: #747474;">Mr. Md. Raisul Uddin</p>
                     <p style="margin-top: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 19px; color: #747474;">Chairman</p>
                 </div>
-           
             </div>
             <div class="col-lg-6 col-sm-12 d-flex justify-content-center text-center ">
                 <div>
@@ -106,4 +113,5 @@
         </div>
     </div>
 
-@endsection
+</body>
+</html>

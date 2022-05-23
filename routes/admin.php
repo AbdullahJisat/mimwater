@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\SalesmanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,4 @@ Route::namespace('Admin')->name('admin.')->group(function () {
 });
 
 Route::resource('salesmans', SalesmanController::class)->middleware('web');
+Route::resource('dealers', DealerController::class)->middleware('web');

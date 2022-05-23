@@ -1,5 +1,14 @@
-@extends('frontend.layouts.master')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>total Quality Assurance</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
     <h4 style="text-align:center; color: #6EC1E4; font-size: 35px; font-weight: bold;font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px;margin-top: 100px;">Total Quality Assurance</h4>
     <p class="content-P">
         Our Quality Assurance consists of Quality Control Department and Quality Compliance. Our quality control laboratory is well-equipped with modern instruments which are calibrated on regular basis. Our well-trained personnel continuously monitors and check the products on every single stage of production to ensure the best quality of product. All processes are strictly followed under the proper guidelines of cGMP.
@@ -19,4 +28,5 @@
     <p style="color: rgb(53, 53, 53); text-decoration: line-through; font-weight: bold;">
         Chemical Analysis of Water
     </p>
-@endsection
+</body>
+</html>

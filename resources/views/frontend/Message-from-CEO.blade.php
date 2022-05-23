@@ -1,5 +1,13 @@
-@extends('frontend.layouts.master')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message from CEO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     <h4 style="text-align:center; color: #6EC1E4; font-size: 35px; font-weight: bold;font-family: Arial, Helvetica, sans-serif;">Message From CEO</h4>
     <img style="width: 15%; display: block; margin-left: auto; margin-right: auto;" src="image/Chief-Advisor.jpg" alt="">
     <p style="width: 83%; margin: auto; color: rgb(95, 95, 95); font-size: 17px; font-family: Arial, Helvetica, sans-serif;">
@@ -23,4 +31,5 @@ Looking ahead we are determined to achieve our goal of becoming a force in affor
         Favourita Limited <br>
         Chittagong, Bangladesh.
     </p>
-@endsection
+</body>
+</html>

@@ -1,5 +1,13 @@
-@extends('frontend.layouts.master')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Over View</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     <section class="content" style="margin-top: 50px;">
         <p style="text-align: center; font-size: 35px; font-weight: bolder; color: aqua;">Overview</p>
         <p style="text-align: center; color: rgb(46, 129, 207); font-weight: bold;"> <span> BLUE AQUA </span>Drinking Water  –  Drink The Difference</p>
@@ -26,4 +34,5 @@
         <img src="image/overViewImage/oVpic3.jpg" alt="">
         <img src="image/overViewImage/oVpic4.jpg" alt="">
     </section>
-@endsection
+</body>
+</html>

@@ -1,5 +1,17 @@
-@extends('frontend.layouts.master')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="ourProducts.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
     <section class="sec">
             <div class="sec1 row mx-auto g-3">
                 <div class="sec1-card col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -46,4 +58,6 @@
             </div>
         </div>
     </section>
-@endsection
+</body>
+
+</html>

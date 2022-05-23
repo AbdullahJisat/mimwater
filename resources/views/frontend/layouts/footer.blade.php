@@ -1,8 +1,7 @@
 <footer class="sec7 ">
     <div class="sec7-content row">
-        <div class="sec7-content1 col-lg-4 col-12">
-            <img style="padding: 60px; padding-bottom: 50px;display: block; width: 100%; margin-left: auto; margin-right: auto;" src="image/meem-logooo.png" alt="">
-             
+        <div class="sec7-content1 col-lg-4 col-12 ">
+            <img class="footerLogo"  src="{{asset('assets/image/anupBiswasLogo.png')}}" alt="" height="500px" width="400px"/>
         </div>
         <div class="sec7-content2 col-lg-4 col-6">
             <p style="padding-top: 60px; font-size: 24px; color: aquamarine;">About Us</p>
@@ -34,3 +33,6 @@
     <hr style="margin-top: 50px; opacity:.20; border: 1px solid rgb(131, 131, 131);">
     <p style="padding-top:20px; font-size: 10px; color: rgb(167, 167, 167); padding: 20px;">© 2021, BlueAqua . All rights reserved .</p>
 </footer>
+
+</body>
+</html>
