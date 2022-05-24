@@ -16,9 +16,7 @@
        </li>
          <li class="nav-item nav-item_con"><a class="nav-link" href="Sponsor-Directors.html"> Our Team </a></li>
          <li class="nav-item nav-item_con"><a class="nav-link" href="contact-us.html"> Contact Us</a></li>
-         <a href="logIn.html">
-          <button type="button" class="btn btn-primary btn-sm logInBUtton" data-target="#exampleModal">LOGIN</button>
-         </a>
+         
          
       </ul>
      
