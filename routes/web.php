@@ -32,10 +32,6 @@ Route::get('contact', [UIController::class, 'contact'])->name('contact');
 Route::get('invoice', [UIController::class, 'invoice'])->name('invoice');
 Route::get('invoice-details/{id}', [UIController::class, 'invoice'])->name('invoice-details')->where('id', '[0-9]+');
 
-Route::get('invoices/{id}', [PaymentInvoiceController::class, 'index'])->name('invoices.index');
-Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
-Route::post('invoices/{id}', [PaymentInvoiceController::class, 'store'])->name('invoices.store');
-
 
 // Admin prefix
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {

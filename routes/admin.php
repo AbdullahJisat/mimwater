@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DealerController;
-use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SalesmanController;
 use App\Http\Controllers\Admin\DirectorController;
 use App\Http\Controllers\Salesman\ItemController;
@@ -35,3 +32,5 @@ use Illuminate\Support\Facades\Route;
 //     Route::post('designations', [DirectorController::class, 'designationStore'])->name('designations.store');
 // });
 
+// Route::resource('salesmans', SalesmanController::class)->middleware('web');
+// Route::resource('dealers', DealerController::class)->middleware('web');
