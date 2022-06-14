@@ -71,7 +71,9 @@
             <div class="row">
                 <div class="col-sm-12">
 
-                    <form class="md-float-material form-material" method="POST" action="{{ route('admin.login') }}">
+                    @isset($url)
+                        <form class="md-float-material form-material" method="POST" action="{{ url("$url/login") }}">
+                    @endisset
                         @csrf
                         <div class="text-center">
                             <img src="png/logo.png" alt="logo.png">

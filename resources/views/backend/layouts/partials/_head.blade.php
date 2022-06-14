@@ -15,4 +15,3 @@
     content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
 <meta name="author" content="colorlib" />
 
-@stack('style')

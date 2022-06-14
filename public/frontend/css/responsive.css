@@ -1,0 +1,224 @@
+@media all and (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: none;
+    }
+    /* .navbar .nav-item:hover .nav-link{} */
+    .navbar .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+    .navbar .nav-item .dropdown-menu {
+        margin-top: 0;
+    }
+    .sec3 {
+        display: block;
+    }
+    .card-sec1 {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .row {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 383px) {
+    .blockone,
+    .blocktwo,
+    .blockthree {
+        padding: 10px 1px !important;
+        font-size: 12px !important;
+        margin: 0px 0px !important;
+        width: 31% !important;
+    }
+    .soical-icon {
+        display: none !important;
+    }
+    .sec1>iframe {
+        margin-top: 17%;
+        height: 42vh;
+    }
+    .logInBUtton {
+        margin-bottom: 30px !important;
+    }
+    .rowImage>button {
+        left: 30%;
+    }
+    .content {
+        margin-top: 24%;
+    }
+}
+
+@media (min-width: 384px) and (max-width: 567px) {
+    .blockone,
+    .blocktwo,
+    .blockthree {
+        padding: 10px 3px !important;
+        font-size: 12px !important;
+        margin: 0px 2px !important;
+        width: 31.333% !important;
+    }
+    .sec1 {
+        margin-top: 16%;
+    }
+    .sec1>iframe {
+        margin-top: 5%;
+        height: 34vh;
+    }
+    .soical-icon {
+        display: none !important;
+    }
+    .logInBUtton {
+        margin-bottom: 30px !important;
+    }
+    .rowImage>button {
+        left: 32%;
+    }
+    .content {
+        margin-top: 24%;
+    }
+}
+
+@media (min-width: 567px) and (max-width: 985px) {
+    .blockone,
+    .blocktwo,
+    .blockthree {
+        padding: 10px 3px !important;
+        font-size: 17px !important;
+        margin: 0px 2px !important;
+        width: 31.333% !important;
+    }
+    .soical-icon {
+        display: none !important;
+    }
+    .sec1 {
+        margin-top: 9.2%;
+    }
+    .logInBUtton {
+        margin-bottom: 30px !important;
+    }
+    .rowImage>button {
+        left: 33%;
+    }
+    .content {
+        margin-top: 24%;
+    }
+}
+
+@media (max-width: 480px) {
+    .readMore {
+        width: 40%;
+        padding: 10px 10px 10px 10px;
+    }
+    .soical-icon>a>i {
+        padding: 5px;
+    }
+    .readMore>a {
+        font-size: 15px;
+    }
+    .nav-item_con>a {
+        font-size: 17px;
+    }
+    .zomAnchor1 {
+        font-size: 20px !important;
+    }
+    .zomAnchor-icon {
+        font-size: 40px !important;
+    }
+    .content {
+        margin-top: 24%;
+    }
+}
+
+@media (max-width: 300px) {
+    .readMore>a {
+        font-size: 12px;
+    }
+    .nav-item_con>a {
+        font-size: 15px;
+    }
+    .content {
+        margin-top: 24%;
+    }
+}
+
+
+/* --------------contact form css -------------*/
+
+@media (max-width: 980px) {
+    .container-flex {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .item1 {
+        width: 90%;
+        margin: auto;
+    }
+    .item1>img {
+        width: 100%;
+        margin: auto;
+    }
+    .item2 {
+        width: 90%;
+        margin: auto;
+    }
+    .item2>img {
+        width: 100%;
+        margin: auto;
+    }
+    .item3 {
+        width: 90%;
+        margin: auto;
+    }
+    .item3>img {
+        width: 100%;
+        margin: auto;
+    }
+    .item4 {
+        width: 90%;
+        margin: auto;
+    }
+    .item4>img {
+        width: 100%;
+        margin: auto;
+    }
+    .item5 {
+        width: 90%;
+        margin: auto;
+    }
+    .item5>img {
+        width: 100%;
+        margin: auto;
+    }
+    .item6 {
+        width: 90%;
+        margin: auto;
+    }
+    .item6>img {
+        width: 100%;
+        margin: auto;
+    }
+    .careerImage {
+        width: 90% !important;
+        margin: auto;
+        height: auto;
+    }
+    .careerP {
+        font-size: 12px;
+        text-align: justify;
+    }
+    .ImageFlex-P {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        /* justify-content: center; */
+    }
+    .modalimage {
+        width: 100%;
+        margin: auto;
+    }
+    .modal-target1 {
+        width: 100%;
+    }
+}

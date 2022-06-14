@@ -71,7 +71,7 @@ class SalesmanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreSalesmanRequest $request, $id)
+    public function update(Request $request, $id)
     {
         Salesman::findOrFail($id)->update($request->except('password'));
         return redirect()->route('salesmans.index');

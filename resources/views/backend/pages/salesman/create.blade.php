@@ -86,13 +86,13 @@
                     <div class="col-sm-10">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="status" id="status" {{ $salesman->status == 1 ? 'checked' : ''}} value="1"> Active
+                                <input class="form-check-input" type="radio" name="status" id="status" {{ @$salesman->status == 1 ? 'checked' : ''}} value="1"> Active
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="radio" name="status" id="status"
-                                    value="0" {{ $salesman->status == 0 ? 'checked' : '' }}> Inactive
+                                    value="0" {{ @$salesman->status == 0 ? 'checked' : ' ' }}> Inactive
                             </label>
                         </div>
                         @if($errors->has('status'))

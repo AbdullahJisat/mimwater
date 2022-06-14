@@ -38,4 +38,32 @@ class Salesman extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function stockItemPrices()
+    {
+        // return $this->hasManyThrough(Retailer::class, Salesman::class, 'retailer_id', 'salesman_id');
+        return $this->hasManyThrough(
+            StockItem::class,
+            Retailer::class,
+            'salesman_id', // Foreign key on users table...
+            'retailer_id', // Foreign key on posts table...
+            'id', // Local key on countries table...
+            'id' // Local key on users table...
+        );
+    }
 }
+
+
+// salesman
+//     id - integer
+//     name - string
+
+// retailer
+//     id - integer
+//     salesman_id - integer
+//     name - string
+
+// stockitem
+//     id - integer
+//     retailer_id - integer
+//     title - string

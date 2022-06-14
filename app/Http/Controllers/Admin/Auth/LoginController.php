@@ -17,11 +17,16 @@ class LoginController extends Controller
     public function __construct()
     {
         // $this->middleware('guest')->except('logout');
-        // $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
+
     public function showLoginForm()
     {
-        return view('backend.auth.login');
+        if (Auth::guard('admin')->check()) {
+            return redirect('/admin');
+        } else {
+            return view('backend.auth.login', ['url' => 'admin']);
+        }
     }
 
     public function login(Request $request)
@@ -43,10 +48,9 @@ class LoginController extends Controller
         } else {
             $auth = Admin::whereUsername($request->username)->first();
             if ($auth && Hash::check($request->password, $auth->password) && Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember)){
-
-                return redirect()->intended(RouteServiceProvider::ADMINHOME);;
+                return redirect()->intended('/admin');
             }
-            return redirect()->back()->withInput($request->only('email', 'remember'));
+            return redirect()->back()->withInput($request->only('username', 'remember'));
         }
     }
 
@@ -54,6 +58,6 @@ class LoginController extends Controller
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin');
+        return redirect('/');
     }
 }
