@@ -37,7 +37,9 @@ class SalesmanController extends Controller
      */
     public function store(StoreSalesmanRequest $request)
     {
-        Salesman::create($request->validated());
+        $request = new Request($request->all());
+        $request->merge(['password' => bcrypt($request->password)]);
+        Salesman::create($request->all());
         return redirect()->route('salesmans.index');
     }
 

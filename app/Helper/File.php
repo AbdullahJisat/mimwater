@@ -7,11 +7,11 @@ namespace App\Helper;
 
 Trait File
 {
-    public function file( $file, $model, $number = null )
+    public function file( $file, $model, $number = 0 )
     {
         if($file) {
             $filename = $model.'-'.$number.'.'.$file->getClientOriginalExtension();
-            $image_path = str_ireplace("public/","/storage/", $file->storeAs('public/upload/item_image', $filename));
+            $image_path = str_ireplace("public/","/storage/", $file->storeAs('public/upload/'.$model.'_image', $filename));
             return $image_path;
         }
     //    if ( $file ) {

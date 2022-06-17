@@ -25,13 +25,13 @@ class StoreRetailerRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required',
+            'email' => 'required|unique:retailers,email',
             'password' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:retailers,username',
             'shopname' => 'required',
             'shop_location' => 'required',
             'phone' => 'required',
-            'nid' => 'required',
+            'nid' => 'required|unique:retailers,nid',
             'location' => 'required',
         ];
     }

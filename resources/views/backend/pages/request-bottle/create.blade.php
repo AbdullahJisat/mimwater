@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route('request_bottles.store') }}" novalidate enctype="multipart/form-data">
+                <form method="post" action="{{ route('dealer.request_bottles.store') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Item</label>
@@ -26,7 +26,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Quantity</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly class="form-control" name="quantity" id="quantity" placeholder="Enter Your quantity" value="5"/>
+                            <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Enter bottles quantity" />
                             @error('quantity')
                                 <span class="messages">{{ $message }}</span>
                             @enderror

@@ -32,11 +32,20 @@ Route::get('contact', [UIController::class, 'contact'])->name('contact');
 Route::get('invoice', [UIController::class, 'invoice'])->name('invoice');
 Route::get('invoice-details/{id}', [UIController::class, 'invoice'])->name('invoice-details')->where('id', '[0-9]+');
 
-Route::get('invoices/{id}', [PaymentInvoiceController::class, 'index'])->name('invoices.index');
-Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
-Route::post('invoices/{id}', [PaymentInvoiceController::class, 'store'])->name('invoices.store');
 
-
+Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function() {
+    Route::get('report', [ReportController::class, 'getReport'])->name('getReport');
+    Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
+    Route::get('cashes', [PaymentInvoiceController::class, 'showCashes'])->name('invoices.cashes');
+});
+Route::group(['middleware' => 'auth:admin'], function() {
+    Route::get('dealer-dues', [PaymentInvoiceController::class, 'showDealerDues'])->name('invoices.dealer_dues');
+    Route::get('dealer-cashes', [PaymentInvoiceController::class, 'showDealerCashes'])->name('invoices.dealer_cashes');
+    Route::get('admin/stock-out-items', [StockOutItemController::class, 'indexDealer'])->name('admin.index_stockOut_dealer');
+    Route::post('admin/store/stock-out-items', [StockOutItemController::class, 'stockOutDealer'])->name('stock_out_dealer');
+    Route::get('admin/stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
+    Route::post('admin/store/stock-items', [StockItemController::class, 'stockDealer'])->name('stock_dealer');
+});
 // Admin prefix
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {
     // login route
@@ -56,7 +65,6 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('items', ItemController::class);
     Route::resource('stock-items', StockItemController::class);
     Route::post('categories', [CostController::class, 'categoryStore'])->name('categories.store');
-    Route::get('report', [ReportController::class, 'getReport'])->name('getReport');
     Route::resource('directors', DirectorController::class);
     Route::resource('galleries', GalleryController::class);
     Route::post('departments', [DirectorController::class, 'departmentStore'])->name('departments.store');
@@ -84,11 +92,9 @@ Route::prefix('salesmans')->middleware('auth:salesman')->group(function () {
     Route::resource('stock-items', StockItemController::class);
     Route::get('request-bottle', [RequestBottleController::class, 'index'])->name('request_bottles.index');
     Route::post('request-bottle/create', [RequestBottleController::class, 'store'])->name('request_bottles.store');
-    Route::resource('costs', CostController::class);
     Route::resource('stock-out-items', StockOutItemController::class);
     Route::post('categories', [CostController::class, 'categoryStore'])->name('categories.store');
     Route::get('invoices/{id}', [PaymentInvoiceController::class, 'index'])->name('invoices.index');
-    Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
     Route::post('invoices/{id}', [PaymentInvoiceController::class, 'store'])->name('invoices.store');
 });
 

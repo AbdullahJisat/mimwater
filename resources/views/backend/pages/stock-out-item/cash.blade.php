@@ -1,14 +1,14 @@
 @extends('backend.layouts.master')
-@section('due_active', 'active pcoded-trigger')
-@section('view_due_active', 'active')
-@section('title', 'View due')
+@section('cash_active', 'active pcoded-trigger')
+@section('view_cash_active', 'active')
+@section('title', 'View cash')
 @push('css')
 @endpush
 @section('content')
 <div class="col-sm-12">
     <div class="card">
         {{-- <div class="card-header">
-            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
+            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add cash') }}</button>
             @include('backend.pages.stock-out-item.create')
         </div> --}}
         <div class="card-block">
@@ -18,28 +18,32 @@
                         <tr>
                             <th>SL</th>
                             <th>Retailer Name</th>
-                            <th>Due</th>
+                            <th>cash</th>
+                            <th>due</th>
+                            <th>total</th>
                             <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($dues as $due)
+                        @forelse ($cashes as $cash)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name">{{ $due->retailer->name }}</td>
-                                <td data-label="Quantity">{{ $due->due }}</td>
-                                <td data-label="Quantity">{{ $due->created_at->format('Y-m-d') }}</td>
+                                <td data-label="Name">{{ $cash->retailer->name }}</td>
+                                <td data-label="Quantity">{{ $cash->amount }}</td>
+                                <td data-label="Quantity">{{ $cash->due }}</td>
+                                <td data-label="Quantity">{{ $cash->total }}</td>
+                                <td data-label="Quantity">{{ $cash->created_at->format('Y-m-d') }}</td>
                                 {{-- <td data-label="Action">
-                                    <form action="{{route('dues.destroy',$due->id)}}" method="post">
+                                    <form action="{{route('cashs.destroy',$cash->id)}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <a href="{{route('dues.edit',$due->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{route('cashs.edit',$cash->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
                                         <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td> --}}
                             </tr>
                         @empty
-                            <td colspan="8">No due available</td>
+                            <td colspan="8">No cash available</td>
                         @endforelse
                     </tbody>
                 </table>

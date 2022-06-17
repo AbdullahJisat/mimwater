@@ -25,11 +25,11 @@ class StoreSalesmanRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required',
+            'email' => 'required|unique:salesmen,email',
             'password' => 'required',
-            'username' => 'required',
-            'phone' => 'required',
-            'nid' => 'required',
+            'username' => 'required|unique:salesmen,username',
+            'phone' => 'required|unique:salesmen,phone',
+            'nid' => 'required|unique:salesmen,nid',
             'location' => 'required',
         ];
     }

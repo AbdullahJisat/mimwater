@@ -169,6 +169,13 @@
                     <td>${{ $item->price }}</td>
                 </tr>
 
+                <tr class="total">
+                    <td></td>
+
+                    <td>Due: ${{ $dueCheck }}</td>
+                </tr>
+
+
 
                 <!--/* <tr class="item">
                     <td>Domain name (1 year)</td>
@@ -176,15 +183,19 @@
                     <td>$10.00</td>
                 </tr> */ -->
 
+                @php
+                    $total = $item->price + $dueCheck;
+                @endphp
+
                 <tr class="total">
                     <td></td>
 
-                    <td>Total: ${{ $item->price }} <input type="hidden" id="total" name="total" value="{{ $item->price }}"></td>
+                    <td>Total: ${{ $total }}.00 <input type="hidden" id="total" name="total" value="{{ $total }}"></td>
                 </tr>
                 <tr class="total">
                     <td></td>
 
-                    <td><input type="text" name="amount" id="amount" value="{{ $item->price }}"></td>
+                    <td><input type="hidden" name="amount" id="amount" value="{{ $item->price }}"></td>
                 </tr>
                 <tr class="total">
                     <td></td>
@@ -192,7 +203,7 @@
                         <option value="1">success</option>
                         <option value="2">failed</option>
                         <option value="3">due</option>
-                        <option value="4">partial due</option>
+                        /* <option value="4">partial due</option> */
                         </select></td>
                 </tr>
                 <tr class="total">
@@ -214,7 +225,7 @@
                 alert(total);
                 var amount = document.getElementById('amount').value;
                 alert(amount);
-                document.getElementById('afterAmount').value= total - amount;
+                document.getElementById('afterAmount').value = total - amount;
             }
         }
     </script>

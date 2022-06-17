@@ -47,7 +47,7 @@
                         </li>
                         <li class="pcoded-hasmenu @yield('gallery_active')">
                             <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">gallery</span>
+                                <span class="pcoded-mtext">Gallery</span>
                             </a>
                             <ul class="pcoded-submenu">
                                 <li class="@yield('view_gallery_active')">
@@ -74,7 +74,6 @@
                         </li>
                     </ul>
                 </li>
-                @endif
                 <li class="pcoded-hasmenu @yield('cost_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -85,11 +84,13 @@
                     <ul class="pcoded-submenu">
                         <li class="@yield('view_cost_active')">
                             <a href="{{ route('costs.index') }}" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">{{ __('View cost') }}</span>
+                                <span class="pcoded-mtext">{{ __('View Cost') }}</span>
                             </a>
                         </li>
                     </ul>
                 </li>
+                @endif
+
                 @if (Auth::guard('salesman')->check())
                 <li class="pcoded-hasmenu @yield('retailer_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -136,7 +137,6 @@
                         </li>
                     </ul>
                 </li>
-                @endif
                 <li class="pcoded-hasmenu @yield('stock_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -152,6 +152,8 @@
                         </li>
                     </ul>
                 </li>
+                @endif
+                @if (Auth::guard('dealer')->check())
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -161,12 +163,13 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="@yield('view_request_bottle_item_active')">
-                            <a href="{{ route('request_bottles.index') }}" class="waves-effect waves-dark">
+                            <a href="{{ route('dealer.request_bottles.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Request Bottle') }}</span>
                             </a>
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -178,6 +181,41 @@
                         <li class="@yield('view_request_bottle_item_active')">
                             <a href="{{ route('invoices.dues') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Due Report') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('invoices.cashes') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Cash Report') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('invoices.dealer_dues') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Due Report') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('invoices.dealer_cashes') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Cash Report') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Stock Dealer</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ url('admin/stock-items') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Stock') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('admin.index_stockOut_dealer') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Stock Out') }}</span>
                             </a>
                         </li>
                     </ul>

@@ -10,7 +10,7 @@
                     class="icofont icofont-user-alt-3"></i>{{ __('View director') }}</a>
         </div>
         <div class="card-block">
-            <form id="directorForm" method="post" action="{{ (@$director) ? route('directors.update', $director->id) : route('directors.store') }}" novalidate>
+            <form id="directorForm" method="post" action="{{ (@$director) ? route('directors.update', $director->id) : route('directors.store') }}" novalidate enctype="multipart/form-data">
                 @csrf
                 @method((@$director) ? 'PUT': 'POST')
                 <div class="form-group row">
@@ -74,6 +74,15 @@
                             @if($errors->has('phone'))
                                 <span class="messages">{{ $errors->first('phone') }}</span>
                             @endif
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="image" id="image"/>
+                        @if($errors->has('image'))
+                            <span class="messages">{{ $errors->first('image') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRetailerRequest;
 use App\Models\Retailer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RetailerController extends Controller
 {
@@ -26,7 +27,9 @@ class RetailerController extends Controller
 
     public function store(StoreRetailerRequest $request)
     {
-        $this->retailer->create($request->validated());
+        $request = new Request($request->all());
+        $request->merge(['password' => Hash::make($request->password)]);
+        $this->retailer->create($request->all());
         return redirect()->route('retailers.index');
     }
 

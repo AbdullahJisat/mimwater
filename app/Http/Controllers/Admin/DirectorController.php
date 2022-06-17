@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\File;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Designation;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 
 class DirectorController extends Controller
 {
+    use File;
+
     public function __construct(Director $director, Department $department, Designation $designation)
     {
         $this->director = $director;
@@ -42,6 +45,11 @@ class DirectorController extends Controller
 
     public function store(Request $request)
     {
+        if($request->hasFile('image')) {
+            $image_path = $this->file($request->image, 'director');
+        }
+        $request = new Request($request->all());
+        $request->merge(['image' => $image_path]);
         $this->director->create($request->all());
         return redirect()->route('directors.index');
     }

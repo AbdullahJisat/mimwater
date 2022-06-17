@@ -41,7 +41,9 @@ class DealerController extends Controller
      */
     public function store(StoreDealerRequest $request)
     {
-        $this->dealer->create($request->validated());
+        $request = new Request($request->all());
+        $request->merge(['password' => bcrypt($request->password)]);
+        $this->dealer->create($request->all());
         return redirect()->route('dealers.index');
     }
 
