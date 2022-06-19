@@ -46,7 +46,7 @@ class DirectorController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('image')) {
-            $image_path = $this->file($request->image, 'director');
+            $image_path = $this->file($request->image, 'director', $request->name);
         }
         $request = new Request($request->all());
         $request->merge(['image' => $image_path]);

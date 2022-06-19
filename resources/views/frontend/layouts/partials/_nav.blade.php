@@ -35,17 +35,83 @@
                     </ul>
                 </li>
                 <li class="nav-item nav-item_con"><a class="nav-link" href="{{ route('contact') }}"> Contact Us</a></li>
-                <div class="dropdown">
-                <button type="button" class="btn btn-primary btn-sm logInBUtton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Login
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
-                    <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
-                    <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
-                    <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
-                </ul>
-                </div>
+                    @if (Route::has('admin.login'))
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary btn-sm logInBUtton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
+                            <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
+                            <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
+                        </ul>
+                    </div>
+                    @else
+                    @if (Auth::guard('admin')->check())
+                    <a type="button" class="btn btn-primary btn-sm" href="{{ url('admin/dashboard') }}">
+                        Dashboard
+                    </a>
+                    @endif
+                    @endif
+                    {{-- @if (Route::has('dealer.login'))
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary btn-sm logInBUtton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
+                            <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
+                            <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
+                        </ul>
+                    </div>
+                    @endif
+                    @if (Route::has('retailer.login'))
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary btn-sm logInBUtton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
+                            <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
+                            <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
+                        </ul>
+                    </div>
+                    @endif
+                    @if (Route::has('salesman.login'))
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary btn-sm logInBUtton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
+                            <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
+                            <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
+                        </ul>
+                    </div>
+                    @endif
+                @else
+                @else (Auth::guard('admin')->check())
+                <a type="button" class="btn btn-primary btn-sm" href="{{ url('admin/dashboard') }}">
+                    Dashboard
+                </a>
+                @elseif (Auth::guard('dealer')->check())
+                <a type="button" class="btn btn-primary btn-sm" href="{{ url('dealers/dashboard') }}">
+                    Dashboard
+                </a>
+                @elseif (Auth::guard('retailer')->check())
+                <a type="button" class="btn btn-primary btn-sm" href="{{ url('retailers/dashboard') }}">
+                    Dashboard
+                </a>
+                @elseif (Auth::guard('salesman')->check())
+                <a type="button" class="btn btn-primary btn-sm" href="{{ url('salesmans/dashboard') }}">
+                    Dashboard
+                </a>
+                @endif
+                @endguest --}}
             </ul>
 
         </div>

@@ -57,6 +57,18 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="pcoded-hasmenu @yield('gallery_active')">
+                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Production Facilities</span>
+                            </a>
+                            <ul class="pcoded-submenu">
+                                <li class="@yield('view_gallery_active')">
+                                    <a href="{{ route('production-facilities.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-mtext">{{ __('View Production Facilities') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="pcoded-hasmenu @yield('dealer_active')">
@@ -70,6 +82,21 @@
                         <li class="@yield('view_dealer_active')">
                             <a href="{{ route('dealers.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Dealer') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pcoded-hasmenu @yield('dealer_request_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Dealer Request</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_dealer_request_active')">
+                            <a href="{{ route('dealer_request') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Request') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -89,9 +116,8 @@
                         </li>
                     </ul>
                 </li>
-                @endif
 
-                @if (Auth::guard('salesman')->check())
+                @elseif (Auth::guard('salesman')->check())
                 <li class="pcoded-hasmenu @yield('retailer_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -152,8 +178,7 @@
                         </li>
                     </ul>
                 </li>
-                @endif
-                @if (Auth::guard('dealer')->check())
+                @elseif (Auth::guard('dealer')->check())
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -169,7 +194,7 @@
                         </li>
                     </ul>
                 </li>
-                @endif
+                @else
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -220,6 +245,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

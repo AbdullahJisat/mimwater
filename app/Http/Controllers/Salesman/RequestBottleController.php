@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\RequestBottle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RequestBottleController extends Controller
 {
@@ -16,15 +17,33 @@ class RequestBottleController extends Controller
         view()->share('items', $this->items);
     }
 
+
+    public function dealerRequest()
+    {
+        $requestBottles = $this->requestBottle->with('item', 'dealer')->get();
+        return view('backend.pages.request-bottle.dealer-request', compact('requestBottles'));
+    }
+
     public function index()
     {
-        return view('backend.pages.request-bottle.index')->with('requestBottles', $this->requestBottle->with('item')->get());
+        if (Auth::guard('dealer')->check()) {
+            $requestBottles = $this->requestBottle->with('item')->whereDealerId(auth('dealer')->user()->id)->get();
+        } else {
+            $requestBottles = $this->requestBottle->with('item')->whereRetailerId(auth('retailer')->user()->id)->get();
+        }
+
+        return view('backend.pages.request-bottle.index', compact('requestBottles'));
     }
 
     public function store(Request $request)
     {
         $request = new Request($request->all());
-        $request->merge(['retailer_id' => 1]);
+        if (Auth::guard('dealer')->check()) {
+            $request->merge(['dealer_id' => auth('dealer')->user()->id]);
+        } else {
+            dd('rea');
+            $request->merge(['retailer_id' => auth('retailer')->user()->id]);
+        }
         $this->requestBottle->create($request->all());
         return back();
     }

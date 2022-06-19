@@ -95,72 +95,101 @@
                     </div>
                 </li>
                 <li class="user-profile header-notification">
-                    <div class="dropdown-primary dropdown">
-                        <div class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                    @if (Auth::guard('admin')->check())
+                            <div class="dropdown-primary dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                            <span>{{ Auth::guard('admin')->user()->name ?? "" }}</span>
-                            <i class="feather icon-chevron-down"></i>
-                        </div>
-                        <ul class="show-notification profile-notification dropdown-menu"
-                            data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                            @if (Auth::guard('admin')->check())
-                            <li>
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                </a>
+                                    <span>{{ Auth::guard('admin')->user()->name ?? "" }}</span>
+                                    <i class="feather icon-chevron-down"></i>
+                                </div>
+                                <ul class="show-notification profile-notification dropdown-menu"
+                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
-                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-                                    @csrf
-                                </form>
-                            </li>
-                            @elseif (Auth::guard('salesman')->check())
-                            <li>
-                                <a class="dropdown-item" href="{{ route('salesman.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                </a>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                        </a>
 
-                                <form id="logout-form" action="{{ route('salesman.logout') }}" method="POST">
-                                    @csrf
-                                </form>
-                            </li>
-                            @elseif (Auth::guard('dealer')->check())
-                            <li>
-                                <a class="dropdown-item" href="{{ route('salesman.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                </a>
+                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        @elseif(Auth::guard('dealer')->check())
+                            <div class="dropdown-primary dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                                <form id="logout-form" action="{{ route('dealer.logout') }}" method="POST">
-                                    @csrf
-                                </form>
-                            </li>
-                            @elseif (Auth::guard('retailer')->check())
-                            <li>
-                                <a class="dropdown-item" href="{{ route('salesman.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                </a>
+                                    <span>{{ Auth::guard('dealer')->user()->name ?? "" }}</span>
+                                    <i class="feather icon-chevron-down"></i>
+                                </div>
+                                <ul class="show-notification profile-notification dropdown-menu"
+                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
-                                <form id="logout-form" action="{{ route('retailer.logout') }}" method="POST">
-                                    @csrf
-                                </form>
-                            </li>
-                            @endif
-                            {{-- <li>
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                </a>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                        </a>
 
-                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-                                    @csrf
-                                </form>
-                            </li> --}}
-                        </ul>
-                    </div>
+                                        <form id="logout-form" action="{{ route('dealer.logout') }}" method="POST">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            @elseif(Auth::guard('salesman')->check())
+                            <div class="dropdown-primary dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+
+                                    <span>{{ Auth::guard('salesman')->user()->name ?? "" }}</span>
+                                    <i class="feather icon-chevron-down"></i>
+                                </div>
+                                <ul class="show-notification profile-notification dropdown-menu"
+                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('salesman.logout') }}" method="POST">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            @elseif(Auth::guard('retailer')->check())
+                            <div class="dropdown-primary dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+
+                                    <span>{{ Auth::guard('retailer')->user()->name ?? "" }}</span>
+                                    <i class="feather icon-chevron-down"></i>
+                                </div>
+                                <ul class="show-notification profile-notification dropdown-menu"
+                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0)"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('retailer.logout') }}" method="POST">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        @else
+                        retailer
+                    @endif
                 </li>
             </ul>
         </div>

@@ -15,4 +15,9 @@ class RequestBottle extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function dealer()
+    {
+        return $this->belongsTo(Dealer::class);
+    }
 }

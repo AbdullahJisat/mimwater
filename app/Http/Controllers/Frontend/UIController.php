@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\Director;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class UIController extends Controller
     }
 
     public function directors(){
-        return view('frontend.pages.directors', ['directors' => Director::all()]);
+        return view('frontend.pages.directors', ['departments' => Department::with('directors', 'directors.designation')->get()]);
     }
 
     public function products(){

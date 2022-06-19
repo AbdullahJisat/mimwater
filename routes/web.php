@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DirectorController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ProductionFacilitiesController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SalesmanController;
 use App\Http\Controllers\Frontend\UIController;
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'auth:admin'], function() {
     Route::post('admin/store/stock-out-items', [StockOutItemController::class, 'stockOutDealer'])->name('stock_out_dealer');
     Route::get('admin/stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
     Route::post('admin/store/stock-items', [StockItemController::class, 'stockDealer'])->name('stock_dealer');
+    Route::get('admin/dealer/request', [RequestBottleController::class, 'dealerRequest'])->name('dealer_request');
 });
 // Admin prefix
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -67,6 +69,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::post('categories', [CostController::class, 'categoryStore'])->name('categories.store');
     Route::resource('directors', DirectorController::class);
     Route::resource('galleries', GalleryController::class);
+    Route::resource('production-facilities', ProductionFacilitiesController::class);
     Route::post('departments', [DirectorController::class, 'departmentStore'])->name('departments.store');
     Route::post('designations', [DirectorController::class, 'designationStore'])->name('designations.store');
 });
