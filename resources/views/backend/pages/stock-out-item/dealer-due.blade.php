@@ -7,10 +7,30 @@
 @section('content')
 <div class="col-sm-12">
     <div class="card">
-        {{-- <div class="card-header">
-            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
-            @include('backend.pages.stock-out-item.create')
-        </div> --}}
+        <div class="card-header">
+            {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
+            @include('backend.pages.stock-out-item.create') --}}
+            <form action="{{ route('show_dealer_dues_by_date') }}" method="post" style="display: inline-flex">
+                @csrf
+                <div class="row input-daterange">
+                    <div class="col-md-4">
+                        <input type="date" class="form-control" value="{{ old('start') }}" name="start" id="">
+                        @error('start')
+                            <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
+                        <input type="date" name="end" value="{{ old('end') }}" class="form-control" id="">
+                        @error('end')
+                            <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" value="Search" class="btn btn-primary" id="">
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="card-block">
             <div class="dt-responsive table-responsive">
                 <table class="table table-striped table-bordered nowrap responsive">

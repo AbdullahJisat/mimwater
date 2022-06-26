@@ -93,12 +93,12 @@ class StockOutItemController extends Controller
     {
         // DB::beginTransaction();
         try {
-                $user = Dealer::find($request->dealer_id);
-                $preQuantity = $this->stockItem->whereRetailerId($request->dealer_id)->whereStock(1)->latest()->first();
-                if (empty($preQuantity)){
-                    return redirect()->route('stock-items.index')->with('message', "Stock not available");
+            $user = Dealer::find($request->dealer_id);
+            $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
+            if (empty($preQuantity)){
+                    return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
                 } elseif ($preQuantity->quantity == 0) {
-                    return redirect()->route('stock-items.index')->with('message', "Stock not available");
+                    return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
                 } else {
                     if ($preQuantity->quantity < $request->quantity) {
                         return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
@@ -113,7 +113,7 @@ class StockOutItemController extends Controller
                                                     "item_id" => $request->item_id,
                                                     "quantity" => $request->quantity,
                                                     "price" => $user->price * $request->quantity]);
-                        return redirect()->route('invoices.index', $saveStockOut->id);
+                        return redirect()->route('invoices.dealer_index', $saveStockOut->id);
                     }
                 }
             // DB::commit();

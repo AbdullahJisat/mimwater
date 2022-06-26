@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DirectorController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\NewsEventsController;
 use App\Http\Controllers\Admin\ProductionFacilitiesController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SalesmanController;
@@ -27,6 +28,7 @@ Route::get('directors', [UIController::class, 'directors'])->name('directors');
 Route::get('products', [UIController::class, 'products'])->name('products');
 Route::get('quality-assurance', [UIController::class, 'qualityAssurance'])->name('quality_assurance');
 Route::get('galleries', [UIController::class, 'gallery'])->name('gallery');
+Route::get('production-facilities', [UIController::class, 'productionFacilities'])->name('production_facilities');
 Route::get('news-events', [UIController::class, 'newsEvent'])->name('news_event');
 Route::get('career', [UIController::class, 'career'])->name('career');
 Route::get('contact', [UIController::class, 'contact'])->name('contact');
@@ -42,11 +44,20 @@ Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function()
 Route::group(['middleware' => 'auth:admin'], function() {
     Route::get('dealer-dues', [PaymentInvoiceController::class, 'showDealerDues'])->name('invoices.dealer_dues');
     Route::get('dealer-cashes', [PaymentInvoiceController::class, 'showDealerCashes'])->name('invoices.dealer_cashes');
-    Route::get('admin/stock-out-items', [StockOutItemController::class, 'indexDealer'])->name('admin.index_stockOut_dealer');
+    Route::get('admin/dealer-stock-out-items', [StockOutItemController::class, 'indexDealer'])->name('admin.index_stockOut_dealer');
     Route::post('admin/store/stock-out-items', [StockOutItemController::class, 'stockOutDealer'])->name('stock_out_dealer');
-    Route::get('admin/stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
+    Route::get('admin/dealer-stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
     Route::post('admin/store/stock-items', [StockItemController::class, 'stockDealer'])->name('stock_dealer');
     Route::get('admin/dealer/request', [RequestBottleController::class, 'dealerRequest'])->name('dealer_request');
+
+    Route::get('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceIndex'])->name('invoices.dealer_index');
+    Route::post('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceStore'])->name('invoices.dealer_store');
+    Route::post('show-dealer-cash-date', [PaymentInvoiceController::class, 'showDealerCashesDateFilter'])->name('show_dealer_cash_by_date');
+    Route::post('show-cash-date', [PaymentInvoiceController::class, 'showCashesDateFilter'])->name('show_cash_by_date');
+    Route::post('show-dues-date', [PaymentInvoiceController::class, 'showDuesDateFilter'])->name('show_dues_by_date');
+    Route::post('show-dealer-dues-date', [PaymentInvoiceController::class, 'showDealerDuesDateFilter'])->name('show_dealer_dues_by_date');
+
+
 });
 // Admin prefix
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -70,6 +81,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('directors', DirectorController::class);
     Route::resource('galleries', GalleryController::class);
     Route::resource('production-facilities', ProductionFacilitiesController::class);
+    Route::resource('news-events', NewsEventsController::class);
     Route::post('departments', [DirectorController::class, 'departmentStore'])->name('departments.store');
     Route::post('designations', [DirectorController::class, 'designationStore'])->name('designations.store');
 });

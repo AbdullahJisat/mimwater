@@ -1,20 +1,20 @@
-<div class="modal fade" id="categoryModal">
-    <div class="modal-dialog">
+<div class="modal fade" id="newsEventsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Create Category</h4>
+                <h4 class="modal-title">Create News Events</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ url('admin/categories') }}" novalidate enctype="multipart/form-data">
+                <form method="post" action="{{ route('news-events.store') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">name</label>
+                        <label class="col-sm-2 col-form-label">Image</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your name" />
-                            @error('name')
+                            <input type="file" readonly class="form-control" name="image[]" id="image" multiple />
+                            @error('quantity')
                                 <span class="messages">{{ $message }}</span>
                             @enderror
                         </div>

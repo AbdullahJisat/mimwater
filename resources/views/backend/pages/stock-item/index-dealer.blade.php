@@ -54,6 +54,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Item</th>
+                            <th>Dealer</th>
                             <th>Quantity</th>
                             <th>Action</th>
                         </tr>
@@ -63,6 +64,7 @@
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name">{{ $stockItem->item->name }}</td>
+                                <td data-label="Name">{{ $stockItem->dealer->name }}</td>
                                 <td data-label="Image">{{ $stockItem->quantity }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">

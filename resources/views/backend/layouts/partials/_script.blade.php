@@ -67,7 +67,7 @@
         "responsive": false,
         "autoWidth": false,
         "scrollY": "300px",
-        "scrollCollapse": true,
+        "scrollCollapse": false,
         "paging": true,
         // "bPaginate": true,
         "bFilter": true,

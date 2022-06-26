@@ -28,7 +28,7 @@
                 <li class="nav-item dropdown nav-item_con">
                     <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Facilities </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('gallery') }}"> Production facilities</a></li>
+                        <li><a class="dropdown-item" href="{{ route('production_facilities') }}"> Production facilities</a></li>
                         <li><a class="dropdown-item" href="{{ route('quality_assurance') }}"> Total Quality Assurance
                             </a></li>
 

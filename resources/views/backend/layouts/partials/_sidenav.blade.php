@@ -69,6 +69,18 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="pcoded-hasmenu @yield('newsEvents_active')">
+                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">News Events</span>
+                            </a>
+                            <ul class="pcoded-submenu">
+                                <li class="@yield('view_newsEvents_active')">
+                                    <a href="{{ route('news-events.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-mtext">{{ __('View News Events') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="pcoded-hasmenu @yield('dealer_active')">
@@ -195,6 +207,7 @@
                     </ul>
                 </li>
                 @else
+                @endif
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -213,6 +226,7 @@
                                 <span class="pcoded-mtext">{{ __('View Cash Report') }}</span>
                             </a>
                         </li>
+                        @auth('admin')
                         <li class="@yield('view_request_bottle_item_active')">
                             <a href="{{ route('invoices.dealer_dues') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Dealer Due Report') }}</span>
@@ -223,6 +237,7 @@
                                 <span class="pcoded-mtext">{{ __('View Dealer Cash Report') }}</span>
                             </a>
                         </li>
+                        @endauth
                     </ul>
                 </li>
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
@@ -234,7 +249,7 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="@yield('view_request_bottle_item_active')">
-                            <a href="{{ url('admin/stock-items') }}" class="waves-effect waves-dark">
+                            <a href="{{ url('admin/dealer-stock-items') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Dealer Stock') }}</span>
                             </a>
                         </li>
@@ -245,7 +260,6 @@
                         </li>
                     </ul>
                 </li>
-                @endif
             </ul>
         </div>
     </div>

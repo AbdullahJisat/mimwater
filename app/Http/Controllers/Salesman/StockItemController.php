@@ -24,8 +24,7 @@ class StockItemController extends Controller
 
     public function indexStockDealer()
     {
-        // dd(StockItem::findStock());
-        return view('backend.pages.stock-item.index')->with(['stockItems' => $this->stockItem->with('item')->whereStock(1)->whereNull('retailer_id')->get(),'stockOutItems' => $this->stockItem->with('item')->whereStock(0)->get()]);
+        return view('backend.pages.stock-item.index-dealer')->with(['stockItems' => $this->stockItem->with('item')->whereStock(1)->whereNull('retailer_id')->get(),'stockOutItems' => $this->stockItem->with('item')->whereStock(0)->get()]);
     }
 
     public function store(Request $request)

@@ -18,6 +18,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Item</th>
+                            <th>Dealer Name</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Action</th>
@@ -28,6 +29,7 @@
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name">{{ $stockOutItem->item->name }}</td>
+                                <td data-label="Name">{{ $stockOutItem->dealer->name }}</td>
                                 <td data-label="Quantity">{{ $stockOutItem->quantity }}</td>
                                 <td data-label="Price">{{ $stockOutItem->price }}</td>
                                 {{-- <td data-label="Action">

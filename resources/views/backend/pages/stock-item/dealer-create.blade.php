@@ -2,13 +2,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Create Item</h4>
+                <h4 class="modal-title">Create Dealer Item</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route('stock-items.store') }}" novalidate enctype="multipart/form-data">
+                <form method="post" action="{{ url('admin/store/stock-items') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Dealer Name</label>

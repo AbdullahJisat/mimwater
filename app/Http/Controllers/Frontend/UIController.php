@@ -47,8 +47,12 @@ class UIController extends Controller
         return view('frontend.pages.gallery', ['galleries' => allGallery()]);
     }
 
+    public function productionFacilities(){
+        return view('frontend.pages.production-facilities', ['productionFacilities' => allProductionFacilities()]);
+    }
+
     public function newsEvent(){
-        return view('frontend.pages.new-events');
+        return view('frontend.pages.news-events', ['newsEvents' => allNewsEvents()]);
     }
 
     public function career(){

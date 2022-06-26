@@ -11,7 +11,7 @@
                 <form method="post" action="{{ route('stock-items.store') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Retailer/Dealer Name</label>
+                        <label class="col-sm-2 col-form-label">Dealer Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="retailer_id" id="retailer_id">
                                 @foreach ($retailers as $retailer)

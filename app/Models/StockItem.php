@@ -21,6 +21,11 @@ class StockItem extends Model
         return $this->belongsTo(Retailer::class);
     }
 
+    public function dealer()
+    {
+        return $this->belongsTo(Dealer::class);
+    }
+
     public static function findStock(){
         return self::all();
     }

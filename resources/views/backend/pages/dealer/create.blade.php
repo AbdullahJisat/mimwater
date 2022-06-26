@@ -101,6 +101,15 @@
                             @endif
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="price" id="price" value="{{ (@$dealer) ? $dealer->price :old('price') }}" placeholder="Enter Your price" />
+                            @if($errors->has('price'))
+                                <span class="messages">{{ $errors->first('price') }}</span>
+                            @endif
+                    </div>
+                </div>
                 <div class="row">
                     <label class="col-sm-2 col-form-label">Status</label>
                     <div class="col-sm-10">
