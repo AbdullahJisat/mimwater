@@ -7,7 +7,7 @@ namespace App\Helper;
 
 Trait File
 {
-    public function file( $file, $model, $number = null, $name = null)
+    public function file($file, $model, $number = null, $name = null)
     {
         if($file) {
             $filename = $model.'-'.$name.$number.'.'.$file->getClientOriginalExtension();

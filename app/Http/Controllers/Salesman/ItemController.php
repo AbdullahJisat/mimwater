@@ -26,7 +26,7 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('image')) {
-            $image_path = $this->file($request->image, $request->name);
+            $image_path = $this->file($request->image, 'item', $request->name);
         }
         $this->item->create(array_merge($request->except('image'), ['image' => $image_path]));
         return back();
