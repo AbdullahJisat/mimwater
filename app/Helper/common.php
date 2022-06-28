@@ -30,3 +30,4 @@ function allProductionFacilities(){
 function allNewsEvents(){
     return NewsEvents::all();
 }
+

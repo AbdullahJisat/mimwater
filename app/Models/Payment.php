@@ -25,4 +25,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Dealer::class);
     }
+
+    public function salesman()
+    {
+        return $this->belongsTo(Salesman::class);
+    }
 }

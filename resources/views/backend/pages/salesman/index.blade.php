@@ -36,6 +36,7 @@
                                 <td>{{ $salesman->location }}</td>
                                 <td>{{ $salesman->nid }}</td>
                                 <td>{{ $salesman->password }}</td>
+                                <td><a href="{{ route('retailers_salesman', $salesman->id) }}">Retailers</a></td>
                                 <td>
                                     <form action="{{route('salesmans.destroy',$salesman->id)}}" method="post">
                                         @method('DELETE')

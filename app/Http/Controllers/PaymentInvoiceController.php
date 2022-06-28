@@ -18,7 +18,7 @@ class PaymentInvoiceController extends Controller
 
     public function index($id){
         $item = $this->stockOutItem->find($id);
-        $dueCheck = Payment::whereRetailerId($item->retailer_id)->wherePaymentStatus(3)->sum('due');
+        $dueCheck = Payment::whereRetailerId($item->retailer_id)->orWhere('payment_status',3)->latest()->first();
         return view('backend.pages.stock-item.invoice', compact('item', 'dueCheck'));
     }
 
@@ -41,11 +41,11 @@ class PaymentInvoiceController extends Controller
         $request = new Request($request->all());
         $request->merge(['salesman_id' => auth('salesman')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due]);
         Payment::create($request->except('_token'));
-        return redirect()->route('invoices.dues');
+        return redirect('report');
     }
 
     public function showDues(){
-        $dues = Payment::with('retailer')->wherePaymentStatus(3)->whereNull('dealer_id')->get();
+        $dues = Payment::with('retailer', 'salesman')->wherePaymentStatus(3)->whereNull('dealer_id')->get();
         $duesTotal = $dues->sum('due');
         return view('backend.pages.stock-out-item.due', ['dues' => $dues, 'duesTotal' => $duesTotal]);
     }
@@ -84,7 +84,7 @@ class PaymentInvoiceController extends Controller
     }
 
     public function showCashes(){
-        $cashes = Payment::whereNull('dealer_id')->get();
+        $cashes = Payment::with('retailer', 'salesman')->whereNull('dealer_id')->get();
         $cashesTotal = $cashes->sum('total');
         $duesTotal = $cashes->sum('due');
         $amountTotal = $cashes->sum('amount');
@@ -127,5 +127,19 @@ class PaymentInvoiceController extends Controller
         $duesTotal = $cashes->sum('due');
         $amountTotal = $cashes->sum('amount');
         return view('backend.pages.stock-out-item.dealer-cash', ['cashes' => $cashes, 'cashesTotal' => $cashesTotal, 'duesTotal' => $duesTotal, 'amountTotal' => $amountTotal]);
+    }
+
+    public function showRetailerCashes(){
+        $cashes = Payment::whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->get();
+        $cashesTotal = $cashes->sum('total');
+        $duesTotal = $cashes->sum('due');
+        $amountTotal = $cashes->sum('amount');
+        return view('backend.pages.stock-out-item.cash', ['cashes' => $cashes, 'cashesTotal' => $cashesTotal, 'duesTotal' => $duesTotal, 'amountTotal' => $amountTotal]);
+    }
+
+    public function showRetailerDues(){
+        $dues = Payment::with('retailer')->wherePaymentStatus(3)->whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->get();
+        $duesTotal = $dues->sum('due');
+        return view('backend.pages.stock-out-item.due', ['dues' => $dues, 'duesTotal' => $duesTotal]);
     }
 }

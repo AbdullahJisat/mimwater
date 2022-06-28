@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\ClientReview;
 use App\Models\Department;
 use App\Models\Director;
 use App\Models\Item;
@@ -10,9 +12,8 @@ use Illuminate\Http\Request;
 
 class UIController extends Controller
 {
-    public function __construct(Item $item){
-        $this->item = $item;
-        view()->share(['item' => $this->item->all()]);
+    public function __construct(){
+        view()->share(['items' => allItem(), 'clientReviews' => ClientReview::with('designation')->get(), 'clients' => Client::all()]);
     }
 
     public function index(){
@@ -36,7 +37,7 @@ class UIController extends Controller
     }
 
     public function products(){
-        return view('frontend.pages.products');
+        return view('frontend.pages.products', ['items' => allItem()]);
     }
 
     public function qualityAssurance(){

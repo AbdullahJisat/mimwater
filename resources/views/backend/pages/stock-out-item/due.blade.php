@@ -38,6 +38,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Retailer Name</th>
+                            <th>Salesman Name</th>
                             <th>Due</th>
                             <th>Date</th>
                         </tr>
@@ -47,6 +48,7 @@
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name">{{ $due->retailer->name }}</td>
+                                <td data-label="Name">{{ $due->salesman->name ?? "" }}</td>
                                 <td data-label="Quantity">{{ $due->due }}</td>
                                 <td data-label="Quantity">{{ $due->created_at->format('Y-m-d') }}</td>
                                 {{-- <td data-label="Action">

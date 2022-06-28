@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 
 class SalesmanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function retailersBySalesman($id)
+    {
+        $salesman = Salesman::with('retailers')->findOrFail($id);
+        return view('backend.pages.salesman.retailers', compact('salesman'));
+    }
+
     public function index()
     {
         return view('backend.pages.salesman.index', ['salesmans' => Salesman::all()]);

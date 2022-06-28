@@ -39,6 +39,11 @@ class Salesman extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function retailers()
+    {
+        return $this->hasMany(Retailer::class);
+    }
+
     public function stockItemPrices()
     {
         // return $this->hasManyThrough(Retailer::class, Salesman::class, 'retailer_id', 'salesman_id');

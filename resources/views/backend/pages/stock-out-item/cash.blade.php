@@ -38,6 +38,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Retailer Name</th>
+                            <th>Salesman Name</th>
                             <th>cash</th>
                             <th>due</th>
                             <th>total</th>
@@ -49,6 +50,7 @@
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name">{{ $cash->retailer->name }}</td>
+                                <td data-label="Name">{{ $cash->salesman->name }}</td>
                                 <td data-label="Quantity">{{ $cash->amount }}</td>
                                 <td data-label="Quantity">{{ $cash->due }}</td>
                                 <td data-label="Quantity">{{ $cash->total }}</td>

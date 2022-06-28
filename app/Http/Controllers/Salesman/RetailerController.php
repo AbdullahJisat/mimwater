@@ -17,7 +17,7 @@ class RetailerController extends Controller
 
     public function index()
     {
-        return view('backend.pages.retailer.index')->with('retailers', $this->retailer->all());
+        return view('backend.pages.retailer.index')->with('retailers', $this->retailer->whereSalesmanId(auth('salesman')->user()->id)->get());
     }
 
     public function create()
