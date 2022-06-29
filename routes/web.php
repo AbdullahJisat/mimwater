@@ -20,6 +20,7 @@ use App\Http\Controllers\Salesman\RequestBottleController;
 use App\Http\Controllers\Salesman\RetailerController;
 use App\Http\Controllers\Salesman\StockItemController;
 use App\Http\Controllers\Salesman\StockOutItemController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 // UI prefix
@@ -165,4 +166,47 @@ Route::prefix('retailers')->middleware('auth:retailer')->name('retailer.')->grou
     Route::get('request-bottle', [RequestBottleController::class, 'index'])->name('request_bottles.index');
     Route::post('request-bottle/create', [RequestBottleController::class, 'store'])->name('request_bottles.store');
     Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
+});
+
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+
+Route::get('clear_cache', function () {
+    Artisan::call('cache:clear');
+    dd("Cache is cleared");
+});
+
+Route::get('clear_config', function () {
+    Artisan::call('config:cache');
+    dd("Config is cleared");
+});
+
+Route::get('key', function () {
+    Artisan::call('key:generate');
+    dd("key");
+});
+
+Route::get('optimize', function () {
+    Artisan::call('optimize:clear');
+    dd("optimize");
+});
+
+Route::get('route', function () {
+    Artisan::call('route:clear');
+    dd("route");
+});
+
+Route::get('view', function () {
+    Artisan::call('view:clear');
+    dd("view");
+});
+
+Route::get('config', function () {
+    Artisan::call('config:clear');
+    dd("config");
+});
+
+Route::get('storage', function () {
+    Artisan::call('storage:link');
+    dd("storage");
 });
