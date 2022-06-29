@@ -14,8 +14,9 @@
                         <label class="col-sm-2 col-form-label">Dealer Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="dealer_id" id="dealer_id">
+                                <option value="-1">Select Dealer</option>
                                 @foreach ($dealers as $dealer)
-                                    <option value="{{ $dealer->id }}" selected>{{ $dealer->name }}</option>
+                                    <option value="{{ $dealer->id }}">{{ $dealer->name }}</option>
                                 @endforeach
                             </select>
                             @error('dealer_id')
@@ -27,13 +28,20 @@
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="item_id" id="item_id">
+                                <option value="-1">Select Item</option>
                                 @foreach ($items as $item)
-                                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             @error('item_id')
                                 <span class="messages">{{ $message }}</span>
                             @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Pre Quantity</label>
+                        <div class="col-sm-10">
+                            <label for="" id="preQuantity"></label>
                         </div>
                     </div>
                     <div class="form-group row">

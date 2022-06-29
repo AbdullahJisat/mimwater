@@ -41,7 +41,6 @@ class RequestBottleController extends Controller
         if (Auth::guard('dealer')->check()) {
             $request->merge(['dealer_id' => auth('dealer')->user()->id]);
         } else {
-            dd('rea');
             $request->merge(['retailer_id' => auth('retailer')->user()->id]);
         }
         $this->requestBottle->create($request->all());

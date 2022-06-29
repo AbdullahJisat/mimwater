@@ -24,7 +24,7 @@ class PaymentInvoiceController extends Controller
 
     public function dealerInvoiceIndex($id){
         $item = $this->stockOutItem->find($id);
-        $dueCheck = Payment::whereDealerId($item->dealer_id)->wherePaymentStatus(3)->sum('due');
+        $dueCheck = Payment::whereDealerId($item->dealer_id)->orWhere('payment_status',3)->latest()->first();
         return view('backend.pages.stock-item.dealer-invoice', compact('item', 'dueCheck'));
     }
 

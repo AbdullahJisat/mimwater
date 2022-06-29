@@ -94,6 +94,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('news-events', NewsEventsController::class);
     Route::post('departments', [DirectorController::class, 'departmentStore'])->name('departments.store');
     Route::post('designations', [DirectorController::class, 'designationStore'])->name('designations.store');
+    Route::get('stock-item-quantity/{itemId}/{userId}', [StockOutItemController::class, 'stockByItem'])->name('stock_by_item');
 });
 
 // Salesman prefix

@@ -44,7 +44,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock_item') }}</button>
+            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock item') }}</button>
             @include('backend.pages.stock-item.dealer-create')
         </div>
         <div class="card-block">
@@ -56,7 +56,7 @@
                             <th>Item</th>
                             <th>Dealer</th>
                             <th>Quantity</th>
-                            <th>Action</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,6 +66,7 @@
                                 <td data-label="Name">{{ $stockItem->item->name }}</td>
                                 <td data-label="Name">{{ $stockItem->dealer->name }}</td>
                                 <td data-label="Image">{{ $stockItem->quantity }}</td>
+                                <td data-label="Image">{{ $stockItem->created_at->format('d-M-Y') }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
                                         @method('DELETE')
@@ -82,7 +83,7 @@
                 </table>
             </div>
         </div>
-        <div class="strike">
+        {{-- <div class="strike">
             <span>Stock Out</span>
         </div>
 
@@ -113,14 +114,14 @@
                                         <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td> --}}
-                            </tr>
+                            {{-- </tr>
                         @empty
                             <td colspan="8">No stock_item available</td>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection

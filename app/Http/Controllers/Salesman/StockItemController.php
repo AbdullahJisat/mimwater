@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Salesman;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dealer;
+use App\Models\RequestBottle;
 use App\Models\Retailer;
 use App\Models\StockItem;
 use Illuminate\Http\Request;
@@ -96,7 +97,7 @@ class StockItemController extends Controller
     public function stockDealer(Request $request)
     {
             $user = dealer::find($request->dealer_id);
-            $preQuantity = $this->stockItem->wheredealerId($request->dealer_id)->whereStock(1)->latest()->first();
+            $preQuantity = $this->stockItem->whereItemId($request->item_id)->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
             if (empty($preQuantity)){
                 $request = new Request($request->all());
                 $request->merge(['price' => 0]);
@@ -107,6 +108,10 @@ class StockItemController extends Controller
                     $request = new Request($request->all());
                     $request->merge(['price' => 0, 'quantity' => $preQuantity->quantity + $request->quantity]);
                     $this->stockItem->wheredealerId($request->dealer_id)->update($request->except(['_token']));
+                    $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                    if (!empty($requestBottle)) {
+                        $requestBottle->delete();
+                    }
                     return back();
                 } else {
                     if ($preQuantity->quantity < $request->quantity) {
@@ -122,6 +127,8 @@ class StockItemController extends Controller
                                                     "quantity" => $request->quantity,
                                                     "stock" => 0,
                                                     "price" => $user->price * $request->quantity]);
+
+                        RequestBottle::whereDealerId($request->dealer_id)->latest()->first()->delete();
                         return back();
                     }
                 }

@@ -8,7 +8,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock_item') }}</button>
+            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock Out Item') }}</button>
             @include('backend.pages.stock-out-item.dealer-create')
         </div>
         <div class="card-block">
@@ -32,6 +32,7 @@
                                 <td data-label="Name">{{ $stockOutItem->dealer->name }}</td>
                                 <td data-label="Quantity">{{ $stockOutItem->quantity }}</td>
                                 <td data-label="Price">{{ $stockOutItem->price }}</td>
+                                <td data-label="Price">{{ $stockOutItem->created_at->format('d-M-Y') }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
                                         @method('DELETE')
@@ -51,3 +52,25 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+$('#item_id').change(function(){
+    var itemId = $(this).val();
+    console.log(itemId);
+    var userId = $('#dealer_id').find(":selected").val();
+    console.log(userId);
+    var c = $('#dealer_id :selected').val();
+    console.log(c);
+    $.ajax({
+        url:`stock-item-quantity/`+itemId+`/`+userId+``,
+        method:"get",
+        // data:{itemId:itemId, userId:userId},
+        success:function(data){
+            $("#preQuantity").html(data.quantity);
+        }
+    });
+});
+</script>
+@endpush

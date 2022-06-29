@@ -151,11 +151,11 @@
                         </select></td>
                 </tr>
 
-                <tr class="details">
+                /* <tr class="details">
                     <td>Check</td>
 
                     <td>1000</td>
-                </tr>
+                </tr> */
 
                 <tr class="heading">
                     <td>Item</td>
@@ -172,7 +172,7 @@
                 <tr class="total">
                     <td></td>
 
-                    <td>Due: ${{ $dueCheck->due }}</td>
+                    <td>Due: ${{ $dueCheck->due ?? 0 }}</td>
                 </tr>
 
 
@@ -184,7 +184,11 @@
                 </tr> */ -->
 
                 @php
+                if($dueCheck == null || $dueCheck->due == 0){
+                    $total = $item->price + 0;
+                }else{
                     $total = $item->price + $dueCheck->due;
+                }
                 @endphp
 
                 <tr class="total">

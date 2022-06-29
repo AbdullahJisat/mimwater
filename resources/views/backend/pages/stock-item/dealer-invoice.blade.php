@@ -151,11 +151,11 @@
                         </select></td>
                 </tr>
 
-                <tr class="details">
+                <!-- <tr class="details">
                     <td>Check</td>
 
                     <td>1000</td>
-                </tr>
+                </tr> -->
 
                 <tr class="heading">
                     <td>Item</td>
@@ -164,7 +164,7 @@
                 </tr>
 
                 <tr class="item last">
-                    <td><input type="hidden" value="{{ $item->id }}" name="item_id">{{ $item->item->name }}</td>
+                    <td><input type="hidden" value="{{ $item->item->id }}" name="item_id">{{ $item->item->name }}</td>
 
                     <td>${{ $item->price }}</td>
                 </tr>
@@ -172,7 +172,7 @@
                 <tr class="total">
                     <td></td>
 
-                    <td>Due: ${{ $dueCheck }}</td>
+                    <td>Due: ${{ $dueCheck->due ?? 0 }}</td>
                 </tr>
 
 
@@ -184,7 +184,11 @@
                 </tr> */ -->
 
                 @php
-                    $total = $item->price + $dueCheck;
+                if($dueCheck == null || $dueCheck->due == 0){
+                    $total = $item->price + 0;
+                }else{
+                    $total = $item->price + $dueCheck->due;
+                }
                 @endphp
 
                 <tr class="total">
@@ -199,16 +203,20 @@
                 </tr>
                 <tr class="total">
                     <td></td>
-                    <td><select name="payment_status" id="" onchange="dueAmount(this.value)">
+                    <td>
+                        <!-- <select name="payment_status" id="" onchange="dueAmount(this.value)">
                         <option value="1">success</option>
                         <option value="2">failed</option>
                         <option value="3">due</option>
-                        /* <option value="4">partial due</option> */
-                        </select></td>
+                         <option value="4">partial due</option>
+                         </select> -->
+                        </td>
                 </tr>
                 <tr class="total">
                     <td></td>
-                    <td id="due" style="display: none"><input type="text" name="due" id="afterAmount" ></td>
+                    <td>
+                    <!-- /* id="due" style="display: none" */ -->
+                    <input type="text" name="due" id="afterAmount" ></td>
                 </tr>
             </table>
             <hr>

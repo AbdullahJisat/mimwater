@@ -89,6 +89,11 @@ class StockOutItemController extends Controller
         return view('backend.pages.stock-out-item.dealer-index')->with('stockOutItems', $this->stockOutItem->whereNull('retailer_id')->get());
     }
 
+    public function stockByItem($itemId, $userId){
+        $preQuantity = StockItem::whereItemId($itemId)->whereDealerId($userId)->first();
+        return $preQuantity;
+    }
+
     public function stockOutDealer(Request $request)
     {
         // DB::beginTransaction();
