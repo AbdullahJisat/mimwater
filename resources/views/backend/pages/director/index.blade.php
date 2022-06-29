@@ -17,6 +17,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Image</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -27,6 +28,8 @@
                                 <td>{{ $director->name }}</td>
                                 <td>{{ $director->email }}</td>
                                 <td>{{ $director->phone }}</td>
+                                <td><img src="{{ (!empty($director->image)) ? $director->image : asset('noImage.png') }}"
+                                    style="width: 50px;height: 50px;border: 1px solid #000;"></td>
                                 <td>
                                     <form action="{{route('directors.destroy',$director->id)}}" method="post">
                                         @method('DELETE')
