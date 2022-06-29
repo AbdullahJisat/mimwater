@@ -23,7 +23,7 @@
                         @forelse ($newsEvents as $newsEvent)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name"><img src="{{ (!empty($newsEvent->picture)) ? $newsEvent->picture : asset('noImage.png') }}"
+                                <td data-label="Name"><img src="{{ (!empty($newsEvent->image)) ? $newsEvent->image : asset('noImage.png') }}"
                                     style="width: 50px;height: 50px;border: 1px solid #000;"></td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('newsEvents.destroy',$newsEvents->id)}}" method="post">

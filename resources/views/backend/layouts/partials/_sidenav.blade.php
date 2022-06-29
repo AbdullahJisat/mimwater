@@ -81,6 +81,30 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="pcoded-hasmenu @yield('clientReview_active')">
+                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Client Review</span>
+                            </a>
+                            <ul class="pcoded-submenu">
+                                <li class="@yield('view_clientReview_active')">
+                                    <a href="{{ route('client-reviews.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-mtext">{{ __('View Client Review') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="pcoded-hasmenu @yield('client_active')">
+                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Client </span>
+                            </a>
+                            <ul class="pcoded-submenu">
+                                <li class="@yield('view_client_active')">
+                                    <a href="{{ route('clients.index') }}" class="waves-effect waves-dark">
+                                        <span class="pcoded-mtext">{{ __('View Client') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="pcoded-hasmenu @yield('dealer_active')">

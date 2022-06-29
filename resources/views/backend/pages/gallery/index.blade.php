@@ -23,7 +23,7 @@
                         @forelse ($galleries as $gallery)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name"><img src="{{ (!empty($gallery->picture)) ? $gallery->picture : asset('noImage.png') }}"
+                                <td data-label="Name"><img src="{{ (!empty($gallery->image)) ? $gallery->image : asset('noImage.png') }}"
                                     style="width: 50px;height: 50px;border: 1px solid #000;"></td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('galleries.destroy',$gallery->id)}}" method="post">

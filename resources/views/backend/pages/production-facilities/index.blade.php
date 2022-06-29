@@ -23,7 +23,7 @@
                         @forelse ($productionFacilities as $productionFacilities)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name"><img src="{{ (!empty($productionFacilities->picture)) ? $productionFacilities->picture : asset('noImage.png') }}"
+                                <td data-label="Name"><img src="{{ (!empty($productionFacilities->image)) ? $productionFacilities->image : asset('noImage.png') }}"
                                     style="width: 50px;height: 50px;border: 1px solid #000;"></td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('productionFacilities.destroy',$productionFacilities->id)}}" method="post">
