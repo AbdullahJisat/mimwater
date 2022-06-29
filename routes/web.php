@@ -82,7 +82,6 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('contact-read/{id}', [ContactController::class, 'contactRead'])->name('contact_read');
     Route::resource('clients', ClientController::class);
     Route::resource('client-reviews', ClientReviewController::class);
-    Route::resource('retailers', RetailerController::class);
     Route::resource('dealers', DealerController::class);
     Route::resource('costs', CostController::class);
     Route::resource('items', ItemController::class);
