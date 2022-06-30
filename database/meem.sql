@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 14, 2022 at 09:51 AM
+-- Generation Time: Jun 30, 2022 at 01:58 PM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.2
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mimwater`
+-- Database: `meem`
 --
 
 -- --------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `username`, `email_verified_at`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', 'admin', '2022-06-07 05:20:19', '$2y$10$e8s4N2DOPEbkb6AJiGyZVOUS1sDvy1cPdc6f7GwVuwWqASUtBqezy', NULL, 'zxzcMFPwLuIwVodgWYNXRtz2Xxhz4qTacjb9uOyRYaW9rtesNbJedm7ZETxd', NULL, NULL);
+(1, 'admin', 'admin@admin.com', 'admin', '2022-06-29 06:56:33', '$2y$10$AxKzHQMQFCbOaBM0gcHlUOpo8fkLoNxfbwY4O68G1vCxJizKTGTAe', NULL, 'HjYmQFMsedBmAoUx2U2rMfiKridkWjjyIb3bW5nOrhE9Clb1xMUzWrFrceyC', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -65,7 +65,71 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'oil', '2022-06-13 23:55:04', '2022-06-13 23:55:04');
+(1, 'breakfast', '2022-06-29 07:02:49', '2022-06-29 07:02:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`id`, `image`, `created_at`, `updated_at`) VALUES
+(1, '/storage/upload/client_image/client-1.jpeg', NULL, NULL),
+(2, '/storage/upload/client_image/client-2.jpeg', NULL, NULL),
+(3, '/storage/upload/client_image/client-3.jpeg', NULL, NULL),
+(4, '/storage/upload/client_image/client-4.jpeg', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_reviews`
+--
+
+CREATE TABLE `client_reviews` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `designation_id` int(11) DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `review` text COLLATE utf8mb4_unicode_ci,
+  `status` int(11) DEFAULT '1' COMMENT '1-active,2-inactive',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `client_reviews`
+--
+
+INSERT INTO `client_reviews` (`id`, `client_name`, `designation_id`, `image`, `company_name`, `review`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'client', 1, '/storage/upload/client_image/client-client.jpeg', 'souq', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 1, '2022-06-29 06:58:00', '2022-06-29 06:58:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  `read` int(11) DEFAULT NULL COMMENT '1-read,0-unread',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -86,19 +150,7 @@ CREATE TABLE `costs` (
 --
 
 INSERT INTO `costs` (`id`, `category_id`, `amount`, `created_at`, `updated_at`) VALUES
-(1, 1, '100.00', '2022-06-13 23:55:14', '2022-06-13 23:55:14');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cost_categories`
---
-
-CREATE TABLE `cost_categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(1, 1, '190.00', '2022-06-29 07:02:56', '2022-06-29 07:02:56');
 
 -- --------------------------------------------------------
 
@@ -131,7 +183,7 @@ CREATE TABLE `dealers` (
 --
 
 INSERT INTO `dealers` (`id`, `name`, `email`, `username`, `phone`, `location`, `shopname`, `shop_location`, `nid`, `email_verified_at`, `password`, `image`, `price`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Shahidul Islam', 'sijisat@gmail.com', 'jisat', '01647579646', 'dhaka', 'jio', 'dhaka', '3224', NULL, '$2y$10$e8s4N2DOPEbkb6AJiGyZVOUS1sDvy1cPdc6f7GwVuwWqASUtBqezy', NULL, NULL, NULL, NULL, '2022-06-07 05:22:17', '2022-06-07 05:22:17');
+(1, 'dealer', 'dealer@gmail.com', 'dealer', '0189165', 'chittagong', 'sohid shop', 'chittagong', '5106165763', NULL, '$2y$10$SJGKlzIE/GIpgzF81u1xn.suzmcCz8lxOxKbqRAbo1AUa5etWG/eG', NULL, '10.00', 1, NULL, '2022-06-29 06:58:34', '2022-06-29 06:58:34');
 
 -- --------------------------------------------------------
 
@@ -151,7 +203,7 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Administartor', '2022-06-07 01:22:11', '2022-06-07 01:22:11');
+(1, 'Administration', '2022-06-29 06:59:54', '2022-06-29 06:59:54');
 
 -- --------------------------------------------------------
 
@@ -171,7 +223,7 @@ CREATE TABLE `designations` (
 --
 
 INSERT INTO `designations` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Chairman', '2022-06-07 01:23:09', '2022-06-07 01:23:09');
+(1, 'CEO', '2022-06-29 06:57:13', '2022-06-29 06:57:13');
 
 -- --------------------------------------------------------
 
@@ -196,7 +248,7 @@ CREATE TABLE `directors` (
 --
 
 INSERT INTO `directors` (`id`, `name`, `image`, `email`, `phone`, `department_id`, `designation_id`, `created_at`, `updated_at`) VALUES
-(1, 'Shahidul Islam', NULL, 'sijisat@gmail.com', '01647579646', 1, 1, '2022-06-07 01:23:27', '2022-06-07 01:23:27');
+(1, 'Director', '/storage/upload/director_image/director-Director.png', 'dir@gmail.com', '01891656910', 1, 1, '2022-06-29 07:00:11', '2022-06-29 07:00:11');
 
 -- --------------------------------------------------------
 
@@ -210,28 +262,6 @@ CREATE TABLE `galleries` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `galleries`
---
-
-INSERT INTO `galleries` (`id`, `image`, `created_at`, `updated_at`) VALUES
-(1, '/storage/upload/item_image/gallery-1.png', NULL, NULL),
-(2, '/storage/upload/item_image/gallery-2.png', NULL, NULL),
-(3, '/storage/upload/item_image/gallery-3.png', NULL, NULL),
-(4, '/storage/upload/item_image/gallery-4.png', NULL, NULL),
-(5, '/storage/upload/item_image/gallery-5.png', NULL, NULL),
-(6, '/storage/upload/item_image/gallery-6.png', NULL, NULL),
-(7, '/storage/upload/item_image/gallery-7.png', NULL, NULL),
-(8, '/storage/upload/item_image/gallery-8.png', NULL, NULL),
-(9, '/storage/upload/item_image/gallery-1.png', NULL, NULL),
-(10, '/storage/upload/item_image/gallery-2.png', NULL, NULL),
-(11, '/storage/upload/item_image/gallery-3.png', NULL, NULL),
-(12, '/storage/upload/item_image/gallery-4.png', NULL, NULL),
-(13, '/storage/upload/item_image/gallery-5.png', NULL, NULL),
-(14, '/storage/upload/item_image/gallery-6.png', NULL, NULL),
-(15, '/storage/upload/item_image/gallery-7.png', NULL, NULL),
-(16, '/storage/upload/item_image/gallery-8.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -252,7 +282,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'water', '/storage/upload/item_image/water-.png', '2022-06-07 05:23:40', '2022-06-07 05:23:40');
+(1, 'water 300ml', '/storage/upload/item_image/item-water 300ml.jpg', '2022-06-29 07:03:17', '2022-06-29 07:03:17');
 
 -- --------------------------------------------------------
 
@@ -283,14 +313,31 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2022_06_01_073415_add_price_to_dealers_table', 1),
 (11, '2022_06_01_083207_create_categories_table', 1),
 (12, '2022_06_01_083302_create_costs_table', 1),
-(13, '2022_06_01_083547_create_cost_categories_table', 1),
-(14, '2022_06_06_120844_create_departments_table', 1),
-(15, '2022_06_06_120911_create_designations_table', 1),
-(16, '2022_06_06_120912_create_directors_table', 1),
-(17, '2022_06_07_081544_create_galleries_table', 2),
-(20, '2022_06_09_075550_create_payments_table', 3),
-(21, '2022_06_11_080459_create_stock_out_items_table', 3),
-(22, '2022_06_14_070604_add_total_to_payments_table', 4);
+(13, '2022_06_06_120844_create_departments_table', 1),
+(14, '2022_06_06_120911_create_designations_table', 1),
+(15, '2022_06_06_120912_create_directors_table', 1),
+(16, '2022_06_07_081544_create_galleries_table', 1),
+(17, '2022_06_09_075550_create_payments_table', 1),
+(18, '2022_06_11_080459_create_stock_out_items_table', 1),
+(19, '2022_06_14_070604_add_total_to_payments_table', 1),
+(20, '2022_06_19_121143_create_production_facilities_table', 1),
+(21, '2022_06_19_122840_create_news_events_table', 1),
+(22, '2022_06_28_111055_create_client_reviews_table', 1),
+(23, '2022_06_28_115704_create_clients_table', 1),
+(24, '2022_06_28_124249_create_contacts_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news_events`
+--
+
+CREATE TABLE `news_events` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -320,8 +367,18 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `invoice_no`, `retailer_id`, `dealer_id`, `salesman_id`, `admin_id`, `item_id`, `amount`, `due`, `total`, `payment_type`, `payment_status`, `created_at`, `updated_at`) VALUES
-(1, NULL, 1, NULL, NULL, NULL, '13', '24.00', '16.00', NULL, 1, 3, '2022-06-12 05:40:12', '2022-06-12 05:40:12'),
-(2, '12', 2, NULL, NULL, NULL, '18', '0.00', NULL, '0.00', 1, 1, '2022-06-14 01:07:21', '2022-06-14 01:07:21');
+(1, '1', NULL, 1, NULL, 1, '1', '20.00', '0.00', '20.00', 1, NULL, '2022-06-29 07:14:59', '2022-06-30 07:47:04'),
+(2, NULL, NULL, 1, NULL, 1, '1', '30.00', '0.00', '50.00', 1, NULL, '2022-06-29 07:20:32', '2022-06-30 07:47:04'),
+(3, NULL, NULL, 1, NULL, 1, '1', '15.00', '0.00', '50.00', 1, NULL, '2022-06-29 07:21:15', '2022-06-30 07:47:04'),
+(4, NULL, NULL, 1, NULL, 1, '1', '50.00', '0.00', '55.00', 1, NULL, '2022-06-29 07:32:53', '2022-06-30 07:47:04'),
+(5, NULL, NULL, 1, NULL, 1, '1', '25.00', '0.00', '25.00', 1, NULL, '2022-06-29 07:33:56', '2022-06-30 07:47:04'),
+(7, '2', 2, NULL, 1, NULL, '1', '20.00', '0.00', '60.00', NULL, NULL, '2022-06-30 04:58:02', '2022-06-30 05:20:38'),
+(9, NULL, 1, NULL, 1, NULL, '1', '0.00', '0.00', '0.00', NULL, NULL, '2022-06-30 05:17:54', '2022-06-30 05:17:54'),
+(10, NULL, 2, NULL, 1, NULL, '1', '20.00', '20.00', '40.00', NULL, NULL, '2022-06-30 05:20:38', '2022-06-30 05:20:38'),
+(11, NULL, NULL, 1, NULL, 1, '1', '50.00', '0.00', '200.00', 1, NULL, '2022-06-30 07:46:26', '2022-06-30 07:47:04'),
+(12, NULL, NULL, 1, NULL, 1, '1', '200.00', '0.00', '200.00', 1, NULL, '2022-06-30 07:47:04', '2022-06-30 07:47:04'),
+(13, NULL, 3, NULL, 1, NULL, '1', NULL, '0.00', '200.00', NULL, NULL, '2022-06-30 07:52:27', '2022-06-30 07:52:47'),
+(14, NULL, 3, NULL, 1, NULL, '1', '200.00', '0.00', '200.00', NULL, NULL, '2022-06-30 07:52:47', '2022-06-30 07:52:47');
 
 -- --------------------------------------------------------
 
@@ -337,6 +394,19 @@ CREATE TABLE `personal_access_tokens` (
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `production_facilities`
+--
+
+CREATE TABLE `production_facilities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -362,7 +432,8 @@ CREATE TABLE `request_bottles` (
 --
 
 INSERT INTO `request_bottles` (`id`, `item_id`, `retailer_id`, `dealer_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, 5, '2022-06-14 00:55:53', '2022-06-14 00:55:53');
+(1, 1, NULL, 1, 300, '2022-06-29 07:04:08', '2022-06-29 07:04:08'),
+(2, 1, NULL, 1, 500, '2022-06-30 07:54:31', '2022-06-30 07:54:31');
 
 -- --------------------------------------------------------
 
@@ -396,8 +467,9 @@ CREATE TABLE `retailers` (
 --
 
 INSERT INTO `retailers` (`id`, `name`, `email`, `username`, `phone`, `location`, `shopname`, `shop_location`, `nid`, `email_verified_at`, `password`, `image`, `salesman_id`, `price`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'retail', 'retail@gmail.com', 'retail', '01845536056', 'dhaka', 'dhak', 'dhaka', '232', NULL, '123456789', NULL, 1, '20.00', NULL, NULL, '2022-06-07 05:23:21', '2022-06-07 05:23:21'),
-(2, 'Shahidul Islam', 'sijisat@gmail.com', '12fsdf', '01647579646', 'dhaka', 'jio', 'dhaka', '34324', NULL, '123456789', NULL, NULL, NULL, NULL, NULL, '2022-06-14 00:42:44', '2022-06-14 00:42:44');
+(1, 'retailer', 'retail@gmail.com', 'retailer', '0242', 'dhaka', 'jio', 'dhaka', '432423', NULL, '$2y$10$FN/9ny7yGdPjxJ9f/hdmYOhHV/9pv2BiE9DvTJcTev/Ex9jxTXLk6', NULL, 1, '30.00', 1, NULL, '2022-06-30 04:33:07', '2022-06-30 04:33:07'),
+(2, 'retail2', 'retail2@gmail.com', 'retail2', '0402348242', 'dhaka', 'dhak', 'dhaka', '3234234', NULL, '$2y$10$HT7uura/5.XhGmaLQ/F9LuQtzMLV1n1Fwz9PnSl7iLy0pbY2AKp5O', NULL, 1, '20.00', 1, NULL, '2022-06-30 04:36:30', '2022-06-30 04:36:30'),
+(3, 'retail', 'r@gmail.com', 'retail', '12354645', 'ctg', 'ctg shop', 'ctg', '345664567', NULL, '$2y$10$hiSr5Bc6PXIDX8R0EBrO.eGBV890l5Y4xuRzryIDrVzSJ4OqxNhFC', NULL, 1, '20.00', 1, NULL, '2022-06-30 07:49:37', '2022-06-30 07:49:37');
 
 -- --------------------------------------------------------
 
@@ -427,8 +499,8 @@ CREATE TABLE `salesmen` (
 --
 
 INSERT INTO `salesmen` (`id`, `name`, `email`, `username`, `phone`, `location`, `nid`, `email_verified_at`, `password`, `image`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'salesman', 'salesman@admin.com', 'salesman', '01645567', 'dhaka', '3434343', '2022-06-08 02:36:36', '$2y$10$IEk0xMgpwmPNWNb/wOWCUePHPcA/fNMBPhup4BxZT4TnwFoXsMVWK', NULL, 1, 'RsdMmmpWaqDkDLHf8bvKoD3IZlzAK7TaTOY6XhjlkZZLSVqjYxobFOcKawIC', NULL, NULL),
-(2, 'Shahidul Islam', 'sijisat@gmail.com', 'koi', '01647579646', 'dhaka', '197215174310011', NULL, '123456789', NULL, NULL, NULL, '2022-06-13 23:29:00', '2022-06-13 23:29:00');
+(1, 'salesman', 'salesman@gmail.com', 'salesman', '0125855225', 'chittagong', '12345677890', NULL, '$2y$10$84fwRFAYz5Bk3FNZ6qYtie9YWQifx2Wvtd54KZIaJXDgryjgW4wje', NULL, 1, NULL, '2022-06-29 06:59:18', '2022-06-29 06:59:18'),
+(3, 'salesman2', 'salesman2@gmail.com', 'salesman2', '0424234', 'chittagong', '323123', NULL, '$2y$10$zs8x61Mv90y7FwW1nVQe1u.46PwZVcLUqQAgd/XhdDhGLXpXaZ9Dq', NULL, 1, NULL, '2022-06-30 07:41:57', '2022-06-30 07:41:57');
 
 -- --------------------------------------------------------
 
@@ -453,8 +525,10 @@ CREATE TABLE `stock_items` (
 --
 
 INSERT INTO `stock_items` (`id`, `item_id`, `retailer_id`, `dealer_id`, `quantity`, `price`, `stock`, `created_at`, `updated_at`) VALUES
-(16, 1, 1, NULL, 36, '0.00', 1, '2022-06-11 03:51:40', '2022-06-12 03:11:04'),
-(17, 1, 2, NULL, 0, '0.00', 1, '2022-06-14 00:56:33', '2022-06-14 00:57:33');
+(1, 1, NULL, 1, 209, '0.00', 1, '2022-06-29 07:05:05', '2022-06-30 07:46:53'),
+(2, 1, 1, NULL, 23, '0.00', 1, '2022-06-30 04:43:07', '2022-06-30 05:13:14'),
+(3, 1, 2, NULL, 12, '0.00', 1, '2022-06-30 04:43:18', '2022-06-30 05:20:32'),
+(4, 1, 3, NULL, 190, '0.00', 1, '2022-06-30 07:50:35', '2022-06-30 07:52:22');
 
 -- --------------------------------------------------------
 
@@ -478,16 +552,20 @@ CREATE TABLE `stock_out_items` (
 --
 
 INSERT INTO `stock_out_items` (`id`, `item_id`, `retailer_id`, `dealer_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(9, 1, 1, NULL, 2, '40.00', '2022-06-11 04:08:41', '2022-06-11 04:08:41'),
-(10, 1, 1, NULL, 1, '20.00', '2022-06-11 23:15:45', '2022-06-11 23:15:45'),
-(11, 1, 1, NULL, 3, '60.00', '2022-06-12 02:56:13', '2022-06-12 02:56:13'),
-(12, 1, 1, NULL, 3, '60.00', '2022-06-12 02:57:06', '2022-06-12 02:57:06'),
-(13, 1, 1, NULL, 2, '40.00', '2022-06-12 02:57:40', '2022-06-12 02:57:40'),
-(14, 1, 1, NULL, 1, '20.00', '2022-06-12 03:01:19', '2022-06-12 03:01:19'),
-(15, 1, 1, NULL, 3, '60.00', '2022-06-12 03:09:57', '2022-06-12 03:09:57'),
-(16, 1, 1, NULL, 3, '60.00', '2022-06-12 03:10:51', '2022-06-12 03:10:51'),
-(17, 1, 1, NULL, 3, '60.00', '2022-06-12 03:11:04', '2022-06-12 03:11:04'),
-(18, 1, 2, NULL, 5, '0.00', '2022-06-14 00:57:34', '2022-06-14 00:57:34');
+(1, 1, NULL, 1, 2, '20.00', '2022-06-29 07:14:30', '2022-06-29 07:14:30'),
+(2, 1, NULL, 1, 5, '50.00', '2022-06-29 07:20:22', '2022-06-29 07:20:22'),
+(3, 1, NULL, 1, 3, '30.00', '2022-06-29 07:21:00', '2022-06-29 07:21:00'),
+(4, 1, NULL, 1, 2, '20.00', '2022-06-29 07:30:39', '2022-06-29 07:30:39'),
+(5, 1, NULL, 1, 2, '20.00', '2022-06-29 07:31:44', '2022-06-29 07:31:44'),
+(6, 1, NULL, 1, 2, '20.00', '2022-06-29 07:33:34', '2022-06-29 07:33:34'),
+(7, 1, 1, NULL, 2, '60.00', '2022-06-30 04:54:11', '2022-06-30 04:54:11'),
+(8, 1, 2, NULL, 3, '60.00', '2022-06-30 04:57:47', '2022-06-30 04:57:47'),
+(9, 1, 1, NULL, 0, '0.00', '2022-06-30 04:58:41', '2022-06-30 04:58:41'),
+(10, 1, 1, NULL, 0, '0.00', '2022-06-30 05:13:14', '2022-06-30 05:13:14'),
+(11, 1, 2, NULL, 0, '0.00', '2022-06-30 05:20:32', '2022-06-30 05:20:32'),
+(12, 1, NULL, 1, 20, '200.00', '2022-06-30 07:45:20', '2022-06-30 07:45:20'),
+(13, 1, NULL, 1, 5, '50.00', '2022-06-30 07:46:53', '2022-06-30 07:46:53'),
+(14, 1, 3, NULL, 10, '200.00', '2022-06-30 07:52:22', '2022-06-30 07:52:22');
 
 --
 -- Indexes for dumped tables
@@ -508,15 +586,27 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `costs`
+-- Indexes for table `clients`
 --
-ALTER TABLE `costs`
+ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cost_categories`
+-- Indexes for table `client_reviews`
 --
-ALTER TABLE `cost_categories`
+ALTER TABLE `client_reviews`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `costs`
+--
+ALTER TABLE `costs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -566,6 +656,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `news_events`
+--
+ALTER TABLE `news_events`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
@@ -578,6 +674,12 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `production_facilities`
+--
+ALTER TABLE `production_facilities`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `request_bottles`
@@ -634,16 +736,28 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `client_reviews`
+--
+ALTER TABLE `client_reviews`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `costs`
 --
 ALTER TABLE `costs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `cost_categories`
---
-ALTER TABLE `cost_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dealers`
@@ -673,7 +787,7 @@ ALTER TABLE `directors`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -685,13 +799,19 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `news_events`
+--
+ALTER TABLE `news_events`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -700,34 +820,40 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `production_facilities`
+--
+ALTER TABLE `production_facilities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `request_bottles`
 --
 ALTER TABLE `request_bottles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `retailers`
 --
 ALTER TABLE `retailers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `salesmen`
 --
 ALTER TABLE `salesmen`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `stock_items`
 --
 ALTER TABLE `stock_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stock_out_items`
 --
 ALTER TABLE `stock_out_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
