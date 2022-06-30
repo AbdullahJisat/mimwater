@@ -10,17 +10,17 @@
         <div class="card-header">
             {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add cash') }}</button>
             @include('backend.pages.stock-out-item.create') --}}
-            <form action="{{ route('show_cash_by_date') }}" method="post" style="display: inline-flex">
-                @csrf
+            <form action="{{ route('retailer_cashes_date') }}" method="get" style="display: inline-flex">
+                {{-- @csrf --}}
                 <div class="row input-daterange">
                     <div class="col-md-4">
-                        <input type="date" class="form-control" name="start" id="">
+                        <input type="date" class="form-control" name="start" id="" value="{{ @$start ?? "" }}">
                         @error('start')
                             <span>{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-4">
-                        <input type="date" name="end" class="form-control" id="">
+                        <input type="date" name="end" class="form-control" id="" value="{{ @$end ?? "" }}">
                         @error('end')
                             <span>{{ $message }}</span>
                         @enderror
@@ -74,7 +74,7 @@
                             <td></td>
                             <td>{{ $amountTotal }}</td>
                             <td>{{ $duesTotal }}</td>
-                            <td>{{ $cashesTotal }}</td>
+                            {{-- <td>{{ $cashesTotal }}</td> --}}
                             <td></td>
                         </tr>
                     </tfoot>

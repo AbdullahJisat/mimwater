@@ -42,14 +42,19 @@ Route::get('invoice-details/{id}', [UIController::class, 'invoice'])->name('invo
 
 
 Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function() {
-    Route::get('report', [ReportController::class, 'getReport'])->name('getReport');
+    Route::get('report', [ReportController::class, 'getReport'])->name('get_report');
+    Route::get('show-report-date', [ReportController::class, 'showReportDateFilter'])->name('show_report_date');
     Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
+    Route::get('show-dues-date', [PaymentInvoiceController::class, 'showDuesDateFilter'])->name('show_dues_by_date');
     Route::get('cashes', [PaymentInvoiceController::class, 'showCashes'])->name('invoices.cashes');
+    Route::get('show-cash-date', [PaymentInvoiceController::class, 'showCashesDateFilter'])->name('show_cash_by_date');
 });
 Route::group(['middleware' => 'auth:admin'], function() {
     Route::get('retailers-salesman/{id}', [SalesmanController::class, 'retailersBySalesman'])->name('retailers_salesman');
     Route::get('dealer-dues', [PaymentInvoiceController::class, 'showDealerDues'])->name('invoices.dealer_dues');
+    Route::get('show-dealer-dues-date', [PaymentInvoiceController::class, 'showDealerDuesDateFilter'])->name('show_dealer_dues_by_date');
     Route::get('dealer-cashes', [PaymentInvoiceController::class, 'showDealerCashes'])->name('invoices.dealer_cashes');
+    Route::get('show-dealer-cash-date', [PaymentInvoiceController::class, 'showDealerCashesDateFilter'])->name('show_dealer_cash_by_date');
     Route::get('admin/dealer-stock-out-items', [StockOutItemController::class, 'indexDealer'])->name('admin.index_stockOut_dealer');
     Route::post('admin/store/stock-out-items', [StockOutItemController::class, 'stockOutDealer'])->name('stock_out_dealer');
     Route::get('admin/dealer-stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
@@ -58,10 +63,9 @@ Route::group(['middleware' => 'auth:admin'], function() {
 
     Route::get('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceIndex'])->name('invoices.dealer_index');
     Route::post('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceStore'])->name('invoices.dealer_store');
-    Route::post('show-dealer-cash-date', [PaymentInvoiceController::class, 'showDealerCashesDateFilter'])->name('show_dealer_cash_by_date');
-    Route::post('show-cash-date', [PaymentInvoiceController::class, 'showCashesDateFilter'])->name('show_cash_by_date');
-    Route::post('show-dues-date', [PaymentInvoiceController::class, 'showDuesDateFilter'])->name('show_dues_by_date');
-    Route::post('show-dealer-dues-date', [PaymentInvoiceController::class, 'showDealerDuesDateFilter'])->name('show_dealer_dues_by_date');
+
+
+
 
 
 });
@@ -121,10 +125,11 @@ Route::prefix('salesmans')->middleware('auth:salesman')->group(function () {
     Route::post('categories', [CostController::class, 'categoryStore'])->name('categories.store');
     Route::get('invoices/{id}', [PaymentInvoiceController::class, 'index'])->name('invoices.index');
     Route::post('invoices/{id}', [PaymentInvoiceController::class, 'store'])->name('invoices.store');
-
-    Route::get('report', [ReportController::class, 'getReport'])->name('getReport');
     Route::get('retailer-dues', [PaymentInvoiceController::class, 'showRetailerDues'])->name('retailer_dues');
+    Route::get('retailer-dues-date', [PaymentInvoiceController::class, 'showRetailerDuesDateFilter'])->name('retailer_dues_date');
     Route::get('retailer-cashes', [PaymentInvoiceController::class, 'showRetailerCashes'])->name('retailer_cashes');
+    Route::get('retailer-cashes-date', [PaymentInvoiceController::class, 'showRetailerCashesDateFilter'])->name('retailer_cashes_date');
+    Route::get('retailer-stock-item-quantity/{itemId}/{userId}', [StockOutItemController::class, 'retailerStockByItem'])->name('retailer_stock_by_item');
 });
 
 // Dealer prefix
@@ -145,7 +150,10 @@ Route::prefix('dealers')->middleware('auth:dealer')->name('dealer.')->group(func
     Route::resource('stock-items', StockItemController::class);
     Route::get('request-bottle', [RequestBottleController::class, 'index'])->name('request_bottles.index');
     Route::post('request-bottle/create', [RequestBottleController::class, 'store'])->name('request_bottles.store');
-    Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
+    Route::get('dues-report', [PaymentInvoiceController::class, 'showDealerDuesReport'])->name('invoices.dues_report');
+    Route::get('dues-report-date', [PaymentInvoiceController::class, 'showDealerDuesReportDateFilter'])->name('invoices.dues_report_date');
+    Route::get('cash-report', [PaymentInvoiceController::class, 'showDealerCashesReport'])->name('invoices.cash_report');
+    Route::get('cashes-report-date', [PaymentInvoiceController::class, 'showDealerCashesReportDateFilter'])->name('invoices.cashes_report_date');
 });
 
 // Retailer prefix
@@ -167,6 +175,10 @@ Route::prefix('retailers')->middleware('auth:retailer')->name('retailer.')->grou
     Route::get('request-bottle', [RequestBottleController::class, 'index'])->name('request_bottles.index');
     Route::post('request-bottle/create', [RequestBottleController::class, 'store'])->name('request_bottles.store');
     Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
+    Route::get('dues-report', [PaymentInvoiceController::class, 'showRetailerDuesReport'])->name('invoices.dues_report');
+    Route::get('dues-report-date', [PaymentInvoiceController::class, 'showRetailerDuesReportDateFilter'])->name('invoices.dues_report_date');
+    Route::get('cash-report', [PaymentInvoiceController::class, 'showRetailerCashesReport'])->name('invoices.cash_report');
+    Route::get('cashes-report-date', [PaymentInvoiceController::class, 'showRetailerCashesReportDateFilter'])->name('invoices.cashes_report_date');
 });
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);

@@ -141,7 +141,7 @@
                     </td>
                 </tr>
 
-                <tr class="heading">
+                <!-- <tr class="heading">
                     <td>Payment Method</td>
 
                     <td><select name="payment_type" id="">
@@ -149,13 +149,13 @@
                         <option value="2">Check</option>
                         <option value="3">Mobile</option>
                         </select></td>
-                </tr>
+                </tr> -->
 
-                /* <tr class="details">
+               <!--  /* <tr class="details">
                     <td>Check</td>
 
                     <td>1000</td>
-                </tr> */
+                </tr> */ -->
 
                 <tr class="heading">
                     <td>Item</td>

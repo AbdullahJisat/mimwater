@@ -72,5 +72,21 @@ $('#item_id').change(function(){
         }
     });
 });
+$('#dealer_id').change(function(){
+    var userId = $(this).val();
+    console.log(userId);
+    var itemId = $('#item_id').find(":selected").val();
+    console.log(itemId);
+    var c = $('#item_id :selected').val();
+    console.log(c);
+    $.ajax({
+        url:`retailer-stock-item-quantity/`+itemId+`/`+userId+``,
+        method:"get",
+        // data:{itemId:itemId, userId:userId},
+        success:function(data){
+            $("#preQuantity").html(data.quantity);
+        }
+    });
+});
 </script>
 @endpush

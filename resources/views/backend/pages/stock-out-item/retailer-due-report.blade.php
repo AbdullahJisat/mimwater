@@ -10,7 +10,7 @@
         <div class="card-header">
             {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
             @include('backend.pages.stock-out-item.create') --}}
-            <form action="{{ route('retailer_dues_date') }}" method="get" style="display: inline-flex">
+            <form action="{{ route('retailer.invoices.dues_report_date') }}" method="get" style="display: inline-flex">
                 {{-- @csrf --}}
                 <div class="row input-daterange">
                     <div class="col-md-4">

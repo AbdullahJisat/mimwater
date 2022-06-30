@@ -20,7 +20,7 @@ class StockItemController extends Controller
     public function index()
     {
         // dd(StockItem::findStock());
-        return view('backend.pages.stock-item.index')->with(['stockItems' => $this->stockItem->with('item')->whereStock(1)->get(),'stockOutItems' => $this->stockItem->with('item')->whereStock(0)->get()]);
+        return view('backend.pages.stock-item.index')->with(['stockItems' => $this->stockItem->with('item')->whereNull('dealer_id')->whereStock(1)->get(),'stockOutItems' => $this->stockItem->with('item')->whereStock(0)->get()]);
     }
 
     public function indexStockDealer()

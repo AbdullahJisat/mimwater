@@ -10,8 +10,8 @@
         <div class="card-header">
             {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add cash') }}</button>
             @include('backend.pages.stock-out-item.create') --}}
-            <form action="{{ route('show_dealer_cash_by_date') }}" method="post" style="display: inline-flex">
-                @csrf
+            <form action="{{ route('show_dealer_cash_by_date') }}" method="get" style="display: inline-flex">
+                {{-- @csrf --}}
                 <div class="row input-daterange">
                     <div class="col-md-4">
                         <input type="date" class="form-control" name="start" id="">
@@ -38,6 +38,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Dealer Name</th>
+                            <th>Quantity</th>
                             <th>cash</th>
                             <th>due</th>
                             <th>total</th>
@@ -48,6 +49,7 @@
                         @forelse ($cashes as $cash)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
+                                <td data-label="Name">{{ $cash->dealer->name }}</td>
                                 <td data-label="Name">{{ $cash->dealer->name }}</td>
                                 <td data-label="Quantity">{{ $cash->amount }}</td>
                                 <td data-label="Quantity">{{ $cash->due }}</td>
@@ -72,7 +74,7 @@
                             <td></td>
                             <td>{{ $amountTotal }}</td>
                             <td>{{ $duesTotal }}</td>
-                            <td>{{ $cashesTotal }}</td>
+                            <td>{{ $amountTotal }}</td>
                             <td></td>
                         </tr>
                     </tfoot>

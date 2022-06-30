@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Create Item</h4>
+                <h4 class="modal-title">Create Retailer Stock Out</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,11 +11,12 @@
                 <form method="post" action="{{ route('stock-out-items.store') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Retailer/Dealer Name</label>
+                        <label class="col-sm-2 col-form-label">Retailer Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="retailer_id" id="retailer_id">
+                                <option value="-1">Select Retailer</option>
                                 @foreach ($retailers as $retailer)
-                                    <option value="{{ $retailer->id }}" selected>{{ $retailer->name }}</option>
+                                    <option value="{{ $retailer->id }}">{{ $retailer->name }}</option>
                                 @endforeach
                             </select>
                             @error('retailer_id')
@@ -27,13 +28,20 @@
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="item_id" id="item_id">
+                                <option value="-1">Select Item</option>
                                 @foreach ($items as $item)
-                                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             @error('item_id')
                                 <span class="messages">{{ $message }}</span>
                             @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Pre Quantity</label>
+                        <div class="col-sm-10">
+                            <label for="" id="preQuantity"></label>
                         </div>
                     </div>
                     <div class="form-group row">

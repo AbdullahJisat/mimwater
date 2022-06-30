@@ -263,15 +263,20 @@
                         <span class="pcoded-mtext">Report</span>
                     </a>
                     <ul class="pcoded-submenu">
+                        <li class="@yield('view_report_active')">
+                            <a href="{{ route('get_report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Income Expense Report') }}</span>
+                            </a>
+                        </li>
 
                         <li class="@yield('view_request_bottle_item_active')">
                             <a href="{{ route('invoices.dues') }}" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">{{ __('View Due Report') }}</span>
+                                <span class="pcoded-mtext">{{ __('View Retailer Due Report') }}</span>
                             </a>
                         </li>
                         <li class="@yield('view_request_bottle_item_active')">
                             <a href="{{ route('invoices.cashes') }}" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">{{ __('View Cash Report') }}</span>
+                                <span class="pcoded-mtext">{{ __('View Retailer Cash Report') }}</span>
                             </a>
                         </li>
 
@@ -288,7 +293,6 @@
 
                     </ul>
                 </li>
-                @endauth
                 <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -309,6 +313,52 @@
                         </li>
                     </ul>
                 </li>
+                @endauth
+
+                @auth('dealer')
+                <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Report Dealer</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('dealer.invoices.dues_report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Dues Report') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('dealer.invoices.cash_report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Cash Report') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endauth
+                @auth('retailer')
+                <li class="pcoded-hasmenu @yield('request_bottle_item_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Report retailer</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('retailer.invoices.dues_report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Retailer Dues Report') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_request_bottle_item_active')">
+                            <a href="{{ route('retailer.invoices.cash_report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Retailer Cash Report') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endauth
             </ul>
         </div>
     </div>

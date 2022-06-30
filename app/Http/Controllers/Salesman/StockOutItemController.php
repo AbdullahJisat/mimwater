@@ -94,6 +94,11 @@ class StockOutItemController extends Controller
         return $preQuantity;
     }
 
+    public function retailerStockByItem($itemId, $userId){
+        $preQuantity = StockItem::whereItemId($itemId)->whereRetailerId($userId)->first();
+        return $preQuantity;
+    }
+
     public function stockOutDealer(Request $request)
     {
         // DB::beginTransaction();

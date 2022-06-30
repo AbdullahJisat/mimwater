@@ -14,8 +14,9 @@
                         <label class="col-sm-2 col-form-label">Dealer Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="retailer_id" id="retailer_id">
+                                <option value="-1">Select Retailer</option>
                                 @foreach ($retailers as $retailer)
-                                    <option value="{{ $retailer->id }}" selected>{{ $retailer->name }}</option>
+                                    <option value="{{ $retailer->id }}">{{ $retailer->name }}</option>
                                 @endforeach
                             </select>
                             @error('retailer_id')
@@ -27,8 +28,9 @@
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="item_id" id="item_id">
+                                <option value="-1">Select Item</option>
                                 @foreach ($items as $item)
-                                    <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             @error('item_id')
@@ -55,7 +57,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="stock" id="stock" value="0"
+                                    <input class="form-check-input" type="radio" name="stock" disabled id="stock" value="0"
                                     {{-- onchange="document.getElementById('priceDiv').style.display = 'block'" --}}
                                     > Out
                                 </label>

@@ -28,7 +28,7 @@ class RetailerController extends Controller
     public function store(StoreRetailerRequest $request)
     {
         $request = new Request($request->all());
-        $request->merge(['password' => Hash::make($request->password)]);
+        $request->merge(['salesman_id' => auth('salesman')->user()->id, 'password' => Hash::make($request->password)]);
         $this->retailer->create($request->all());
         return redirect()->route('retailers.index');
     }

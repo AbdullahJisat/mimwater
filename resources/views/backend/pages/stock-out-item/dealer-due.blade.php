@@ -10,8 +10,8 @@
         <div class="card-header">
             {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
             @include('backend.pages.stock-out-item.create') --}}
-            <form action="{{ route('show_dealer_dues_by_date') }}" method="post" style="display: inline-flex">
-                @csrf
+            <form action="{{ route('show_dealer_dues_by_date') }}" method="get" style="display: inline-flex">
+                {{-- @csrf --}}
                 <div class="row input-daterange">
                     <div class="col-md-4">
                         <input type="date" class="form-control" value="{{ old('start') }}" name="start" id="">
@@ -62,6 +62,10 @@
                             <td colspan="8">No due available</td>
                         @endforelse
                     </tbody>
+                    <tfoot>
+                        <td colspan="2">Total</td>
+                        <td>{{ $duesTotal }}</td>
+                    </tfoot>
                 </table>
             </div>
         </div>

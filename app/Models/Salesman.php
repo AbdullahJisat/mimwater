@@ -56,6 +56,16 @@ class Salesman extends Authenticatable
             'id' // Local key on users table...
         );
     }
+
+    /**
+     * Get all of the comments for the Salesman
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'salesman_id', 'id');
+    }
 }
 
 
