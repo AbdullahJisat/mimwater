@@ -147,7 +147,8 @@
                     <td><select name="payment_type" id="">
                         <option value="1">Cash</option>
                         <option value="2">Check</option>
-                        <option value="3">Mobile</option>
+                        <option value="3">Bkash Ceo</option>
+                        <option value="4">Bkash Office</option>
                         </select></td>
                 </tr> -->
 
@@ -172,7 +173,7 @@
                 <tr class="total">
                     <td></td>
 
-                    <td>Due: ${{ $dueCheck->due ?? 0 }}</td>
+                    <td>Due: ${{ $dueCheck->due ?? 0 }} <input type="hidden" name="totalDue" value="{{ $dueCheck->due ?? 0 }}"></td>
                 </tr>
 
 
@@ -194,7 +195,7 @@
                 <tr class="total">
                     <td></td>
 
-                    <td>Total: ${{ $total }}.00 <input type="hidden" id="total" name="total" value="{{ $total }}"></td>
+                    <td>Total: ${{ $stockItemTotalPrice }} <input type="hidden" id="total" name="total" value="{{ $stockItemTotalPrice }}"></td>
                 </tr>
                 <tr class="total">
                     <td></td>

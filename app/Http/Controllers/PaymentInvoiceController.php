@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\StockItem;
 use App\Models\StockOutItem;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -18,31 +19,48 @@ class PaymentInvoiceController extends Controller
 
     public function index($id){
         $item = $this->stockOutItem->find($id);
+        $stockItemTotalPrice = StockItem::whereRetailerId($item->retailer_id)->whereItemId($item->item_id)->latest()->pluck('price')->first();
+        // dd($stockItemTotalPrice);
         $dueCheck = Payment::with('retailer')->whereRetailerId($item->retailer_id)->orWhere('payment_status',3)->latest()->first();
-        return view('backend.pages.stock-item.invoice', compact('item', 'dueCheck'));
+        return view('backend.pages.stock-item.invoice', compact('item', 'dueCheck', 'stockItemTotalPrice'));
     }
 
     public function dealerInvoiceIndex($id){
         $item = $this->stockOutItem->find($id);
+        $stockItemTotalPrice = StockItem::whereDealerId($item->dealer_id)->whereItemId($item->item_id)->latest()->pluck('price')->first();
+        // dd($stockItemTotalPrice);
         $dueCheck = Payment::whereDealerId($item->dealer_id)->orWhere('payment_status',3)->latest()->first();
-        return view('backend.pages.stock-item.dealer-invoice', compact('item', 'dueCheck'));
+        return view('backend.pages.stock-item.dealer-invoice', compact('item', 'dueCheck', 'stockItemTotalPrice'));
     }
 
     public function dealerInvoiceStore(Request $request, $id){
         // dd($request->all());
-        Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
+        // Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
         $request = new Request($request->all());
-        $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due]);
-        Payment::create($request->except('_token'));
+
+
+        if ($request->totalDue == 0) {
+            $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+        } else {
+            $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->totalDue - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+        }
+
+        // dd($request->all());
+        Payment::create($request->except('_token', 'totalDue'));
         return redirect()->route('invoices.dealer_cashes');
     }
 
 
     public function store(Request $request, $id){
-        Payment::whereRetailerId($request->retailer_id)->whereSalesmanId(auth('salesman')->user()->id)->update(['due' => 0]);
+        // Payment::whereRetailerId($request->retailer_id)->whereSalesmanId(auth('salesman')->user()->id)->update(['due' => 0]);
         $request = new Request($request->all());
-        $request->merge(['salesman_id' => auth('salesman')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due]);
-        Payment::create($request->except('_token'));
+        if ($request->totalDue == 0) {
+            $request->merge(['salesman_id' => auth('salesman')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+        } else {
+            $request->merge(['salesman_id' => auth('salesman')->user()->id, 'due' => $request->totalDue - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+        }
+        // dd($request->all());
+        Payment::create($request->except('_token', 'totalDue'));
         return redirect('salesmans/retailer-cashes');
     }
 
@@ -230,7 +248,7 @@ class PaymentInvoiceController extends Controller
     }
 
     public function showRetailerCashes(){
-        $cashes = Payment::whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->whereDate('created_at', Carbon::today())->get();
+        $cashes = Payment::whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get()->unique('retailer_id');
         $cashesTotal = $cashes->sum('total');
         $duesTotal = $cashes->sum('due');
         $amountTotal = $cashes->sum('amount');
@@ -254,7 +272,10 @@ class PaymentInvoiceController extends Controller
     }
 
     public function showRetailerDues(){
-        $dues = Payment::with('retailer')->whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->where('due', '!=' , 0)->whereDate('created_at', Carbon::today())->get();
+        $dues = Payment::with('retailer')->whereNull('dealer_id')->whereSalesmanId(auth('salesman')->user()->id)->where('due', '!=' , 0)->whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get()->unique('retailer_id');
+        // ->groupBy('retailer_id')->latest('created_at')->get();
+        // ->orderBy('created_at', 'DESC')->distinct('from')
+        // ->orderBy('created_at', 'desc')->get()->unique('retailer_id');
         $duesTotal = $dues->sum('due');
         return view('backend.pages.stock-out-item.due', ['dues' => $dues, 'duesTotal' => $duesTotal]);
     }

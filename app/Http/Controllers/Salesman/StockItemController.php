@@ -41,14 +41,14 @@ class StockItemController extends Controller
             $preQuantity = $this->stockItem->whereRetailerId($request->retailer_id)->whereStock(1)->latest()->first();
             if (empty($preQuantity)){
                 $request = new Request($request->all());
-                $request->merge(['price' => 0]);
-                $this->stockItem->create($request->except('_token'));
+                $request->merge(["price" => $user->price * $request->quantity]);
+                $saveStock = $this->stockItem->create($request->except('_token'));
                 return back();
             } else {
                 if ($request->stock == 1) {
                     $request = new Request($request->all());
-                    $request->merge(['price' => 0, 'quantity' => $preQuantity->quantity + $request->quantity]);
-                    $this->stockItem->whereRetailerId($request->retailer_id)->update($request->except(['_token']));
+                    $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                    $this->stockItem->whereRetailerId($request->retailer_id)->whereItemId($request->item_id)->latest()->first()->update($request->except(['_token']));
                     return back();
                 } else {
                     if ($preQuantity->quantity < $request->quantity) {
@@ -58,7 +58,7 @@ class StockItemController extends Controller
                         "item_id" => $request->item_id,
                         'quantity' => $preQuantity->quantity - $request->quantity,
                         "stock" => 1,
-                        "price" => 0]);
+                        "price" => $user->price * $request->quantity]);
                         $this->stockItem->create(["retailer_id" => $request->retailer_id,
                                                     "item_id" => $request->item_id,
                                                     "quantity" => $request->quantity,
@@ -100,35 +100,41 @@ class StockItemController extends Controller
             $preQuantity = $this->stockItem->whereItemId($request->item_id)->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
             if (empty($preQuantity)){
                 $request = new Request($request->all());
-                $request->merge(['price' => 0]);
-                $this->stockItem->create($request->except('_token'));
+                $request->merge(["price" => $user->price * $request->quantity]);
+                $saveStock = $this->stockItem->create($request->except('_token'));
                 return back();
             } else {
                 if ($request->stock == 1) {
                     $request = new Request($request->all());
-                    $request->merge(['price' => 0, 'quantity' => $preQuantity->quantity + $request->quantity]);
-                    $this->stockItem->wheredealerId($request->dealer_id)->update($request->except(['_token']));
+                    $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                    $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                    $updateStock->update($request->except(['_token']));
                     $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
                     if (!empty($requestBottle)) {
                         $requestBottle->delete();
+                        // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
                     }
                     return back();
                 } else {
                     if ($preQuantity->quantity < $request->quantity) {
                         return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
                     } else {
-                        $this->stockItem->wheredealerId($request->dealer_id)->whereStock(1)->update(["dealer_id" => $request->dealer_id,
+                        $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->update(["dealer_id" => $request->dealer_id,
                         "item_id" => $request->item_id,
                         'quantity' => $preQuantity->quantity - $request->quantity,
                         "stock" => 1,
-                        "price" => 0]);
+                        "price" => $user->price * $request->quantity]);
                         $this->stockItem->create(["dealer_id" => $request->dealer_id,
                                                     "item_id" => $request->item_id,
                                                     "quantity" => $request->quantity,
                                                     "stock" => 0,
                                                     "price" => $user->price * $request->quantity]);
 
-                        RequestBottle::whereDealerId($request->dealer_id)->latest()->first()->delete();
+                        $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        if (!empty($requestBottle)) {
+                            $requestBottle->delete();
+                            // $requestBottle->update(['quantity' => $requestBottle->quantity - $request->quantity]);
+                        }
                         return back();
                     }
                 }

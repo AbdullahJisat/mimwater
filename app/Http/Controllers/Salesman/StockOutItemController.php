@@ -43,7 +43,7 @@ class StockOutItemController extends Controller
                         $preQuantity->item_id = $request->item_id;
                         $preQuantity->quantity = $preQuantity->quantity - $request->quantity;
                         $preQuantity->stock = 1;
-                        $preQuantity->price = 0;
+                        $preQuantity->price = $preQuantity->price;
                         $preQuantity->save();
                         $saveStockOut = $this->stockOutItem->create(["retailer_id" => $request->retailer_id,
                                                     "item_id" => $request->item_id,
@@ -117,7 +117,7 @@ class StockOutItemController extends Controller
                         $preQuantity->item_id = $request->item_id;
                         $preQuantity->quantity = $preQuantity->quantity - $request->quantity;
                         $preQuantity->stock = 1;
-                        $preQuantity->price = 0;
+                        $preQuantity->price = $preQuantity->price;
                         $preQuantity->save();
                         $saveStockOut = $this->stockOutItem->create(["dealer_id" => $request->dealer_id,
                                                     "item_id" => $request->item_id,

@@ -56,6 +56,7 @@
                             <th>Item</th>
                             <th>Retailer</th>
                             <th>Quantity</th>
+                            <th>Price</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -66,6 +67,7 @@
                                 <td data-label="Name">{{ $stockItem->item->name }}</td>
                                 <td data-label="Name">{{ $stockItem->retailer->name }}</td>
                                 <td data-label="Image">{{ $stockItem->quantity }}</td>
+                                <td data-label="Image">{{ $stockItem->price }}</td>
                                 <td data-label="Image">{{ $stockItem->created_at->format('d-M-Y') }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
