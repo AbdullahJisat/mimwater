@@ -33,6 +33,8 @@ class StockOutItemController extends Controller
                 $preQuantity = $this->stockItem->whereRetailerId($request->retailer_id)->whereStock(1)->latest()->first();
                 if (empty($preQuantity)){
                     return redirect()->route('stock-items.index')->with('message', "Stock not available");
+                } elseif ($preQuantity->temp_total == 0) {
+                        return redirect()->route('stock-items.index')->with('message', "Stock not available");
                 } elseif ($preQuantity->quantity == 0) {
                     return redirect()->route('stock-items.index')->with('message', "Stock not available");
                 } else {
@@ -90,12 +92,12 @@ class StockOutItemController extends Controller
     }
 
     public function stockByItem($itemId, $userId){
-        $preQuantity = StockItem::whereItemId($itemId)->whereDealerId($userId)->first();
+        $preQuantity = StockItem::whereItemId($itemId)->whereDealerId($userId)->latest()->first();
         return $preQuantity;
     }
 
     public function retailerStockByItem($itemId, $userId){
-        $preQuantity = StockItem::whereItemId($itemId)->whereRetailerId($userId)->first();
+        $preQuantity = StockItem::whereItemId($itemId)->whereRetailerId($userId)->sum('quantity');
         return $preQuantity;
     }
 
@@ -107,6 +109,8 @@ class StockOutItemController extends Controller
             $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
             if (empty($preQuantity)){
                     return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
+                } elseif ($preQuantity->temp_total == 0) {
+                    return redirect()->route('stock-items.index')->with('message', "Stock not available");
                 } elseif ($preQuantity->quantity == 0) {
                     return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
                 } else {

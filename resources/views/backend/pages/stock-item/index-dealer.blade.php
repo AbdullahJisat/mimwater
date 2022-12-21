@@ -57,6 +57,7 @@
                             <th>Dealer</th>
                             <th>Quantity</th>
                             <th>Price</th>
+                            <th>Total</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -64,10 +65,11 @@
                         @forelse ($stockItems as $stockItem)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name">{{ $stockItem->item->name }}</td>
-                                <td data-label="Name">{{ $stockItem->dealer->name }}</td>
+                                <td data-label="Name">{{ $stockItem->item->name ?? "" }}</td>
+                                <td data-label="Name">{{ $stockItem->dealer->name ?? "" }}</td>
                                 <td data-label="Image">{{ $stockItem->quantity }}</td>
                                 <td data-label="Image">{{ $stockItem->price }}</td>
+                                <td data-label="Image">{{ $stockItem->temp_total }}</td>
                                 <td data-label="Image">{{ $stockItem->created_at->format('d-M-Y') }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">

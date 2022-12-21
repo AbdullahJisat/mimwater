@@ -165,9 +165,9 @@
                 </tr>
 
                 <tr class="item last">
-                    <td><input type="hidden" value="{{ $item->item->id }}" name="item_id">{{ $item->item->name }}</td>
+                    <td><input type="hidden" value="{{ $item->item->id }}" name="item_id">{{ $item->item->name ?? "" }}</td>
 
-                    <td>${{ $item->price }}</td>
+                    <td>${{ $item->price ?? 0 }}</td>
                 </tr>
 
                 @php
@@ -177,7 +177,7 @@
                 <tr class="total">
                     <td></td>
 
-                    <td>Due: ${{ $dueCheck->due ?? 0 }}  <input type="hidden" name="totalDue" value="{{ $dueCheck->due ?? 0 }}"></td>
+                    <td>Due: ${{ $due ?? 0 }}  <input type="hidden" name="totalDue" value="{{ $due ?? 0 }}"></td>
                 </tr>
 
 

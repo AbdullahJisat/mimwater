@@ -313,6 +313,21 @@
                         </li>
                     </ul>
                 </li>
+                <li class="pcoded-hasmenu @yield('message_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Message</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_message_active')">
+                            <a href="{{ route('contacts.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Messages') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @endauth
 
                 @auth('dealer')

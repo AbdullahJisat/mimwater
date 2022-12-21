@@ -44,20 +44,22 @@
                     </thead>
                     <tbody>
                         @forelse ($dues as $due)
-                            <tr>
-                                <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name">{{ $due->dealer->name ?? "" }}</td>
-                                <td data-label="Quantity">{{ $due->due }}</td>
-                                <td data-label="Quantity">{{ $due->created_at->format('Y-m-d') }}</td>
-                                {{-- <td data-label="Action">
-                                    <form action="{{route('dues.destroy',$due->id)}}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <a href="{{route('dues.edit',$due->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
-                                        <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </td> --}}
-                            </tr>
+                        @if ($due->due != 0)
+                        <tr>
+                            <td data-label="SL">{{ $loop->iteration }}</td>
+                            <td data-label="Name">{{ $due->dealer->name ?? "" }}</td>
+                            <td data-label="Quantity">{{ $due->due }}</td>
+                            <td data-label="Quantity">{{ $due->created_at->format('Y-m-d') }}</td>
+                            {{-- <td data-label="Action">
+                                <form action="{{route('dues.destroy',$due->id)}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <a href="{{route('dues.edit',$due->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                    <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td> --}}
+                        </tr>
+                        @endif
                         @empty
                             <td colspan="8">No due available</td>
                         @endforelse
