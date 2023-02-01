@@ -39,6 +39,7 @@
                             <th>SL</th>
                             <th>Retailer Name</th>
                             <th>Salesman Name</th>
+                            <th>Payment Type</th>
                             <th>cash</th>
                             <th>due</th>
                             <th>total</th>
@@ -51,6 +52,22 @@
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name">{{ $cash->retailer->name }}</td>
                                 <td data-label="Name">{{ $cash->salesman->name }}</td>
+                                @switch($cash->payment_type)
+                                    @case(1)
+                                        <td data-label="Name">Cash</td>
+                                        @break
+                                    @case(2)
+                                        <td data-label="Name">Check</td>
+                                        @break
+                                    @case(3)
+                                        <td data-label="Name">Bkash Ceo</td>
+                                        @break
+                                    @case(4)
+                                        <td data-label="Name">Bkash</td>
+                                        @break
+                                    @default
+                                        <td data-label="Name">Cash</td>
+                                @endswitch
                                 <td data-label="Quantity">{{ $cash->amount }}</td>
                                 <td data-label="Quantity">{{ $cash->due }}</td>
                                 <td data-label="Quantity">{{ $cash->total }}</td>

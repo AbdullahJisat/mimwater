@@ -8,7 +8,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ url('admin/store/stock-out-items') }}" novalidate enctype="multipart/form-data">
+                {{-- <form method="post" action="{{ url('admin/store/stock-out-items') }}" novalidate enctype="multipart/form-data"> --}}
+                    <form method="post" action="{{ route('stockout-billdealer') }}" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Dealer Name</label>

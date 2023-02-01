@@ -8,9 +8,9 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            {{-- <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
-            @include('backend.pages.stock-out-item.create') --}}
-            <form action="{{ route('show_dealer_dues_by_date') }}" method="get" style="display: inline-flex">
+            <button style="float: left" type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#dealerDueModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add due') }}</button>
+            @include('backend.pages.stock-out-item.dealer_due_create')
+            <form style="float: right" action="{{ route('show_dealer_dues_by_date') }}" method="get" style="display: inline-flex">
                 {{-- @csrf --}}
                 <div class="row input-daterange">
                     <div class="col-md-4">
@@ -40,6 +40,7 @@
                             <th>Dealer Name</th>
                             <th>Due</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,14 +51,14 @@
                             <td data-label="Name">{{ $due->dealer->name ?? "" }}</td>
                             <td data-label="Quantity">{{ $due->due }}</td>
                             <td data-label="Quantity">{{ $due->created_at->format('Y-m-d') }}</td>
-                            {{-- <td data-label="Action">
-                                <form action="{{route('dues.destroy',$due->id)}}" method="post">
+                            <td data-label="Action">
+                                {{-- <form action="{{route('dues.destroy',$due->id)}}" method="post">
                                     @method('DELETE')
-                                    @csrf
-                                    <a href="{{route('dues.edit',$due->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
-                                    <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
-                                </form>
-                            </td> --}}
+                                    @csrf --}}
+                                    <a href="{{url('admin/edit/'.$due->id.'/dealer-due')}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                    {{-- <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
+                                </form> --}}
+                            </td>
                         </tr>
                         @endif
                         @empty
@@ -74,3 +75,20 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+$('#dealer_id').change(function(){
+    // alert('ff');
+    var dealerId = $(this).val();
+    // alert(dealerId);
+    $.ajax({
+        url:`previous-dealer-dues/`+dealerId,
+        method:"get",
+        success:function(data){
+            $("#preDue").html(data);
+        }
+    });
+});
+</script>
+@endpush

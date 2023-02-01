@@ -1,7 +1,7 @@
 <footer class="sec7 ">
     <div class="sec7-content row">
         <div class="sec7-content1 col-lg-4 col-12">
-            <img style="padding: 60px; padding-bottom: 50px;display: block; width: 100%; margin-left: auto; margin-right: auto;" src="image/meem-logooo.png" alt="">
+            <img style="padding: 60px; padding-bottom: 50px;display: block; width: 100%; margin-left: auto; margin-right: auto;" src="{{ asset('frontend') }}/image/meem-logooo.png" alt="">
 
         </div>
         <div class="sec7-content2 col-lg-4 col-6">
@@ -20,17 +20,17 @@
         <div class="sec7-content2 col-lg-4 col-6">
             <div>
                 <p style="padding-top: 60px; font-size: 24px; color: aquamarine;">Head Office</p>
-                <p style="color:#b1b1b1; font-size: 15px;">Innovative Bhuiyan Orchid (Level 3 &p) <br> 1025/A, Bayazid Bostami Road, <br> East Nasirabad, Chittagong, Bangladesh . <br> Tel: +88 01313 767080 <br> Email: info@blueaquabd.com</p>
+                <p style="color:#b1b1b1; font-size: 15px;">Joy Food & Bevarage Industry, Plot No. B/8, Block-b, Nasirabad Shilpo Area,Sholashahar, Chattogram, <br> Bangladesh. <br> Tel: +88 01715-676677 <br> Email: meemsuperwater@gmail.com</p>
             </div>
             <div>
                 <p style="font-size: 24px; color: aquamarine; padding-top: 10px;">
                     Factory
                 </p>
-                <p style="color:#b1b1b1;font-size: 15px;">Plot No. D/8, Block-A, BSCIC I/A, Sholashahar, Baizid, Chattogram, Bangladesh.
+                <p style="color:#b1b1b1;font-size: 15px;">Joy Food & Bevarage Industry, Plot No. B/8, Block-b, Nasirabad Shilpo Area,Sholashahar, Chattogram, <br> Bangladesh.
                 </p>
             </div>
         </div>
     </div>
     <hr style="margin-top: 50px; opacity:.20; border: 1px solid rgb(131, 131, 131);">
-    <p style="padding-top:20px; font-size: 10px; color: rgb(167, 167, 167); padding: 20px;">© 2021, BlueAqua . All rights reserved .</p>
+    <p style="padding-top:20px; font-size: 10px; color: rgb(167, 167, 167); padding: 20px;">© 2021, MEEM DRINKING WATER . All rights reserved .</p>
 </footer>

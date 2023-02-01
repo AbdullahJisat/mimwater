@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Salesman;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dealer;
+use App\Models\Payment;
 use App\Models\Retailer;
+use App\Models\Statement;
 use App\Models\StockItem;
 use App\Models\StockOutItem;
 use Illuminate\Http\Request;
@@ -86,9 +88,30 @@ class StockOutItemController extends Controller
         }
     }
 
+    public function stockOutBillDealer(Request $request)
+    {
+        $user = Dealer::find($request->dealer_id);
+        $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+
+        $stockOutItem = new StockOutItem();
+        $stockOutItem->item_id = $request->item_id;
+        $stockOutItem->dealer_id = $request->dealer_id;
+        $stockOutItem->quantity = $request->quantity;
+        if (!empty($preDue)) {
+            $stockOutItem->price = ($user->price * $request->quantity) + $preDue;
+        } else {
+            $stockOutItem->price = $user->price * $request->quantity;
+        }
+            $stockOutItem->save();
+            $preQuantity = $this->stockItem->whereItemId($request->item_id)->whereDealerId($request->dealer_id)->latest()->first();
+            $preQuantity->quantity = $preQuantity->quantity - $request->quantity;
+            $preQuantity->save();
+            return redirect()->route('invoices.dealer_index_stock_out', $stockOutItem->id);
+    }
+
     public function indexDealer()
     {
-        return view('backend.pages.stock-out-item.dealer-index')->with('stockOutItems', $this->stockOutItem->whereNull('retailer_id')->get());
+        return view('backend.pages.stock-out-item.dealer-index')->with('stockOutItems', $this->stockOutItem->whereNull('retailer_id')->paginate(5));
     }
 
     public function stockByItem($itemId, $userId){
@@ -104,29 +127,45 @@ class StockOutItemController extends Controller
     public function stockOutDealer(Request $request)
     {
         // DB::beginTransaction();
+
         try {
             $user = Dealer::find($request->dealer_id);
-            $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
-            if (empty($preQuantity)){
-                    return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
-                } elseif ($preQuantity->temp_total == 0) {
-                    return redirect()->route('stock-items.index')->with('message', "Stock not available");
-                } elseif ($preQuantity->quantity == 0) {
-                    return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
+            // $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
+
+            // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+            $preDue = Statement::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+            $preQuantity = $this->stockItem->whereItemId($request->item_id)->whereDealerId($request->dealer_id)->latest()->first();
+            // $statement = new Statement();
+            // $statement->dealer_id = $request->dealer_id;
+        // $statement->admin_id = auth('admin')->user()->id;
+        // $statement->stock = abs($request->quantity - $preQuantity->quantity);
+        // $statement->rate = $user->price;
+        // $statement->payment = $user->price * $request->quantity;
+        // $statement->due = abs($preDue - $statement->payment);
+        // $statement->save();
+
+        if (empty($preQuantity)){
+            return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
+            // } elseif ($preQuantity->temp_total == 0) {
+                //     return redirect()->route('stock-items.index')->with('message', "Stock not available");
+            } elseif ($preQuantity->quantity == 0) {
+                return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
+            } else {
+                if ($preQuantity->quantity < $request->quantity) {
+                    return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
                 } else {
-                    if ($preQuantity->quantity < $request->quantity) {
-                        return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
-                    } else {
-                        $preQuantity->dealer_id = $request->dealer_id;
-                        $preQuantity->item_id = $request->item_id;
-                        $preQuantity->quantity = $preQuantity->quantity - $request->quantity;
-                        $preQuantity->stock = 1;
-                        $preQuantity->price = $preQuantity->price;
-                        $preQuantity->save();
-                        $saveStockOut = $this->stockOutItem->create(["dealer_id" => $request->dealer_id,
-                                                    "item_id" => $request->item_id,
-                                                    "quantity" => $request->quantity,
-                                                    "price" => $user->price * $request->quantity]);
+                    $preQuantity->dealer_id = $request->dealer_id;
+                    $preQuantity->item_id = $request->item_id;
+                    $preQuantity->quantity = $preQuantity->quantity - $request->quantity;
+                    $preQuantity->stock = 1;
+                    $preQuantity->price = $preQuantity->price;
+                    // $preQuantity->temp_total = abs($preQuantity->temp_total - ($user->price * $request->quantity));
+                    $preQuantity->save();
+                    $saveStockOut = $this->stockOutItem->create(["dealer_id" => $request->dealer_id,
+                    "item_id" => $request->item_id,
+                    "quantity" => $request->quantity,
+                    "price" => $user->price * $request->quantity]);
+                    // dd($request->all(), $preDue, $preQuantity);
                         return redirect()->route('invoices.dealer_index', $saveStockOut->id);
                     }
                 }

@@ -153,9 +153,9 @@
                     required:true,
                     email: true,
                 },
-                password:{
-                    required:true,
-                },
+                // password:{
+                //     required:true,
+                // },
                 username:{
                     required:true,
                 },

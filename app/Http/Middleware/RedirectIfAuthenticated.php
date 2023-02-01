@@ -48,6 +48,9 @@ class RedirectIfAuthenticated
         if ($guard == "admin" && Auth::guard($guard)->check()) {
             return redirect('/admin/dashboard');
         }
+        if ($guard == "manager" && Auth::guard($guard)->check()) {
+            return redirect('/managers/dashboard');
+        }
         if ($guard == "salesman" && Auth::guard($guard)->check()) {
             return redirect('/salesmans/dashboard');
         }

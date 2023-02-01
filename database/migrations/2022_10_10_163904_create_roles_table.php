@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('stock_items', function (Blueprint $table) {
-            $table->decimal('temp_total')->nullable()->default(0.00)->after('price');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('guard_name')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('stock_items', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('roles');
     }
 };

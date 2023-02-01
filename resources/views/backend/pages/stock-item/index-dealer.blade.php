@@ -46,6 +46,8 @@
         <div class="card-header">
             <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock item') }}</button>
             @include('backend.pages.stock-item.dealer-create')
+            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockInItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Manual stock in item') }}</button>
+            @include('backend.pages.stock-item.dealer-create-stock')
         </div>
         <div class="card-block">
             <div class="dt-responsive table-responsive">
@@ -59,6 +61,7 @@
                             <th>Price</th>
                             <th>Total</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,14 +74,14 @@
                                 <td data-label="Image">{{ $stockItem->price }}</td>
                                 <td data-label="Image">{{ $stockItem->temp_total }}</td>
                                 <td data-label="Image">{{ $stockItem->created_at->format('d-M-Y') }}</td>
-                                {{-- <td data-label="Action">
-                                    <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
+                                <td data-label="Action">
+                                    {{-- <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
                                         @method('DELETE')
-                                        @csrf
-                                        <a href="{{route('stock_items.edit',$stock_item->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
-                                        <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
+                                        @csrf --}}
+                                        <a href="{{ url('admin/edit/'.$stockItem->id.'/dealer-stock-items') }}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                        {{-- <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button> --}}
                                     </form>
-                                </td> --}}
+                                </td>
                             </tr>
                         @empty
                             <td colspan="8">No stock_item available</td>

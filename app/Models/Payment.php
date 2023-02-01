@@ -35,4 +35,19 @@ class Payment extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('created_at', \Carbon\Carbon::today());
+    }
+
+    public function scopePaymentStatus($query, $type)
+    {
+        return $query->wherePaymentStatus($type);
+    }
+
+    public function scopeDealer($query)
+    {
+        return $query->whereDealerId(auth('dealer')->user()->id);
+    }
 }

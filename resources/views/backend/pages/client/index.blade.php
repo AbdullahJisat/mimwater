@@ -16,7 +16,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
-                            {{-- <th>Action</th> --}}
+                           <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,14 +25,14 @@
                                 <td data-label="SL">{{ $loop->iteration }}</td>
                                 <td data-label="Name"><img src="{{ (!empty($client->image)) ? $client->image : asset('noImage.png') }}"
                                     style="width: 50px;height: 50px;border: 1px solid #000;"></td>
-                                {{-- <td data-label="Action">
-                                    <form action="{{route('galleries.destroy',$client->id)}}" method="post">
+                               <td data-label="Action">
+                                    <form action="{{route('clients.destroy',$client->id)}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <a href="{{route('galleries.edit',$client->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{route('clients.edit',$client->id)}}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
                                         <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
                                     </form>
-                                </td> --}}
+                                </td> 
                             </tr>
                         @empty
                             <td colspan="8">No client available</td>

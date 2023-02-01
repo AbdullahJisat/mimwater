@@ -41,8 +41,8 @@
                             <i class="feather icon-bell"></i>
                             <span class="badge bg-c-red">5</span>
                         </div>
-                        <ul class="show-notification notification-view dropdown-menu"
-                            data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
                             <li>
                                 <h6>Notifications</h6>
                                 <label class="label label-danger">New</label>
@@ -61,8 +61,7 @@
                             </li>
                             <li>
                                 <div class="media">
-                                    <img class="img-radius" src="jpg/avatar-3.jpg"
-                                        alt="Generic placeholder image">
+                                    <img class="img-radius" src="jpg/avatar-3.jpg" alt="Generic placeholder image">
                                     <div class="media-body">
                                         <h5 class="notification-user">Joseph William</h5>
                                         <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -73,8 +72,7 @@
                             </li>
                             <li>
                                 <div class="media">
-                                    <img class="img-radius" src="jpg/avatar-4.jpg"
-                                        alt="Generic placeholder image">
+                                    <img class="img-radius" src="jpg/avatar-4.jpg" alt="Generic placeholder image">
                                     <div class="media-body">
                                         <h5 class="notification-user">Sara Soudein</h5>
                                         <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -96,99 +94,122 @@
                 </li>
                 <li class="user-profile header-notification">
                     @if (Auth::guard('admin')->check())
-                            <div class="dropdown-primary dropdown">
-                                <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                    <div class="dropdown-primary dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                                    <span>{{ Auth::guard('admin')->user()->name ?? "" }}</span>
-                                    <i class="feather icon-chevron-down"></i>
-                                </div>
-                                <ul class="show-notification profile-notification dropdown-menu"
-                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                            <span>{{ Auth::guard('admin')->user()->name ?? "" }}</span>
+                            <i class="feather icon-chevron-down"></i>
+                        </div>
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
 
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                        </a>
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                </a>
 
-                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        @elseif(Auth::guard('dealer')->check())
-                            <div class="dropdown-primary dropdown">
-                                <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif(Auth::guard('manager')->check())
+                    <div class="dropdown-primary dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                                    <span>{{ Auth::guard('dealer')->user()->name ?? "" }}</span>
-                                    <i class="feather icon-chevron-down"></i>
-                                </div>
-                                <ul class="show-notification profile-notification dropdown-menu"
-                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                            <span>{{ Auth::guard('manager')->user()->name ?? "" }}</span>
+                            <i class="feather icon-chevron-down"></i>
+                        </div>
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
 
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                        </a>
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                </a>
 
-                                        <form id="logout-form" action="{{ route('dealer.logout') }}" method="POST">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                            @elseif(Auth::guard('salesman')->check())
-                            <div class="dropdown-primary dropdown">
-                                <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                <form id="logout-form" action="{{ route('manager.logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif(Auth::guard('dealer')->check())
+                    <div class="dropdown-primary dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                                    <span>{{ Auth::guard('salesman')->user()->name ?? "" }}</span>
-                                    <i class="feather icon-chevron-down"></i>
-                                </div>
-                                <ul class="show-notification profile-notification dropdown-menu"
-                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                            <span>{{ Auth::guard('dealer')->user()->name ?? "" }}</span>
+                            <i class="feather icon-chevron-down"></i>
+                        </div>
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
 
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                        </a>
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                </a>
 
-                                        <form id="logout-form" action="{{ route('salesman.logout') }}" method="POST">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                            @elseif(Auth::guard('retailer')->check())
-                            <div class="dropdown-primary dropdown">
-                                <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                <form id="logout-form" action="{{ route('dealer.logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif(Auth::guard('salesman')->check())
+                    <div class="dropdown-primary dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
 
-                                    <span>{{ Auth::guard('retailer')->user()->name ?? "" }}</span>
-                                    <i class="feather icon-chevron-down"></i>
-                                </div>
-                                <ul class="show-notification profile-notification dropdown-menu"
-                                    data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                            <span>{{ Auth::guard('salesman')->user()->name ?? "" }}</span>
+                            <i class="feather icon-chevron-down"></i>
+                        </div>
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
 
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0)"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="feather icon-log-out"></i>{{ __('Logout') }}
-                                        </a>
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                </a>
 
-                                        <form id="logout-form" action="{{ route('retailer.logout') }}" method="POST">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        @else
-                        retailer
+                                <form id="logout-form" action="{{ route('salesman.logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif(Auth::guard('retailer')->check())
+                    <div class="dropdown-primary dropdown">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="jpg/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+
+                            <span>{{ Auth::guard('retailer')->user()->name ?? "" }}</span>
+                            <i class="feather icon-chevron-down"></i>
+                        </div>
+                        <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
+                            data-dropdown-out="fadeOut">
+
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="feather icon-log-out"></i>{{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('retailer.logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @else
+                    retailer
                     @endif
                 </li>
             </ul>

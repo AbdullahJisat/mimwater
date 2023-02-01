@@ -7,6 +7,8 @@ use App\Models\NewsEvents;
 use App\Models\ProductionFacilities;
 use App\Models\Retailer;
 
+use function PHPUnit\Framework\returnSelf;
+
 function allItem(){
     return Item::all();
 }
@@ -29,5 +31,19 @@ function allProductionFacilities(){
 
 function allNewsEvents(){
     return NewsEvents::all();
+}
+
+function getAuthType(){
+    if (auth('admin')->check()) {
+        return 'admin';
+    } elseif (auth('salesman')->check()) {
+        return 'salesman';
+    } elseif (auth('dealer')->check()) {
+        return 'dealer';
+    } elseif (auth('retailer')->check()) {
+        return 'retailer';
+    } else {
+        return false;
+    }
 }
 

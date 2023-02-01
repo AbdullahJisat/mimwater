@@ -3,15 +3,13 @@
 @section('content')
 <section class="content">
     <div class="sec">
-        <div class="sec1 row mx-auto g-3">
+        <div class="sec1 row mx-auto g-3 text-center">
             @foreach ($items as $item)
             <div class="sec1-card col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card-content">
                     <img class="cardImg1" src="{{ (!empty($item->image)) ? $item->image : asset('noImage.png') }}" width="80%" alt="">
                     <p style="text-align: center; font-weight: bold; color: rgb(1, 29, 29); font-size: 20px;">{{ $item->name }}</p>
-                    <p
-                        style=" text-align:center; font-size: 30px; font-weight: bold; color: red; padding-bottom: 12px;">
-                        (coming soon)</p>
+                  
                 </div>
 
             </div>
