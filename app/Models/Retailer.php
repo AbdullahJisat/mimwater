@@ -11,4 +11,14 @@ class Retailer extends Authenticatable
     use HasFactory;
 
     protected $guarded = [];
+
+    public function salesman()
+    {
+        return $this->belongsTo(Salesman::class);
+    }
+
+    public function statements()
+    {
+        return $this->hasMany(Statement::class);
+    }
 }

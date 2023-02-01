@@ -225,7 +225,7 @@
                 </tr>
             </table>
             <hr>
-            <button style="float: right; type="submit" class="btn btn-primary">Pay</button>
+            <button style="float: right; type="submit" name="action" value="pay" class="btn btn-primary">Pay</button>
         </form>
     </div>
 

@@ -23,13 +23,14 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        $image_path = [];
         if($request->hasFile('image')) {
             foreach($request->image as $key => $image){
-                $image_path[] = ['image' => $this->file($image, 'client', $key+1)];
-            }
+            // $filename = 'client'.'-'.'image'.'-'.$key+1.'.'.$image->getClientOriginalExtension();
+            $filename = 'client-image'.'-'.$key.$image->getClientOriginalExtension();
+            $image_path = str_ireplace("public/","/storage/", $image->storeAs('public/upload/'.'client_image', $filename));
+            $this->client->create(['image' => $image_path]);
+            }   
         }
-        $this->client->insert($image_path);
         return redirect()->route('clients.index');
     }
 

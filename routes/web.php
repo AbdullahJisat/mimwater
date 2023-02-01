@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CostController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DirectorController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\NewsEventsController;
 use App\Http\Controllers\Admin\ProductionFacilitiesController;
 use App\Http\Controllers\Admin\ReportController;
@@ -20,11 +21,46 @@ use App\Http\Controllers\Salesman\RequestBottleController;
 use App\Http\Controllers\Salesman\RetailerController;
 use App\Http\Controllers\Salesman\StockItemController;
 use App\Http\Controllers\Salesman\StockOutItemController;
+use App\Http\Controllers\StatementController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 // UI prefix
+Route::get('role', function () {
+    dd('admin');
+})->middleware('role_custom:new');
+
+Route::namespace('App/Http/Controllers/Admin')->prefix('admin/role')->name('admin.role.')->group(function () {
+    Route::get('', [RolePermissionController::class, 'index'])->name('index');
+    Route::get('create', [RolePermissionController::class, 'create'])->name('create');
+    Route::post('get-permissions-by-role-id/{id}', [RolePermissionController::class, 'getPermissionsByRoleId'])->name('get_permissions_by_role_id');
+    Route::post('store', [RolePermissionController::class, 'store'])->name('store');
+    Route::post('permission-store', [RolePermissionController::class, 'permissionStore'])->name('permission_store');
+});
+
+
+Route::group(['middleware' => ['auth:admin']], function () {
+    // Route::get('role', function () {
+    //     if (auth('admin')->user()->hasRole('admin')) {
+    //         dd('admin');
+    //     }
+    // });
+    Route::resource('roles', RoleController::class);
+    Route::resource('admins', AdminController::class);
+    Route::resource('permissions', PermissionController::class);
+});
+
 Route::get('/', [UIController::class, 'index'])->name('index');
+Route::get('statements', [StatementController::class, 'index'])->name('statement.index');
+Route::get('statements-retailer', [StatementController::class, 'indexRetailer'])->name('statement.index_retailer');
+Route::get('statements-form', [StatementController::class, 'create'])->name('statement.create');
+Route::get('retailer-statements-form', [StatementController::class, 'createRetailer'])->name('statement.create_retailer');
+// Route::get('cash-in-hand', ReportController::class)->name('cash_in_hand');
+Route::get('profit-report', [App\Http\Controllers\Admin\ReportController::class, 'profitReport'])->name('profit_report');
 Route::get('overview', [UIController::class, 'overview'])->name('overview');
 Route::get('ceo-message', [UIController::class, 'ceoMsg'])->name('ceo_message');
 Route::get('chief-message', [UIController::class, 'chiefMsg'])->name('chief_message');
@@ -41,7 +77,7 @@ Route::get('invoice', [UIController::class, 'invoice'])->name('invoice');
 Route::get('invoice-details/{id}', [UIController::class, 'invoice'])->name('invoice-details')->where('id', '[0-9]+');
 
 
-Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function() {
+Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function () {
     Route::get('report', [ReportController::class, 'getReport'])->name('get_report');
     Route::get('show-report-date', [ReportController::class, 'showReportDateFilter'])->name('show_report_date');
     Route::get('dues', [PaymentInvoiceController::class, 'showDues'])->name('invoices.dues');
@@ -49,9 +85,11 @@ Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman'], function()
     Route::get('cashes', [PaymentInvoiceController::class, 'showCashes'])->name('invoices.cashes');
     Route::get('show-cash-date', [PaymentInvoiceController::class, 'showCashesDateFilter'])->name('show_cash_by_date');
 });
-Route::group(['middleware' => 'auth:admin'], function() {
+Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('retailers-salesman/{id}', [SalesmanController::class, 'retailersBySalesman'])->name('retailers_salesman');
     Route::get('dealer-dues', [PaymentInvoiceController::class, 'showDealerDues'])->name('invoices.dealer_dues');
+    Route::get('previous-dealer-dues/{id}', [PaymentInvoiceController::class, 'previousDealerDue'])->name('previous_dealer_dues');
+    Route::post('dealer-dues-store', [PaymentInvoiceController::class, 'storeDealerDues'])->name('stock-out-items.dealer_due_store');
     Route::get('show-dealer-dues-date', [PaymentInvoiceController::class, 'showDealerDuesDateFilter'])->name('show_dealer_dues_by_date');
     Route::get('dealer-cashes', [PaymentInvoiceController::class, 'showDealerCashes'])->name('invoices.dealer_cashes');
     Route::get('show-dealer-cash-date', [PaymentInvoiceController::class, 'showDealerCashesDateFilter'])->name('show_dealer_cash_by_date');
@@ -59,15 +97,13 @@ Route::group(['middleware' => 'auth:admin'], function() {
     Route::post('admin/store/stock-out-items', [StockOutItemController::class, 'stockOutDealer'])->name('stock_out_dealer');
     Route::get('admin/dealer-stock-items', [StockItemController::class, 'indexStockDealer'])->name('admin.index_stock_dealer');
     Route::post('admin/store/stock-items', [StockItemController::class, 'stockDealer'])->name('stock_dealer');
+    Route::post('admin/store/stock-in-items', [StockItemController::class, 'stockInDealer'])->name('stock_in_dealer');
     Route::get('admin/dealer/request', [RequestBottleController::class, 'dealerRequest'])->name('dealer_request');
 
     Route::get('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceIndex'])->name('invoices.dealer_index');
     Route::post('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceStore'])->name('invoices.dealer_store');
 
-
-
-
-
+    Route::get('income-report', [ReportController::class, 'incomeReport'])->name('income_report');
 });
 // Admin prefix
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -75,11 +111,19 @@ Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(functio
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('show_login');
     Route::post('login', [LoginController::class, 'login'])->name('login');
 });
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
+Route::prefix('admin')->middleware(['auth:admin', 'role_custom:director'])->group(function () {
     Route::get('dashboard', function () {
-        return view('backend.layouts.master');
+        // dd(auth('admin')->user()->can('create-admin'));
+        return view('backend.layouts.partials._dashboard', ['loans' => \App\Models\Loan::all()]);
     });
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+    Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
+    Route::get('loans-report', [LoanController::class, 'loanReport'])->name('loans.report');
+    Route::get('pay-loans', [LoanController::class, 'payIndex'])->name('loans.pay_index');
+    Route::post('loans/store', [LoanController::class, 'store'])->name('loans.store');
+    Route::post('loans/pay-store', [LoanController::class, 'payStore'])->name('loans.pay_store');
+    Route::post('loans/delete/{id}', [LoanController::class, 'destroy'])->name('loans.destroy');
 
     Route::resource('salesmans', SalesmanController::class);
     Route::resource('items', ItemController::class);
@@ -88,6 +132,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('client-reviews', ClientReviewController::class);
     Route::resource('dealers', DealerController::class);
+    Route::get('retailers', function () {
+        return view('backend.pages.retailer.admin_index', ['retailers' => allRetailer()]);
+    })->name('admin_retailers');
     Route::resource('costs', CostController::class);
     Route::resource('items', ItemController::class);
     Route::resource('stock-items', StockItemController::class);
@@ -126,6 +173,8 @@ Route::prefix('salesmans')->middleware('auth:salesman')->group(function () {
     Route::get('invoices/{id}', [PaymentInvoiceController::class, 'index'])->name('invoices.index');
     Route::post('invoices/{id}', [PaymentInvoiceController::class, 'store'])->name('invoices.store');
     Route::get('retailer-dues', [PaymentInvoiceController::class, 'showRetailerDues'])->name('retailer_dues');
+    Route::get('previous-retailer-dues/{id}', [PaymentInvoiceController::class, 'previousRetailerDue'])->name('previous_retailer_dues');
+    Route::post('retailer-dues-store', [PaymentInvoiceController::class, 'storeRetailerDues'])->name('stock-out-items.retailer_due_store');
     Route::get('retailer-dues-date', [PaymentInvoiceController::class, 'showRetailerDuesDateFilter'])->name('retailer_dues_date');
     Route::get('retailer-cashes', [PaymentInvoiceController::class, 'showRetailerCashes'])->name('retailer_cashes');
     Route::get('retailer-cashes-date', [PaymentInvoiceController::class, 'showRetailerCashesDateFilter'])->name('retailer_cashes_date');

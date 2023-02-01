@@ -46,6 +46,8 @@
         <div class="card-header">
             <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add stock item') }}</button>
             @include('backend.pages.stock-item.dealer-create')
+            <button type="button" class="btn waves-effect waves-light btn-primary"  data-toggle="modal" data-target="#stockInItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Manual stock in item') }}</button>
+            @include('backend.pages.stock-item.dealer-create-stock')
         </div>
         <div class="card-block">
             <div class="dt-responsive table-responsive">

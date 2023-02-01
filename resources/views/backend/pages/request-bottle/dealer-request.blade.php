@@ -25,7 +25,7 @@
                         @forelse ($requestBottles as $requestBottle)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name">{{ $requestBottle->item->name }}</td>
+                                <td data-label="Name">{{ $requestBottle->item->name ?? "" }}</td>
                                 <td data-label="Name">{{ $requestBottle->dealer->name ?? '' }}</td>
                                 <td data-label="Quantity">{{ $requestBottle->quantity }}</td>
                                 {{-- <td data-label="Action">

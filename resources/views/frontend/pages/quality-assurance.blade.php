@@ -21,7 +21,7 @@
     </div>
     <h4
         style="text-align:center; color: #6EC1E4; font-size: 35px; font-weight: bold;font-family: Arial, Helvetica, sans-serif; margin-bottom: 10px;margin-top: 100px;">
-        Specialties of BLUE AQUA Drinking Water</h4>
+        Specialties of Meem Drinking Water</h4>
     <p class="content-P">
         Source of raw water is our own deep tube-well at 800 ft. below the ground. The collected deep water is then
         processed through our high-tech water purification process involves high quality quartz sand filtration,
@@ -31,12 +31,9 @@
         system also removes inorganic or organic toxic chemicals including cancer causing agents. Our water is Arsenic
         free, tested by BSTI & BCSIR, Institute of food science, Dhaka University and ICDDRB. Our water is meticulously
         quality controlled and BSTI approved. Also approved by the Department of Environment, Government of Bangladesh.
-        Blue aqua natural drinking water conforms to WHO and BSTI guidelines. We also request you to visit our plant at
-        Plot- D/8, Block-A, BSCIC, Baizid Bostami, Chattogram, to see the way to purify and fill our jar water.
+       
     </p>
-    <p style="color: rgb(53, 53, 53); text-decoration: line-through; font-weight: bold;">
-        Chemical Analysis of Water
-    </p>
+  
 
 </section>
 @endsection

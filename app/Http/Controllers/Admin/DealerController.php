@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDealerRequest;
 use App\Models\Dealer;
 use Illuminate\Http\Request;
+use Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class DealerController extends Controller
 {

@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use App\Permissions\HasPermissionsTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissionsTrait;
 
     protected $table = 'admins';
+
+    protected $guarded = [];
 
     /**
      * The attributes that are mass assignable.
@@ -43,5 +48,10 @@ class Admin extends Authenticatable
     public function payments()
     {
         return $this->hasMany(Payment::class, 'admin_id', 'id');
+    }
+
+    public function rolesa()
+    {
+        return $this->belongsToMany(Role::class, 'users_roles', 'admin_id', 'role_id');
     }
 }

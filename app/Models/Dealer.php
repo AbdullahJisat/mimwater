@@ -11,4 +11,9 @@ class Dealer extends Authenticatable
     use HasFactory;
 
     protected $guarded = [];
+
+    public function statements()
+    {
+        return $this->hasMany(Statement::class);
+    }
 }

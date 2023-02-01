@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dealer;
 use App\Models\Payment;
+use App\Models\Statement;
 use App\Models\StockItem;
 use App\Models\StockOutItem;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PaymentInvoiceController extends Controller
 {
@@ -14,7 +17,7 @@ class PaymentInvoiceController extends Controller
     {
         $this->stockOutItem = $stockOutItem;
         $this->payment = $payment;
-        view()->share(['items' => allItem(), 'retailers' => allRetailer()]);
+        view()->share(['items' => allItem(), 'retailers' => allRetailer(), 'dealers' => allDealer()]);
     }
 
     public function index($id){
@@ -38,23 +41,53 @@ class PaymentInvoiceController extends Controller
     }
 
     public function dealerInvoiceStore(Request $request, $id){
-        // dd($request->all());
-        // Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
-        $request = new Request($request->all());
+            DB::transaction(function () use ($request, $id) {
+                if ($request->action == 'pay') {
+                    $item = $this->stockOutItem->find($id);
+                    $user = Dealer::find($request->dealer_id);
+                    // dd($request->all());
+                    // Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
+                    $request = new Request($request->all());
 
 
-        if ($request->totalDue == 0) {
-            $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due, 'total' => $request->total]);
-        } else {
-            $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->totalDue - $request->due, 'amount' => $request->due, 'total' => $request->total]);
-        }
+                    if ($request->totalDue == 0) {
+                        $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->total - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+                    } else {
+                        $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => $request->totalDue - $request->due, 'amount' => $request->due, 'total' => $request->total]);
+                    }
 
-        // dd($request->all());
-        Payment::create($request->except('_token', 'totalDue'));
-        $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
-        $temp_total = $stockItem->price - $request->due;
-        // dd($request->all(), $stockItem->price, $request->due, $temp_total);
-        $stockItem->update(['temp_total' => $request->due]);
+                    // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+                    $preQuantity = Statement::whereDealerId($request->dealer_id)->latest()->first();
+                        $statement = new Statement();
+                        $statement->out = $request->quantity;
+                        $statement->dealer_id = $request->dealer_id;
+                        $statement->admin_id = auth('admin')->user()->id;
+                        $statement->stock = abs($request->quantity - $preQuantity->in);
+                        $statement->rate = $user->price;
+                        dd($request->due);
+                    if ($request->due != '') {
+                        $statement->payment = $request->due;
+                        $statement->due = abs($request->due - $preQuantity->due);
+                    } else {
+                        $statement->bill = $request->due;
+                        $statement->due = abs($request->due + $preQuantity->due);
+                    }
+                    $statement->save();
+
+                    Payment::create($request->except('_token', 'totalDue', 'action'));
+                    $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                    $temp_total = $stockItem->price - $request->due;
+                    // dd($request->all(), $stockItem->price, $request->due, $temp_total);
+                    $stockItem->update(['temp_total' => $temp_total]);
+                } else {
+                    $item = $this->stockOutItem->find($id);
+                    $item->delete();
+                }
+            });
+        // catch (\Throwable $e) {
+        //     DB::rollback();
+        //     throw $e;
+        // }
         return redirect()->route('invoices.dealer_cashes');
     }
 
@@ -172,7 +205,24 @@ class PaymentInvoiceController extends Controller
     public function showDealerDues(){
         $dues = Payment::whereNull('retailer_id')->whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get()->unique('dealer_id');;
         $duesTotal = $dues->sum('due');
-        return view('backend.pages.stock-out-item.dealer-due', ['dues' => $dues, 'duesTotal' => $duesTotal]);
+        return view('backend.pages.stock-out-item.dealer-due', ['dues' => $dues, 'duesTotal' => $duesTotal, 'dealers' => allDealer()]);
+    }
+
+    public function storeDealerDues(Request $request){
+        $due = Payment::whereNull('retailer_id')->whereDealerId($request->dealer_id)->orderBy('created_at', 'desc')->first();
+        if (!empty($due)){
+            $request = new Request($request->all());
+            $request->merge(['due' => $due->due - $request->due, 'admin_id' => auth('admin')->user()->id]);
+        }
+        $request = new Request($request->all());
+        $request->merge(['admin_id' => auth('admin')->user()->id]);
+        Payment::create($request->all());
+        return back();
+    }
+
+    public function previousDealerDue($id){
+        $due = Payment::whereNull('retailer_id')->whereDealerId($id)->orderBy('created_at', 'desc')->first();
+        return $due;
     }
 
     public function showDealerDuesDateFilter(Request $request){
@@ -291,6 +341,23 @@ class PaymentInvoiceController extends Controller
         // ->orderBy('created_at', 'desc')->get()->unique('retailer_id');
         $duesTotal = $dues->sum('due');
         return view('backend.pages.stock-out-item.due', ['dues' => $dues, 'duesTotal' => $duesTotal]);
+    }
+
+    public function storeRetailerDues(Request $request){
+        $due = Payment::whereNull('dealer_id')->whereRetailerId($request->retailer_id)->whereSalesmanId(auth('salesman')->user()->id)->orderBy('created_at', 'desc')->first();
+        if (!empty($due)){
+            $request = new Request($request->all());
+            $request->merge(['due' => $due->due + $request->due, 'salesman_id' => auth('salesman')->user()->id]);
+        }
+        $request = new Request($request->all());
+        $request->merge(['salesman_id' => auth('salesman')->user()->id]);
+        Payment::create($request->all());
+        return back();
+    }
+
+    public function previousRetailerDue($id){
+        $due = Payment::whereNull('dealer_id')->whereRetailerId($id)->orderBy('created_at', 'desc')->first();
+        return $due;
     }
 
     public function showRetailerDuesDateFilter(Request $request){

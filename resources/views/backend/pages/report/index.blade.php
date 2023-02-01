@@ -112,6 +112,11 @@
                                     <td>Total Retailer Income</td>
                                     <td>{{ $retailerIncome ?? 0 }}</td>
                                 </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Total Pt Cash</td>
+                                    <td>{{ $loan->amount ?? 0 }}</td>
+                                </tr>
                             </tbody>
                             <tfoot>
                                 <tr>

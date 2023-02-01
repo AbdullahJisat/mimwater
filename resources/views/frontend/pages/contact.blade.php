@@ -9,27 +9,27 @@
                     <h2 style="text-align: center;margin-top: 10px; margin-bottom: 20px;">
                         CONTACT INFO
                     </h2>
-                    <div class="CONTACT-INFO">
+                          <div class="CONTACT-INFO">
                         <div class="CONTACT-INFO-1" style="display: flex;">
                             <i style="padding-left: 20px; font-size:28px;" class=" fa fa-mobile-android-alt"></i>
                             <div>
                                 <p style="font-size:21px; font-weight: bold;">Phone</p>
-                                <p style="font-size:17px; font-weight: lighter;">+88 01313 767080</p>
+                                <p style="font-size:17px; font-weight: lighter;">+88 01715-676677 </p>
                             </div>
                         </div>
                         <div class="CONTACT-INFO-1" style="display: flex;">
                             <i class=" fa fa-mail-bulk"></i>
                             <div>
                                 <p style="font-size:21px; font-weight: bold;">Email Adress</p>
-                                <p style="font-size:17px; font-weight: lighter;">info@blueaquabd.com</p>
+                                <p style="font-size:17px; font-weight: lighter;">meemsuperwater@gmail.com</p>
                             </div>
                         </div>
                         <div class="CONTACT-INFO-1" style="display: flex;">
                             <i class=" fa fa-home"></i>
                             <div>
                                 <p style="font-size:21px; font-weight: bold;">Factory</p>
-                                <p style="font-size:17px; font-weight: lighter;">Plot No. D/8, Block-A, BSCIC I/A, <br>
-                                    Sholashahar, Baizid, Chattogram, <br> Bangladesh.</p>
+                                <p style="font-size:17px; font-weight: lighter;">Joy Food & Bevarage Industry, Plot No. B/8, Block-b, Nasirabad Shilpo Area, <br>
+                                    Sholashahar, Chattogram, <br> Bangladesh.</p>
                             </div>
                         </div>
                     </div>

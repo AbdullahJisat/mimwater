@@ -28,11 +28,11 @@
                         @forelse ($stockOutItems as $stockOutItem)
                             <tr>
                                 <td data-label="SL">{{ $loop->iteration }}</td>
-                                <td data-label="Name">{{ $stockOutItem->item->name }}</td>
-                                <td data-label="Name">{{ $stockOutItem->dealer->name }}</td>
-                                <td data-label="Quantity">{{ $stockOutItem->quantity }}</td>
-                                <td data-label="Price">{{ $stockOutItem->price }}</td>
-                                <td data-label="Price">{{ $stockOutItem->created_at->format('d-M-Y') }}</td>
+                                <td data-label="Name">{{ $stockOutItem->item->name ?? "" }}</td>
+                                <td data-label="Name">{{ $stockOutItem->dealer->name ?? "" }}</td>
+                                <td data-label="Quantity">{{ $stockOutItem->quantity ?? "" }}</td>
+                                <td data-label="Price">{{ $stockOutItem->price ?? "" }}</td>
+                                <td data-label="Price">{{ $stockOutItem->created_at->format('d-M-Y') ?? "" }}</td>
                                 {{-- <td data-label="Action">
                                     <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
                                         @method('DELETE')

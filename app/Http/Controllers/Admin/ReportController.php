@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Cost;
+use App\Models\DailyCashInHand;
+use App\Models\Loan;
 use App\Models\Payment;
 use App\Models\Salesman;
 use App\Models\StockItem;
@@ -104,7 +106,8 @@ class ReportController extends Controller
         ->sum('amount');
         $totalProfit = $income - $expense;
         $salesmans = '';
-        return view('backend.pages.report.index', compact('dealerIncome', 'retailerIncome', 'income', 'expense', 'salesmans', 'costs', 'totalProfit'));
+        $loan = Loan::latest()->first();
+        return view('backend.pages.report.index', compact('loan', 'dealerIncome', 'retailerIncome', 'income', 'expense', 'salesmans', 'costs', 'totalProfit'));
     }
 
     public function showReportDateFilter(Request $request){
@@ -117,16 +120,17 @@ class ReportController extends Controller
             $dealerIncome = Payment::whereNull('retailer_id')->whereBetween('created_at', [$start, $end])->sum('amount');
             $retailerIncome = Payment::whereNull('dealer_id')->whereBetween('created_at', [$start, $end])->sum('amount');
 
-            $income = $dealerIncome + $retailerIncome ?? 0;
+            $loan = Loan::latest()->first();
+            $income = $dealerIncome + $retailerIncome + $loan->amount ?? 0;
             $expense = $this->cost
             // whereDate('created_at', Carbon::today()->subDays(30))->
             ->whereBetween('created_at', [$start, $end])
             ->sum('amount');
-            $totalProfit = $income - $expense;
+            $totalProfit = $income + $loan->amount - $expense;
             $salesmans = '';
             $start = $start;
             $end = $end;
-            return view('backend.pages.report.index', compact('start', 'end', 'dealerIncome', 'retailerIncome', 'income', 'expense', 'salesmans', 'costs', 'totalProfit'));
+            return view('backend.pages.report.index', compact('loan', 'start', 'end', 'dealerIncome', 'retailerIncome', 'income', 'expense', 'salesmans', 'costs', 'totalProfit'));
         }else {
             return back()->with('date older');
         }
@@ -134,7 +138,57 @@ class ReportController extends Controller
 
 
     }
+
+    public function incomeReport(){
+        $cashIncome = Payment::
+        whereDate('created_at', Carbon::today())->
+        wherePaymentType(1)->sum('amount');
+        $checkIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(2)->sum('amount');
+        $bkashIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(3)->sum('amount');
+        $bkashCeoIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(4)->sum('amount');
+        $loan = Loan::whereDate('created_at', Carbon::today())->whereType(1)->sum('amount');
+
+        $totalIncome = $cashIncome + $checkIncome + $bkashIncome + $bkashCeoIncome + $loan;
+        $costs = Cost::whereDate('created_at', Carbon::today())->with('category')->get();
+        $expense = $costs->sum('amount');
+        $loanPay = Loan::whereDate('created_at', Carbon::today())->whereType(0)->sum('amount');
+        $dailyCashInHand = DailyCashInHand::latest()->first();
+        if (!empty($dailyCashInHand)) {
+            $cashInHand = ($cashIncome + $loan) - ($expense + $loanPay) + $dailyCashInHand->amount;
+        } else {
+            $cashInHand = ($cashIncome + $loan) - ($expense + $loanPay);
+        }
+        // dd('cash income', $cashIncome, 'loan', $loan, 'expense', $expense, 'loanPay', $loanPay, 'total ex', $expense + $loanPay, $cashInHand);
+        // dd(($cashIncome + $loan) - ($expense + $loanPay));
+
+
+        return view('backend.pages.report.income', compact('loanPay', 'expense', 'costs', 'totalIncome', 'cashInHand', 'loan', 'cashIncome', 'checkIncome', 'bkashIncome', 'bkashCeoIncome'));
+    }
+    // public function dailyCashInHand(){
+    //     $dailyCashesInHand = DailyCashInHand::all();
+    //     return view('backend.pages.report.daily-cash', ['dailyCashesInHand' => $dailyCashesInHand]);
+    // }
+
+    public function profitReport()
+    {
+        $bill = StockItem::whereDate('created_at', today())->get();
+        $cost = Cost::whereDate('created_at', today())->get();
+        return view('backend.pages.report.profit-report', compact('bill', 'cost'));
+    }
 }
 
 
 // select * from `salesmen` where exists (select * from `stock_items` inner join `retailers` on `retailers`.`id` = `stock_items`.`retailer_id` where `salesmen`.`id` = `retailers`.`salesman_id` and date(`stockItemPrices`.`created_at`) = 2022-05-05)
+
+
+// fetch('https://jsonplaceholder.typicode.com/photos')
+//   .then(response => response.json())
+//   .then(json => console.log(json))
+
+//  async function fetchMovies() {
+//   await fetch('https://jsonplaceholder.typicode.com/photos')
+//   .then(response => response.json())
+//   .then(json => console.log(json))
+// }
+
+// console.log(fetchMovies());

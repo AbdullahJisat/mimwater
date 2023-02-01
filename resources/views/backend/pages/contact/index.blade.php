@@ -66,9 +66,9 @@
                         @forelse ($unreadMessages as $message)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $message->name }}</td>
-                                <td>{{ $message->email }}</td>
-                                <td><a href="{{ route('contact_read', $message->id) }}" style="text-decoration: none !important;color: black;font: caption;"><strong>{{ $message->message }}</strong></a></td>
+                                <td>{{ $message->name ?? "" }}</td>
+                                <td>{{ $message->email ?? "" }}</td>
+                                <td><a href="{{ route('contact_read', $message->id) }}" style="text-decoration: none !important;color: black;font: caption;"><strong>{{ $message->message ?? "" }}</strong></a></td>
                                 <td>
                                     <form action="{{route('contacts.destroy',$message->id)}}" method="post">
                                         @method('DELETE')
@@ -106,9 +106,9 @@
                         @forelse ($readMessages as $message)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $message->name }}</td>
-                                <td>{{ $message->email }}</td>
-                                <td><strong>{{ $message->message }}</strong></td>
+                                <td>{{ $message->name ?? "" }}</td>
+                                <td>{{ $message->email ?? "" }}</td>
+                                <td><strong>{{ $message->message ?? "" }}</strong></td>
                                 <td>
                                     <form action="{{route('contacts.destroy',$message->id)}}" method="post">
                                         @method('DELETE')

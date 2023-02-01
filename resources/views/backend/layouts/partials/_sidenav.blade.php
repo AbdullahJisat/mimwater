@@ -2,6 +2,41 @@
     <div class="nav-list">
         <div class="pcoded-inner-navbar main-menu">
             <ul class="pcoded-item pcoded-left-item">
+                <li class="pcoded-hasmenu">
+                    <a href="{{ url(getAuthType().'/dashboard') }}" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Dashboard</span>
+                    </a>
+                </li>
+                @role('director')
+                <li class="pcoded-hasmenu @yield('loan_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">PT Cash</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_loan_active')">
+                            <a href="{{ route('loans.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View PT Cash') }}</span>
+                            </a>
+                        </li>
+                        <li class="@yield('view_loan_active')">
+                            <a href="{{ route('loans.pay_index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('Pay PT Cash') }}</span>
+                            </a>
+                        </li>
+                        {{-- <li class="@yield('view_dailyCashHand_active')">
+                            <a href="{{ route('cash_in_hand') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('Daily Cash Hand') }}</span>
+                            </a>
+                        </li> --}}
+                    </ul>
+                </li>
+                @endrole
                 @if (Auth::guard('admin')->check())
                 <li class="pcoded-hasmenu @yield('admin_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -118,6 +153,21 @@
                         <li class="@yield('view_dealer_active')">
                             <a href="{{ route('dealers.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Dealer') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pcoded-hasmenu @yield('retailer_active')">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-list"></i>
+                        </span>
+                        <span class="pcoded-mtext">Retailer</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="@yield('view_retailer_active')">
+                            <a href="{{ route('admin_retailers') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Retailer') }}</span>
                             </a>
                         </li>
                     </ul>
@@ -266,6 +316,24 @@
                         <li class="@yield('view_report_active')">
                             <a href="{{ route('get_report') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-mtext">{{ __('View Income Expense Report') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="@yield('view_report_active')">
+                            <a href="{{ url('income-report') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Income Report') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="@yield('view_report_active')">
+                            <a href="{{ url('statements-form') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Dealer Statements') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="@yield('view_report_active')">
+                            <a href="{{ url('retailer-statements-form') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ __('View Retailer Statements') }}</span>
                             </a>
                         </li>
 

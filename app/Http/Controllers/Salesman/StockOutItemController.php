@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Salesman;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer;
 use App\Models\Retailer;
+use App\Models\Statement;
 use App\Models\StockItem;
 use App\Models\StockOutItem;
 use Illuminate\Http\Request;
@@ -106,7 +107,20 @@ class StockOutItemController extends Controller
         // DB::beginTransaction();
         try {
             $user = Dealer::find($request->dealer_id);
-            $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
+            // $preQuantity = $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
+
+            // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+            $preDue = Statement::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+            $preQuantity = $this->stockItem->whereItemId($request->item_id)->whereDealerId($request->dealer_id)->whereStock(1)->latest()->first();
+        // $statement = new Statement();
+        // $statement->dealer_id = $request->dealer_id;
+        // $statement->admin_id = auth('admin')->user()->id;
+        // $statement->stock = abs($request->quantity - $preQuantity->quantity);
+        // $statement->rate = $user->price;
+        // $statement->payment = $user->price * $request->quantity;
+        // $statement->due = abs($preDue - $statement->payment);
+        // $statement->save();
+
             if (empty($preQuantity)){
                     return redirect('admin/dealer-stock-items')->with('message', "Stock not available");
                 } elseif ($preQuantity->temp_total == 0) {
@@ -155,6 +169,3 @@ class StockOutItemController extends Controller
         return back();
     }
 }
-
-
-

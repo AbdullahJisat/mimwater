@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cost;
+use App\Models\Dealer;
+use App\Models\Retailer;
+use App\Models\Statement;
+use App\Models\StockItem;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+
+class StatementController extends Controller
+{
+    public function __construct(Statement $statement, Dealer $dealer, Retailer $retailer)
+    {
+        $this->statement = $statement;
+        $this->dealer = $dealer;
+        $this->retailer = $retailer;
+    }
+
+    public function index(Request $request)
+    {
+        $start = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+        $end = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+
+        return view('backend.pages.report.profit-report')->with(['dealer' => $this->dealer->whereHas('statements')->with(['statements' => function ($q) use ($request, $start, $end) {
+            $q->whereBetween('created_at', [$start, $end])->get();
+        }])->findOrFail($request->dealer_id), 'start' => $start->format('d-M-Y'), 'end' => $end->format('d-M-Y')]);
+    }
+
+    public function create()
+    {
+        return view('backend.pages.report.statement-form');
+    }
+
+    public function indexRetailer(Request $request)
+    {
+        $start = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
+        $end = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
+
+        return view('backend.pages.report.retailer-statement-report')->with(['retailer' => $this->retailer->whereHas('statements')->with(['statements' => function ($q) use ($request, $start, $end) {
+            $q->whereBetween('created_at', [$start, $end])->get();
+        }])->findOrFail($request->retailer_id), 'start' => $start->format('d-M-Y'), 'end' => $end->format('d-M-Y')]);
+    }
+
+    public function createRetailer()
+    {
+        return view('backend.pages.report.retailer-statement-form');
+    }
+
+    public function store(Request $request)
+    {
+        $this->statement->create($request->validated());
+        return redirect()->route('statements.index');
+    }
+
+    public function edit($id)
+    {
+        $statement = $this->statement->findOrFail($id);
+        return view('backend.pages.statement.create', compact('statement'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->statement->findOrFail($id)->update($request->validated());
+        return redirect()->route('statements.index');
+    }
+
+    public function destroy($id)
+    {
+        $this->statement->findOrFail($id)->delete();
+        return back();
+    }
+}
+
+
+
