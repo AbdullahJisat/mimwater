@@ -226,14 +226,149 @@ class StockItemController extends Controller
                     //                                     "stock" => 0,
                     //                                     "price" => $user->price * $request->quantity]);
 
-                    //         $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
-                    //         if (!empty($requestBottle)) {
-                    //             $requestBottle->delete();
-                    //             // $requestBottle->update(['quantity' => $requestBottle->quantity - $request->quantity]);
-                    //         }
-                    //         return back();
-                    //     }
-                    // }
+            if (!empty($preDue)){
+                if (empty($preQuantity)){
+                    $request = new Request($request->all());
+                    $request->merge(["temp_total" => $user->price * $request->quantity + $preDue, "price" => $user->price * $request->quantity]);
+                    $saveStock = $this->stockItem->create($request->except('_token'));
+                    return back();
+                } else {
+                    if ($preQuantity->temp_total == 0) {
+                        // $request = new Request($request->all());
+                        // $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'temp_total' => $request->quantity * $user->price, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                        // $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                        // $updateStock->update($request->except(['_token']));
+                        // $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        // if (!empty($requestBottle)) {
+                        //     $requestBottle->delete();
+                        //     // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                        // }
+                        // return back();
+                        // if ($preQuantity->quantity != 0) {
+                        //     $request = new Request($request->all());
+                        //     $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'temp_total' => $request->quantity * $user->price, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                        //     $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                        //     $updateStock->update($request->except(['_token']));
+                        //     $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        //     if (!empty($requestBottle)) {
+                        //         $requestBottle->delete();
+                        //         // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                        //     }
+                        //     return back();
+                        // } else {
+                            $request = new Request($request->all());
+                            $request->merge(["temp_total" => $user->price * $request->quantity, "price" => $user->price * $request->quantity]);
+                            $saveStock = $this->stockItem->create($request->except('_token'));
+                            return back();
+                        // }
+                    } else {
+                        // if ($request->stock == 1) {
+                            $request = new Request($request->all());
+                            $request->merge(["temp_total" => $preQuantity->temp_total + $user->price * $request->quantity, "price" => $preQuantity->price + $user->price * $request->quantity, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                            $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                            $updateStock->update($request->except(['_token']));
+                            $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                            if (!empty($requestBottle)) {
+                                $requestBottle->delete();
+                                // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                            }
+                            return back();
+                        // } else {
+                        //     if ($preQuantity->quantity < $request->quantity) {
+                        //         return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
+                        //     } else {
+                        //         $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->update(["dealer_id" => $request->dealer_id,
+                        //         "item_id" => $request->item_id,
+                        //         'quantity' => $preQuantity->quantity - $request->quantity,
+                        //         "stock" => 1,
+                        //         "price" => $user->price * $request->quantity]);
+                        //         $this->stockItem->create(["dealer_id" => $request->dealer_id,
+                        //                                     "item_id" => $request->item_id,
+                        //                                     "quantity" => $request->quantity,
+                        //                                     "stock" => 0,
+                        //                                     "price" => $user->price * $request->quantity]);
+
+                        //         $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        //         if (!empty($requestBottle)) {
+                        //             $requestBottle->delete();
+                        //             // $requestBottle->update(['quantity' => $requestBottle->quantity - $request->quantity]);
+                        //         }
+                        //         return back();
+                        //     }
+                        // }
+                    }
+                }
+            } else {
+                if (empty($preQuantity)){
+                    $request = new Request($request->all());
+                    $request->merge(["temp_total" => $user->price * $request->quantity, "price" => $user->price * $request->quantity]);
+                    $saveStock = $this->stockItem->create($request->except('_token'));
+                    return back();
+                } else {
+                    if ($preQuantity->temp_total == 0) {
+                        // $request = new Request($request->all());
+                        // $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'temp_total' => $request->quantity * $user->price, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                        // $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                        // $updateStock->update($request->except(['_token']));
+                        // $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        // if (!empty($requestBottle)) {
+                        //     $requestBottle->delete();
+                        //     // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                        // }
+                        // return back();
+                        // if ($preQuantity->quantity != 0) {
+                        //     $request = new Request($request->all());
+                        //     $request->merge(["price" => $preQuantity->price + $user->price * $request->quantity, 'temp_total' => $request->quantity * $user->price, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                        //     $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                        //     $updateStock->update($request->except(['_token']));
+                        //     $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        //     if (!empty($requestBottle)) {
+                        //         $requestBottle->delete();
+                        //         // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                        //     }
+                        //     return back();
+                        // } else {
+                            $request = new Request($request->all());
+                            $request->merge(["temp_total" => $user->price * $request->quantity, "price" => $user->price * $request->quantity]);
+                            $saveStock = $this->stockItem->create($request->except('_token'));
+                            return back();
+                        // }
+                    } else {
+                        // if ($request->stock == 1) {
+                            $request = new Request($request->all());
+                            $request->merge(["temp_total" => $preQuantity->temp_total + $user->price * $request->quantity, "price" => $preQuantity->price + $user->price * $request->quantity, 'quantity' => $preQuantity->quantity + $request->quantity]);
+                            $updateStock = $this->stockItem->whereDealerId($request->dealer_id)->whereItemId($request->item_id)->latest()->first();
+                            $updateStock->update($request->except(['_token']));
+                            $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                            if (!empty($requestBottle)) {
+                                $requestBottle->delete();
+                                // $requestBottle->update(['quantity' => $requestBottle->quantity - $updateStock->quantity]);
+                            }
+                            return back();
+                        // } else {
+                        //     if ($preQuantity->quantity < $request->quantity) {
+                        //         return back()->withErrors(['quantity' => 'Quantity greater than previos quantity'])->onlyInput('quantity');
+                        //     } else {
+                        //         $this->stockItem->whereDealerId($request->dealer_id)->whereStock(1)->update(["dealer_id" => $request->dealer_id,
+                        //         "item_id" => $request->item_id,
+                        //         'quantity' => $preQuantity->quantity - $request->quantity,
+                        //         "stock" => 1,
+                        //         "price" => $user->price * $request->quantity]);
+                        //         $this->stockItem->create(["dealer_id" => $request->dealer_id,
+                        //                                     "item_id" => $request->item_id,
+                        //                                     "quantity" => $request->quantity,
+                        //                                     "stock" => 0,
+                        //                                     "price" => $user->price * $request->quantity]);
+
+                        //         $requestBottle = RequestBottle::whereDealerId($request->dealer_id)->latest()->first();
+                        //         if (!empty($requestBottle)) {
+                        //             $requestBottle->delete();
+                        //             // $requestBottle->update(['quantity' => $requestBottle->quantity - $request->quantity]);
+                        //         }
+                        //         return back();
+                        //     }
+                        // }
+                    }
                 }
             }
         } else {
@@ -249,8 +384,6 @@ class StockItemController extends Controller
                 $statement->admin_id = auth('admin')->user()->id;
                 $statement->stock = $request->quantity;
                 $statement->rate = $user->price;
-                $statement->bill = $user->price * $request->quantity;
-                $statement->due = $preDue + $statement->bill;
                 $statement->save();
                 return back();
             } else {
@@ -344,52 +477,8 @@ class StockItemController extends Controller
                 }
             }
         }
+=======
 
-    }
-
-    public function stockInDealer(Request $request)
-    {
-        $user = Dealer::find($request->dealer_id);
-        $previousStock = StockItem::whereDealerId($request->dealer_id)->latest()->first();
-        $previousStatement = Statement::whereDealerId($request->dealer_id)->latest()->first();
-        if (empty($previousStock)) {
-            $request = new Request($request->all());
-            $request->merge(["temp_total" => 0, "price" => 0]);
-            $saveStock = $this->stockItem->create($request->except('_token'));
-        } else {
-            $previousStock->quantity = $previousStock->quantity + $request->quantity;
-            $previousStock->save();
-        }
-        if (empty($previousStatement)) {
-            $statement = new Statement();
-            $statement->in = $request->quantity;
-            $statement->dealer_id = $request->dealer_id;
-            $statement->admin_id = auth('admin')->user()->id;
-            $statement->stock = $request->quantity;
-            $statement->rate = $user->price;
-            $statement->bill = 0;
-            $statement->due = 0;
-            $statement->save();
-        } else {
-            $statement = new Statement();
-            $statement->in = $request->quantity;
-            $statement->dealer_id = $request->dealer_id;
-            $statement->admin_id = auth('admin')->user()->id;
-            $statement->stock = $previousStatement->stock + $request->quantity;
-            $statement->rate = $user->price;
-            $statement->bill = 0;
-            $statement->due = $previousStatement->due;
-            // dd($request->all(), $statement);
-            $statement->save();
-        }
-
-
-        return back();
-
-    }
-
-    public function stockInRetailer(Request $request)
-    {
         $user = Retailer::find($request->retailer_id);
         $preStock=StockItem::whereItemId($request->item_id)->whereRetailerId($request->retailer_id)->latest()->first();
         if (!empty($preStock)) {
@@ -434,6 +523,3 @@ class StockItemController extends Controller
         return back();
     }
 }
-
-
-

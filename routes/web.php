@@ -65,28 +65,7 @@ Route::group(['middleware' => 'auth:admin,dealer,retailer,salesman,manager'], fu
     Route::get('cashes', [PaymentInvoiceController::class, 'showCashes'])->name('invoices.cashes');
     Route::get('show-cash-date', [PaymentInvoiceController::class, 'showCashesDateFilter'])->name('show_cash_by_date');
 });
-
 Route::group(['middleware' => 'auth:admin'], function () {
-
-    Route::resource('admin/admins', AdminController::class);
-    Route::resource('admin/managers', ManagerController::class);
-
-    Route::prefix('admin/roles')->name('admin.role.')->group(function () {
-        Route::get('', [RolePermissionController::class, 'index'])->name('index');
-        Route::get('create', [RolePermissionController::class, 'create'])->name('create');
-        Route::post('get-permissions-by-role-id/{id}', [RolePermissionController::class, 'getPermissionsByRoleId'])->name('get_permissions_by_role_id');
-        Route::post('store', [RolePermissionController::class, 'store'])->name('store');
-        Route::post('permission-store', [RolePermissionController::class, 'permissionStore'])->name('permission_store');
-    });
-
-    Route::post('stockout-billdealer', [StockOutItemController::class, 'stockOutBillDealer'])->name('stockout-billdealer');
-    Route::get('dealer-invoices-stock-out/{id}', [PaymentInvoiceController::class, 'dealerInvoiceStockOutIndex'])->name('invoices.dealer_index_stock_out');
-    Route::post('dealer-invoices-stock-out-store/{id}', [PaymentInvoiceController::class, 'dealerInvoiceStockOutStore'])->name('invoices.dealer_store_out');
-    Route::post('daily_cash_hand_store', [PaymentInvoiceController::class, 'dailyCashHandStore'])->name('daily_cash_hand_store');
-
-
-
-
     Route::get('retailers-salesman/{id}', [SalesmanController::class, 'retailersBySalesman'])->name('retailers_salesman');
     Route::get('dealer-dues', [PaymentInvoiceController::class, 'showDealerDues'])->name('invoices.dealer_dues');
     Route::get('previous-dealer-dues/{id}', [PaymentInvoiceController::class, 'previousDealerDue'])->name('previous_dealer_dues');
@@ -100,7 +79,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('admin/retailer-stock-items', [StockItemController::class, 'indexStockRetailer'])->name('admin.index_stock_retailer');
     Route::post('admin/store/stock-items', [StockItemController::class, 'stockDealer'])->name('stock_dealer');
     Route::post('admin/store/stock-in-items', [StockItemController::class, 'stockInDealer'])->name('stock_in_dealer');
-    Route::post('admin/store-retailer/stock-items', [StockItemController::class, 'stockInRetailer'])->name('stock_retailer');
     Route::get('admin/dealer/request', [RequestBottleController::class, 'dealerRequest'])->name('dealer_request');
 
     Route::get('dealer-invoices/{id}', [PaymentInvoiceController::class, 'dealerInvoiceIndex'])->name('invoices.dealer_index');
@@ -122,9 +100,9 @@ Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(functio
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('show_login');
     Route::post('login', [LoginController::class, 'login'])->name('login');
 });
-
-Route::prefix('admin')->middleware(['auth:admin', 'prevent-back-history'])->group(function () {
+Route::prefix('admin')->middleware(['auth:admin', 'role_custom:director'])->group(function () {
     Route::get('dashboard', function () {
+        // dd(auth('admin')->user()->can('create-admin'));
         return view('backend.layouts.partials._dashboard', ['loans' => \App\Models\Loan::all()]);
     });
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');

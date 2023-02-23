@@ -10,7 +10,6 @@
                         <span class="pcoded-mtext">Dashboard</span>
                     </a>
                 </li>
-
                 @if (Auth::guard('admin')->check())
                 <li class="pcoded-hasmenu @yield('admin_active')">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">

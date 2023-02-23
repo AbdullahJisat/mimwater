@@ -56,7 +56,7 @@
                         <th>Total</th>
                         <th>{{ $retailer->statements->sum('in') }}</th>
                         <th>{{ $retailer->statements->sum('out') }}</th>
-                        ` <th>{{ $retailerStock }}</th>
+                        <th>{{ $retailerStock }}</th>
                         <th colspan="1"></th>
                         <th>{{ $retailer->statements->sum('bill') }}</th>
                         <th>{{ $retailer->statements->sum('payment') }}</th>

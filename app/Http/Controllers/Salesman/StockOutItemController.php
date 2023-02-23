@@ -194,6 +194,3 @@ class StockOutItemController extends Controller
         return back();
     }
 }
-
-
-

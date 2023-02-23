@@ -84,7 +84,6 @@ class StatementController extends Controller
 
     public function dailyDealerStatement(){
         $dailyStatement = Statement::with('dealer')->whereDate('created_at', Carbon::today())->get()->unique('dealer_id');
-        return view('backend.pages.statement.daily-dealer', compact('dailyStatement'));
     }
 
     public function dateDealerStatement(Request $request)
@@ -108,6 +107,3 @@ class StatementController extends Controller
         return view('backend.pages.statement.daily-Salesman', compact('dailyStatement', 'start', 'end'));
     }
 }
-
-
-

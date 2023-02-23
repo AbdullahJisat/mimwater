@@ -199,7 +199,7 @@ code {
 }
 
 .card .card-header span {
-    display: block;
+    display: inherit;
     font-size: 13px;
     margin-top: 5px
 }

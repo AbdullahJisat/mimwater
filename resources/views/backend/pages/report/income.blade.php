@@ -9,7 +9,7 @@
                 {{-- <button type="button" class="btn waves-effect waves-light btn-primary" data-toggle="modal"
                     data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add cash') }}</button>
                 @include('backend.pages.stock-out-item.create') --}}
-                <form action="{{ route('income_report_date') }}" method="get" style="display: inline-flex">
+                <form action="{{ route('show_report_date') }}" method="get" style="display: inline-flex">
                     {{-- @csrf --}}
                     <div class="row input-daterange">
                         <div class="col-md-4">
