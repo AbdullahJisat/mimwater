@@ -141,16 +141,16 @@
                     </td>
                 </tr>
 
-                <!-- <tr class="heading">
-                    <td>Payment Method</td>
+                <!-- <tr class="heading">-->
+                <!--    <td>Payment Method</td>-->
 
-                    <td><select name="payment_type" id="">
-                        <option value="1">Cash</option>
-                        <option value="2">Check</option>
-                        <option value="3">Bkash Ceo</option>
-                        <option value="4">Bkash Office</option>
-                        </select></td>
-                </tr> -->
+                <!--    <td><select name="payment_type" id="">-->
+                <!--        <option value="1">Cash</option>-->
+                <!--        <option value="2">Check</option>-->
+                <!--        <option value="3">Bkash Ceo</option>-->
+                <!--        <option value="4">Bkash Office</option>-->
+                <!--        </select></td>-->
+                <!--</tr>-->
 
                <!--  /* <tr class="details">
                     <td>Check</td>

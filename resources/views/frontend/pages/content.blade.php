@@ -24,33 +24,15 @@
 <section class="sec2 row">
     <div class="slider2 col-lg-5  col-md-11  col-sm-11 mx-auto">
         <div class="rowImage">
-            <img style="width: 100%;" src="{{ asset('frontend') }}/image/slider2/slider21.jpg">
+            <img style="width: 100%;" src="{{$about->image}}">
             {{-- <button type="button" class="btn btn-primary btn-lg jwuButton">Join with us</button> --}}
         </div>
     </div>
     <div class="content1 col-lg-5 col-md-11 col-sm-11 mx-auto">
                 <div class="content1-sec">
             <p class="content1-text">WELCOME TO <br><span>
-                MEEM DRINKING WATER</span></p>
-            <p class="content1-text2">MEEM DRINKING WATER<span>Drinking Water – Drink The Difference </span></p>
-            <p style="text-align: center; margin-top: 40px; ">
-                The pure drinking water we produce is strictly quality controlled <br> by experienced chemists and
-                microbiologists in our laboratory <br> at the <span style="font-weight: bold;">MEEM DRINKING WATER</span>
-                drinking water factory, which is tested
-                by <br> BUET and ICDDR, It is marketed under the authorization of <br> Bangladesh Standards &
-                Testing Institution (BSTI). <br>
-
-                <br>
-            </p>
-            <p style="text-align: center; margin-top: 20px; ">
-                Skilled sales and suppliers in our transportation system are <br> always ready to deliver <span
-                    style="font-weight: bold;">MEEM DRINKING WATER</span> drinking water jars & small <br> bottles to your
-                office, factory, residence, hospital, restaurant,
-                <br> shopping center and etc.
-            </p>
-            <p style="text-align: center; margin-top: 20px; ">Wash your hands well before meals, follow hygiene
-                rules, and <br> always drink <span style="font-weight: bold;">MEEM DRINKING WATER</span> drinking water to
-                stay healthy.</p>
+                MEEM SUPER DRINKING WATER</span></p>
+          <p style="text-align:justify;font-size:20px;margin-top:20px;">{{$about->description}}</p>
             
         </div>
     </div>

@@ -144,8 +144,10 @@ class ReportController extends Controller
         $totalStock = Statement::whereDate('created_at', Carbon::today())->sum('out');
         $totalBill = Statement::whereDate('created_at', Carbon::today())->sum('bill');
         $cashIncome = Payment::
-        whereDate('created_at', Carbon::today())->
+        whereDate('created_at', Carbon::today())->                                                      
         wherePaymentType(1)->sum('amount');
+        // $cashIncome = Statement::
+        // whereDate('created_at', Carbon::today())->sum('payment');
         $checkIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(2)->sum('amount');
         $bkashIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(3)->sum('amount');
         $bkashCeoIncome = Payment::whereDate('created_at', Carbon::today())->wherePaymentType(4)->sum('amount');
@@ -167,8 +169,12 @@ class ReportController extends Controller
 
         return view('backend.pages.report.income', compact('totalStock', 'totalBill', 'loanPay', 'expense', 'costs', 'totalIncome', 'cashInHand', 'loan', 'cashIncome', 'checkIncome', 'bkashIncome', 'bkashCeoIncome'));
     }
+    // public function dailyCashInHand(){
+    //     $dailyCashesInHand = DailyCashInHand::all();
+    //     return view('backend.pages.report.daily-cash', ['dailyCashesInHand' => $dailyCashesInHand]);
+    // }
 
-    public function incomeReportByDate(Request $request)
+     public function incomeReportByDate(Request $request)
     {
         $start = Carbon::createFromFormat('Y-m-d', $request->start)->startOfDay();
         $end = Carbon::createFromFormat('Y-m-d', $request->end)->endOfDay();
@@ -179,6 +185,7 @@ class ReportController extends Controller
             $totalStock = Statement::whereBetween('created_at', [$start, $end])->sum('out');
             $totalBill = Statement::whereBetween('created_at', [$start, $end])->sum('bill');
             $cashIncome = Payment::whereBetween('created_at', [$start, $end])->wherePaymentType(1)->sum('amount');
+            // $cashIncome = Statement::whereBetween('created_at', [$start, $end])->sum('payment');
             $checkIncome = Payment::whereBetween('created_at', [$start, $end])->wherePaymentType(2)->sum('amount');
             $bkashIncome = Payment::whereBetween('created_at', [$start, $end])->wherePaymentType(3)->sum('amount');
             $bkashCeoIncome = Payment::whereBetween('created_at', [$start, $end])->wherePaymentType(4)->sum('amount');
@@ -203,11 +210,6 @@ class ReportController extends Controller
             return back()->with('date older');
         }
     }
-
-    // public function dailyCashInHand(){
-    //     $dailyCashesInHand = DailyCashInHand::all();
-    //     return view('backend.pages.report.daily-cash', ['dailyCashesInHand' => $dailyCashesInHand]);
-    // }
 
     public function profitReport()
     {

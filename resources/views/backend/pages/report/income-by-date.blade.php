@@ -171,11 +171,7 @@
                                     <th>{{ $cashInHand }}
                                         <input type="hidden" name="dailyCashAmount" value="{{ $cashInHand}}">
                                     </th>
-                                    <th><button type="submit" class="btn btn-sm btn-primary" style="position: fixed;
-                                        top: 70%;
-                                        right: 0%;
-                                        z-index: 999;
-                                        background-color: chocolate;">Save</button></th>
+                                    <th><button type="submit" class="btn btn-sm btn-primary">Save</button></th>
                                 </tr>
                             </form>
                         </tfoot>

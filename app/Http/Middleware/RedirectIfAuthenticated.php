@@ -57,6 +57,9 @@ class RedirectIfAuthenticated
         if ($guard == "dealer" && Auth::guard($guard)->check()) {
             return redirect('/dealers/dashboard');
         }
+        if ($guard == "office_user" && Auth::guard($guard)->check()) {
+            return redirect('/office_users/dashboard');
+        }
         if ($guard == "retailer" && Auth::guard($guard)->check()) {
             return redirect('/retailers/dashboard');
         }

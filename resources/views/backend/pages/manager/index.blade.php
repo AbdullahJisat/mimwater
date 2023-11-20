@@ -8,7 +8,7 @@
         <div class="card-header">
             {{-- @isset($url) --}}
             <a href="{{ route("managers.create") }}" class="btn waves-effect waves-light btn-primary"><i
-                    class="icofont icofont-user-alt-3"></i>{{ __('Add manager') }}</a>
+                    class="icofont icofont-user-alt-3"></i>{{ __('Add Director') }}</a>
             {{-- @endisset --}}
         </div>
         <div class="card-block">

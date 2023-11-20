@@ -6,9 +6,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            {{-- @isset($url) --}}
-                <a href="{{ route("retailers.create") }}" class="btn waves-effect waves-light btn-primary"><i class="icofont icofont-user-alt-3"></i>{{ __('Add retailer') }}</a>
-            {{-- @endisset --}}
+
         </div>
         <div class="card-block">
             <div class="dt-responsive table-responsive">

@@ -22,6 +22,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+
         if (Auth::guard('admin')->check()) {
             return redirect('/admin/dashboard');
         } else {
@@ -31,6 +32,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $messages = array(
             'username.required' => 'You cant leave username field empty',
             'password.required' => 'You cant leave password field empty'

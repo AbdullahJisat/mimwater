@@ -48,7 +48,6 @@ class LoginController extends Controller
         } else {
             $manager = Manager::whereUsername($request->username)->first();
             if ($manager && Hash::check($request->password, $manager->password) && Auth::guard('manager')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember)) {
-
                 return redirect()->intended('/managers/dashboard');;
             }
             return redirect()->back()->withInput($request->only('email', 'remember'));

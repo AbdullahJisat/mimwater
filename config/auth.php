@@ -59,6 +59,11 @@ return [
             'driver' => 'session',
             'provider' => 'dealers',
         ],
+        
+        'office_user' => [
+            'driver' => 'session',
+            'provider' => 'office_users',
+        ],
 
         'retailer' => [
             'driver' => 'session',
@@ -106,6 +111,11 @@ return [
         'dealers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Dealer::class,
+        ],
+        
+        'office_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\OfficeUser::class,
         ],
 
         'retailers' => [

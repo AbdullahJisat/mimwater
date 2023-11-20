@@ -54,7 +54,7 @@ class PaymentInvoiceController extends Controller
 
     public function dealerInvoiceStockOutIndex($id)
     {
-        $item = $this->stockOutItem->find($id);
+         $item = $this->stockOutItem->find($id);
 
         // dd($stockItemTotalPrice);
         $dueCheck = Payment::whereDealerId($item->dealer_id)->orWhere('payment_status', 3)->latest()->first();
@@ -92,8 +92,6 @@ class PaymentInvoiceController extends Controller
                         $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => ($request->totalDue - $request->due) - $discount, 'amount' => $request->due, 'total' => $request->total, 'discount' => $discount]);
                     }
 
-                    Payment::create($request->except('_token', 'totalDue', 'action', 'discount'));
-
                     // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
                     $preQuantity = Statement::whereDealerId($request->dealer_id)->latest()->first();
                     // dd($preQuantity->due);
@@ -119,6 +117,11 @@ class PaymentInvoiceController extends Controller
 
                     // $previousDue = Payment::whereDealerId($request->dealer_id)->latest()->first();
                     // dd($statement, $item, $preQuantity, $request->all(), $previousDue);
+                    // if (empty($peviousDue)){
+                    Payment::create($request->except('_token', 'totalDue', 'action', 'discount'));
+                    // } else {
+                    //     // $prviousDue->due = $previousDue + )
+                    // }
                     $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($item->item_id)->latest()->first();
                     // dd($request->all(), $stockItem, $request->due, $item->item_id);
                     // $temp_total = abs($stockItem->price - $request->due);
@@ -155,8 +158,6 @@ class PaymentInvoiceController extends Controller
                     // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
                     // dd($request->all());
 
-                    $previousDue->update($request->except('_token', 'totalDue', 'action', 'discount'));
-
                     $preQuantity = Statement::whereDealerId($request->dealer_id)->latest()->first();
                     // dd($preQuantity->due);
                     $statement = new Statement();
@@ -181,7 +182,11 @@ class PaymentInvoiceController extends Controller
 
                     // $previousDue = Payment::whereDealerId($request->dealer_id)->latest()->first();
                     // dd($statement, $item, $preQuantity, $request->all(), $previousDue);
-
+                    // if (empty($peviousDue)){
+                    $previousDue->update($request->except('_token', 'totalDue', 'action', 'discount'));
+                    // } else {
+                    //     // $prviousDue->due = $previousDue + )
+                    // }
                     $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($item->item_id)->latest()->first();
                     // $temp_total = abs($stockItem->price - $request->due);
                     // dd($request->all(), $stockItem->price, $request->due, $temp_total);
@@ -211,7 +216,163 @@ class PaymentInvoiceController extends Controller
         return redirect()->route('invoices.dealer_cashes');
     }
 
-    public function dealerInvoiceStockOutStore(Request $request, $id)
+    // public function dealerInvoiceStockOutStore(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'payment_type' => 'required|integer',
+    //     ]);
+    //     // dd($request->all());
+    //     $previousDue = Payment::whereDealerId($request->dealer_id)->latest()->first();
+    //     DB::transaction(function () use ($request, $id, $previousDue) {
+    //         if ($request->discount !== 0 || $request->discount != "") {
+    //             $discount = $request->discount;
+    //         } else {
+    //             $discount = 0;
+    //         }
+
+    //         if (empty($previousDue)) {
+    //             if ($request->action == 'pay') {
+    //                 $item = $this->stockOutItem->find($id);
+    //                 $user = Dealer::find($request->dealer_id);
+    //                 // dd($request->all());
+    //                 // Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
+    //                 $request = new Request($request->all());
+
+
+
+
+    //                 if ($request->totalDue == 0) {
+    //                     $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => ($request->total - $request->due) - $discount, 'amount' => $request->due, 'total' => $request->total, 'discount' => $discount]);
+    //                 } else {
+    //                     $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => ($request->totalDue - $request->due) - $discount, 'amount' => $request->due, 'total' => $request->total, 'discount' => $discount]);
+    //                 }
+
+    //                 // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+    //                 $preQuantity = Statement::whereDealerId($request->dealer_id)->latest()->first();
+    //                 // dd($preQuantity->due);
+    //                 $statement = new Statement();
+    //                 $statement->out = $item->quantity;
+    //                 $statement->dealer_id = $request->dealer_id;
+    //                 $statement->admin_id = auth('admin')->user()->id;
+    //                 $statement->stock = abs($item->quantity - $preQuantity->stock);
+    //                 $statement->rate = $user->price;
+    //                 if ($request->amount != '' && $request->amount != 0) {
+    //                     $statement->bill = 0;
+    //                     $statement->payment = $request->amount;
+    //                     $statement->due = abs(($item->price - $request->amount) - $discount);
+    //                     $statement->discount = $discount;
+    //                     // dd('not null', $request->all(), $item, $statement, $preQuantity);
+    //                 } else {
+    //                     $statement->bill = 0;
+    //                     $statement->due = $request->amount + $item->price;
+    //                     $statement->discount = $discount;
+    //                     // dd($request->all(), $item, $statement, $preQuantity);
+    //                 }
+    //                 $statement->save();
+
+    //                 // $previousDue = Payment::whereDealerId($request->dealer_id)->latest()->first();
+    //                 // dd($statement, $item, $preQuantity, $request->all(), $previousDue);
+    //                 // if (empty($peviousDue)){
+    //                 Payment::create($request->except('_token', 'totalDue', 'action', 'discount'));
+    //                 // } else {
+    //                 //     // $prviousDue->due = $previousDue + )
+    //                 // }
+    //                 // $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($item->item_id)->latest()->first();
+    //                 // // dd($request->all(), $stockItem, $request->due, $item->item_id);
+    //                 // // $temp_total = abs($stockItem->price - $request->due);
+    //                 // $stockItem->temp_total = abs(($stockItem->temp_total - $request->amount) - $discount);
+    //                 // // dd($stockItem, $request->all());
+    //                 // $stockItem->save();
+    //             } else {
+    //                 $item = $this->stockOutItem->find($id);
+    //                 if (isset($item)) {
+    //                     $stockUpdate = StockItem::whereItemId($item->item_id)->whereDealerId($request->dealer_id)->latest()->first();
+    //                     if (isset($stockUpdate)) {
+    //                         $stockUpdate->quantity += $item->quantity;
+    //                         $stockUpdate->temp_total += $item->price;
+    //                         $stockUpdate->save();
+    //                         $item->delete();
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             if ($request->action == 'pay') {
+    //                 $item = $this->stockOutItem->find($id);
+    //                 $user = Dealer::find($request->dealer_id);
+    //                 // dd($request->all());
+    //                 // Payment::whereDealerId($request->dealer_id)->whereAdminId(auth('admin')->user()->id)->update(['due' => 0]);
+    //                 $request = new Request($request->all());
+
+
+    //                 if ($request->totalDue == 0) {
+    //                     $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => ($request->total - $request->due) - $discount, 'amount' => $request->due, 'total' => $request->total]);
+    //                 } else {
+    //                     $request->merge(['admin_id' => auth('admin')->user()->id, 'due' => ($request->totalDue - $request->due) - $discount, 'amount' => $request->due, 'total' => $request->total]);
+    //                 }
+
+    //                 // $preDue = Payment::whereDealerId($request->dealer_id)->latest()->pluck('due')->first();
+    //                 // dd($request->all());
+
+    //                 $preQuantity = Statement::whereDealerId($request->dealer_id)->latest()->first();
+    //                 // dd($preQuantity->due);
+    //                 $statement = new Statement();
+    //                 $statement->out = $item->quantity;
+    //                 $statement->dealer_id = $request->dealer_id;
+    //                 $statement->admin_id = auth('admin')->user()->id;
+    //                 $statement->stock = abs($item->quantity - $preQuantity->stock);
+    //                 $statement->rate = $user->price;
+    //                 if ($request->amount != '') {
+    //                     $statement->bill = $item->quantity + $user->price;
+    //                     $statement->payment = $request->amount;
+    //                     $statement->due = abs(($item->price - $request->amount) - $discount);
+    //                     $statement->discount = $discount;
+    //                     // dd('not null','not empty due', $request->all(), $item, $statement, $preQuantity);
+    //                 } else {
+    //                     $statement->bill = $item->quantity + $user->price;
+    //                     $statement->due = $request->amount + $item->quantity * $user->price + $preQuantity->due;
+    //                     $statement->discount = $discount;
+    //                     // dd($request->all(), 'not empty due', $item, $statement, $preQuantity);
+    //                 }
+    //                 $statement->save();
+
+    //                 // $previousDue = Payment::whereDealerId($request->dealer_id)->latest()->first();
+    //                 // dd($statement, $item, $preQuantity, $request->all(), $previousDue);
+    //                 // if (empty($peviousDue)){
+    //                 $previousDue->update($request->except('_token', 'totalDue', 'action', 'discount'));
+    //                 // } else {
+    //                 //     // $prviousDue->due = $previousDue + )
+    //                 // }
+    //                 // $stockItem = StockItem::whereDealerId($request->dealer_id)->whereItemId($item->item_id)->latest()->first();
+    //                 // // $temp_total = abs($stockItem->price - $request->due);
+    //                 // // dd($request->all(), $stockItem->price, $request->due, $temp_total);
+    //                 // // dd($stockItem, $request->all());
+    //                 // if (!empty($stockItem)) {
+    //                 //     $stockItem->temp_total = abs(($stockItem->temp_total - $request->amount) - $discount);
+    //                 //     $stockItem->save();
+    //                 // }
+    //             } else {
+    //                 $item = $this->stockOutItem->find($id);
+    //                 if (isset($item)) {
+    //                     $stockUpdate = StockItem::whereItemId($item->item_id)->whereDealerId($request->dealer_id)->latest()->first();
+    //                     if (isset($stockUpdate)) {
+    //                         $stockUpdate->quantity += $item->quantity;
+    //                         $stockUpdate->temp_total += $item->price;
+    //                         $stockUpdate->save();
+    //                         $item->delete();
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    //     // catch (\Throwable $e) {
+    //     //     DB::rollback();
+    //     //     throw $e;
+    //     // }
+    //     return redirect()->route('invoices.dealer_cashes');
+    // }
+
+
+     public function dealerInvoiceStockOutStore(Request $request, $id)
     {
         $request->validate([
             'payment_type' => 'required|integer',
@@ -310,7 +471,9 @@ class PaymentInvoiceController extends Controller
                     // dd($request->all());
 
 
+
                         // $previousDue->update($request->except('_token', 'totalDue', 'action', 'discount'));
+
                         Payment::create($request->except('_token', 'totalDue', 'action', 'discount'));
 
 
@@ -323,13 +486,13 @@ class PaymentInvoiceController extends Controller
                     $statement->stock = abs($item->quantity - $preQuantity->stock);
                     $statement->rate = $user->price;
                     if ($request->amount != '') {
-                        $statement->bill = $item->quantity + $user->price;
+                        $statement->bill = $item->quantity * $user->price;
                         $statement->payment = $request->amount;
                         $statement->due = abs(($item->price - $request->amount) - $discount);
                         $statement->discount = $discount;
                         // dd('not null','not empty due', $request->all(), $item, $statement, $preQuantity);
                     } else {
-                        $statement->bill = $item->quantity + $user->price;
+                        $statement->bill = $item->quantity * $user->price;
                         $statement->due = $request->amount + $item->quantity * $user->price + $preQuantity->due;
                         $statement->discount = $discount;
                         // dd($request->all(), 'not empty due', $item, $statement, $preQuantity);
@@ -502,7 +665,7 @@ class PaymentInvoiceController extends Controller
             if (!empty($due)) {
                 // dd($due, $preStock, $request->all(), 'due');
                 $dueInsert = new Request($request->except('temp_total'));
-                $dueInsert->merge(['dealer_id' => $request->dealer_id, 'due' => $due->due + $request->due, 'admin_id' => auth('admin')->user()->id, 'temp_total' => $request->due]);
+                $dueInsert->merge(['dealer_id' => $request->dealer_id, 'due' => $due->due + $request->due, 'admin_id' => auth('admin')->user()->id]);
                 // dd($preStock, $due, $dueInsert->all(), 'not due');
                 $due->update($dueInsert->all());
             } elseif (!empty($preStock)) {
@@ -695,7 +858,8 @@ class PaymentInvoiceController extends Controller
 
     public function storeRetailerDues(Request $request)
     {
-        $due = Payment::whereNull('dealer_id')->whereRetailerId($request->retailer_id)->whereSalesmanId(auth('salesman')->user()->id)->orderBy('created_at', 'desc')->first();
+
+         return $due = Payment::whereNull('dealer_id')->whereRetailerId($request->retailer_id)->whereSalesmanId(auth('salesman')->user()->id)->orderBy('created_at', 'desc')->first();
         if (!empty($due)) {
             $request = new Request($request->all());
             $request->merge(['due' => $due->due + $request->due, 'salesman_id' => auth('salesman')->user()->id]);

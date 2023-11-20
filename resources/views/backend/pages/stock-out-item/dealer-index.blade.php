@@ -29,7 +29,7 @@
                             <tr>
                                 {{-- <td data-label="SL">{{ $stockOutItems->getFrom() + $loop->iteration }}</td> --}}
                                 <td data-label="SL">{{ ($stockOutItems->currentPage() - 1) * $stockOutItems->perPage() + $loop->iteration }}</td>
-                                <td data-label="Name">{{ $stockOutItem->item->name ?? "" }}</td>
+                                <td data-label="Name">{{ @$stockOutItem->item->name }}</td>
                                 <td data-label="Name">{{ $stockOutItem->dealer->name ?? "" }}</td>
                                 <td data-label="Quantity">{{ $stockOutItem->quantity ?? "" }}</td>
                                 <td data-label="Price">{{ $stockOutItem->price ?? "" }}</td>
@@ -57,8 +57,8 @@
 @endsection
 
 @push('script')
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
-<script src="{{ asset('backend/assets/js/jquery-3.6.0.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<!--<script src="{{ asset('backend/assets/js/jquery-3.6.0.js') }}"></script>-->
 <script>
 $('#item_id').change(function(){
     var itemId = $(this).val();
@@ -100,13 +100,13 @@ $('#dealer_id').change(function(){
     }
 </script> --}}
 
-<script type="text/javascript">
-    function preventBack() {
-            window.history.forward();
-        }
+// <script type="text/javascript">
+//     function preventBack() {
+//             window.history.forward();
+//         }
 
-        setTimeout("preventBack()", 0);
+//         setTimeout("preventBack()", 0);
 
-        window.onunload = function () { null };
-</script>
+//         window.onunload = function () { null };
+// </script>
 @endpush

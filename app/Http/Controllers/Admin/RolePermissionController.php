@@ -17,11 +17,11 @@ class RolePermissionController extends Controller
      */
     public function index()
     {
-        if (auth('admin')->user()->can('view-role')) {
+         if (auth('admin')->user()->can('view-role')) {
             $roles =  Role::all();
             return view('backend.pages.role_permission.index', compact('roles'));
-        }
-        abort(403);
+         }
+         abort(403);
     }
 
     /**

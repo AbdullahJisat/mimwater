@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-header">
             <a href="{{ route('managers.index') }}" class="btn waves-effect waves-light btn-primary"><i
-                    class="icofont icofont-user-alt-3"></i>{{ __('View manager') }}</a>
+                    class="icofont icofont-user-alt-3"></i>{{ __('View Director') }}</a>
         </div>
         <div class="card-block">
             <form id="managerForm" method="post"

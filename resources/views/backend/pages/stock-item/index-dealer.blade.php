@@ -75,11 +75,11 @@
                                 <td data-label="Image">{{ $stockItem->temp_total }}</td>
                                 <td data-label="Image">{{ $stockItem->created_at->format('d-M-Y') }}</td>
                                 <td data-label="Action">
-                                    {{-- <form action="{{route('stock_items.destroy',$stock_item->id)}}" method="post">
+                                    <form action="{{route('stock-items.destroy',$stockItem->id)}}" method="post">
                                         @method('DELETE')
-                                        @csrf --}}
+                                        @csrf 
                                         <a href="{{ url('admin/edit/'.$stockItem->id.'/dealer-stock-items') }}" class="btn waves-effect waves-light btn-primary"><i class="fas fa-edit"></i></a>
-                                        {{-- <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button> --}}
+                                        <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn waves-effect waves-light btn-success"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

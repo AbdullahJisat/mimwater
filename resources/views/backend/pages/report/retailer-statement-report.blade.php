@@ -55,12 +55,12 @@
                     <tfoot>
                         <th>Total</th>
                         <th>{{ $retailer->statements->sum('in') }}</th>
-                        <th>{{ $retailer->statements->sum('out') }}</th>
-                        <th>{{ $retailerStock }}</th>
+                        <th>{{ $retailerStock->sum('quantity') ?? 0 }}</th>
+                        <th>{{ $retailer->statements->sum('in') - $retailerStock->sum('quantity') }}</th>
                         <th colspan="1"></th>
                         <th>{{ $retailer->statements->sum('bill') }}</th>
                         <th>{{ $retailer->statements->sum('payment') }}</th>
-                        <th>{{ $retailerDue }}</th>
+                        <th>{{ $retailerDue ?? 0 }}</th>
                         <th colspan="1"></th>
                     </tfoot>
                 </table>

@@ -79,9 +79,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
 $('#dealer_id').change(function(){
-    // alert('ff');
     var dealerId = $(this).val();
-    // alert(dealerId);
     $.ajax({
         url:`previous-dealer-dues/`+dealerId,
         method:"get",

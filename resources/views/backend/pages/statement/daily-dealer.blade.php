@@ -35,7 +35,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Dealer Name</th>
-                            <th>In</th>
+                            <th>In yyyyyy</th>
                             <th>Out</th>
                             <th>Stock</th>
                             <th>Rate</th>

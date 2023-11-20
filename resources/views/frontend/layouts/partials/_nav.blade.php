@@ -44,10 +44,11 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="{{ route('admin.login') }}">Admin</a></li>
-                        <li><a class="dropdown-item" href="{{ route('manager.login') }}">Manager</a></li>
+                        <li><a class="dropdown-item" href="{{ route('manager.login') }}">Director</a></li>
                         <li><a class="dropdown-item" href="{{ route('salesman.login') }}">Salesman</a></li>
                         <li><a class="dropdown-item" href="{{ route('dealer.login') }}">Dealer</a></li>
                         <li><a class="dropdown-item" href="{{ route('retailer.login') }}">Retailer</a></li>
+                        <li><a class="dropdown-item" href="{{ route('office_user.login') }}">Office_User</a></li>
                     </ul>
                 </div>
                 @endguest
@@ -110,6 +111,10 @@
                 </a>
                 @elseif (Auth::guard('retailer')->check())
                 <a type="button" class="btn btn-primary btn-sm" href="{{ url('retailers/dashboard') }}">
+                    Dashboard
+                </a>
+                @elseif (Auth::guard('office_user')->check())
+                <a type="button" class="btn btn-primary btn-sm" href="{{ url('office_users/dashboard') }}">
                     Dashboard
                 </a>
                 @elseif (Auth::guard('salesman')->check())

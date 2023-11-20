@@ -15,4 +15,9 @@ class Statement extends Model
     {
         return $this->belongsTo(Dealer::class);
     }
+    
+    public function retailer()
+    {
+        return $this->belongsTo(Retailer::class);
+    }
 }

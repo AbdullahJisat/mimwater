@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
 use App\Models\Client;
 use App\Models\ClientReview;
 use App\Models\Department;
@@ -17,7 +18,8 @@ class UIController extends Controller
     }
 
     public function index(){
-        return view('frontend.pages.content');
+        $about = About::latest()->first();;
+        return view('frontend.pages.content',compact('about'));
     }
 
     public function overview(){

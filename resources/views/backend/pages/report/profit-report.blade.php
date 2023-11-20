@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <div style="float: left;">
-                <label for="">Dealer : </label>
+                <label for="">Dealer :rrrr </label>
                 <label>{{ $dealer->name }}</label>
             </div>
             <div style="float: right;">
@@ -15,6 +15,7 @@
                 <label>{{ $start }} to {{ $end }}</label>
             </div>
         </div>
+        
 
         <div class="card-block">
             <div class="dt-responsive table-responsive">
@@ -56,11 +57,12 @@
                         <th>Total</th>
                         <th>{{ $dealer->statements->sum('in') }}</th>
                         <th>{{ $dealer->statements->sum('out') }}</th>
-                        <th>{{ $dealerStock }}</th>
+                        ` <th>{{ $dealerStock }}</th>
                         <th colspan="1"></th>
                         <th>{{ $dealer->statements->sum('bill') }}</th>
                         <th>{{ $dealer->statements->sum('payment') }}</th>
-                        <th>{{ $dealerDue }}</th>
+                        <th>{{ $dealer->statements->sum('bill')- ($dealer->statements->sum('payment') +  $dealer->statements->sum('discount') )}}</th>
+                        <th>{{ $dealer->statements->sum('discount') }}</th>
                         <th colspan="1"></th>
                     </tfoot>
                 </table>

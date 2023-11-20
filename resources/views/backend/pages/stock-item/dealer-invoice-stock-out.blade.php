@@ -128,7 +128,8 @@
                                         const options = { year: 'numeric', month: 'short', day: 'numeric' };
                                         document.write(currentDate.toLocaleDateString('en-us', options));
 
-                                        </script><br /> Due: February 1, 2015
+                                        </script>
+                                        <!--<br /> Due: February 1, 2015-->
                                 </td>
                             </tr>
                         </table>
@@ -139,8 +140,10 @@
                     <td colspan="2">
                         <table>
                             <tr>
-                                <td>
-                                    Meem Water.<br /> Meem Road<br /> Chattogram, Chattogram
+                               <td>
+                                    Meem Super Drinking Water<br/> 
+Block#B, Plot# B-4, Sholosohor I/A,<br/> Nasirabad, Chattogram<br/>
+                                    <strong>Mobile:</strong> 019 7567 6677
                                 </td>
 
                                 <td>

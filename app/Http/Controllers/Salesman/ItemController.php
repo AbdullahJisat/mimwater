@@ -15,10 +15,6 @@ class ItemController extends Controller
 
     public function __construct(Item $item)
     {
-        $this->middleware('permission:item-list');
-        $this->middleware('permission:item-create', ['only' => ['create','store']]);
-        $this->middleware('permission:item-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:item-delete', ['only' => ['destroy']]);
         $this->item = $item;
     }
 

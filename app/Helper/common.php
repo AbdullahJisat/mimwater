@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\NewsEvents;
 use App\Models\ProductionFacilities;
 use App\Models\Retailer;
+use App\Models\OfficeUser;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -42,7 +43,11 @@ function getAuthType(){
         return 'dealer';
     } elseif (auth('retailer')->check()) {
         return 'retailer';
-    } else {
+    }
+    elseif (auth('office_user')->check()) {
+        return 'office_user';
+    }
+    else {
         return false;
     }
 }

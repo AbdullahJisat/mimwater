@@ -9,7 +9,7 @@
                 {{-- <button type="button" class="btn waves-effect waves-light btn-primary" data-toggle="modal"
                     data-target="#stockOutItemModal"><i class="icofont icofont-user-alt-3"></i>{{ __('Add cash') }}</button>
                 @include('backend.pages.stock-out-item.create') --}}
-                <form action="{{ route('show_report_date') }}" method="get" style="display: inline-flex">
+                <form action="{{ route('income_report_date') }}" method="get" style="display: inline-flex">
                     {{-- @csrf --}}
                     <div class="row input-daterange">
                         <div class="col-md-4">
@@ -59,12 +59,12 @@
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>Total Office Bkash</td>
+                                    <td>Total Bkash Ceo</td>
                                     <td>{{ $bkashIncome ?? 0 }}</td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
-                                    <td>Total Bkash Ceo</td>
+                                    <td>Total Office Bkash</td>
                                     <td>{{ $bkashCeoIncome ?? 0 }}</td>
                                 </tr>
                                 <tr>
